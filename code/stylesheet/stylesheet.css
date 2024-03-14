@@ -1,0 +1,256 @@
+body {
+    background-color: rgb(223, 216, 187);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+mark {
+    background-color: rgb(255, 199, 199);
+}
+
+#mainfeld {
+    background-color: rgb(197, 190, 163);
+    box-shadow: 10px 10px grey;
+    text-align: center;
+    width: auto;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px 0px 20px 0px;
+    transition-duration: 0.2s;
+    margin-bottom: 40px;
+}
+
+#inputfield {
+    position: relative;
+    box-sizing: border-box;
+    height: 55px;
+    width: 450px;
+    border: 1px solid black;
+    border-radius: 10px;
+    font-size: 28px;
+    padding: 10px;
+    background-color: white;
+    text-align: left;
+    margin-right: auto;
+    color: black;
+    display: inline-block;
+    left: 10px;
+    z-index: 1;
+    font-family: monospace;
+}
+
+[contenteditable=true]:empty:before {
+    content: attr(placeholder);
+    pointer-events: none;
+    display: block;
+    opacity: 50%;
+    font-size: 29px;
+}
+[contenteditable]:focus {
+    outline: 0px solid transparent;
+}
+
+#counter {
+    position: relative;
+    display: inline-block;
+    left: 20px;
+    bottom: 3px;
+    font-size: 18px;
+    user-select: none;
+}
+
+.ruleBubble {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    width: 450px;
+    height: auto;
+    border-radius: 10px;
+    font-size: 18px;
+    margin-bottom: 20px;
+    box-shadow: 1px 1px 10px rgba(255, 0, 0, 0);
+    transition-duration: 0.5s;
+}
+
+
+.ruleName {
+    padding-left: 30px;
+    position: relative;
+    text-align: left;
+    border-radius: 10px 10px 0px 0px;
+    margin: 0px;
+    padding: 15px;
+    background-color: #ffc7c700;
+    border: 1px solid rgba(255, 0, 0, 0);
+    border-bottom: none;
+    transition-duration: 0.5s;
+}
+
+.ruleText {
+    padding: 15px;
+    font-size: 18px;
+    text-align: left;
+    border-radius: 0px 0px 10px 10px;
+    margin: 0px;
+    background-color: #ffecec00;
+    border: 1px solid rgba(255, 0, 0, 0);
+    border-top: none;
+    transition-duration: 0.5s;
+}
+
+.falseName {
+    background-color: #ffc7c7;
+    border: 1px solid red;
+    border-bottom: none;
+}
+
+.trueName {
+    background-color: #aef3ae;
+    border: 1px solid green;
+    border-bottom: none;
+}
+
+.falseText {
+    background-color: #ffecec;
+    border: 1px solid red;
+    border-top: none;
+}
+
+.trueText {
+    background-color: #e3ffe3;
+    border: 1px solid green;
+    border-top: none;
+}
+
+.falseBubble {
+    box-shadow: 1px 1px 10px rgba(255, 0, 0, 0.397);
+}
+
+.trueBubble {
+    box-shadow: 1px 1px 10px #37ff1467;
+}
+
+.pictogram {
+    position: relative;
+    top: 2px;
+    height: 19px;
+    width: auto;
+}
+
+.sponsor {
+    height: 80px;
+    width: auto;
+    margin: 0px 10px 0px 10px;
+}
+
+#sponsorsP {
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+.captcha {
+    border: 1px solid rgb(20, 20, 20);
+    border-radius: 5px;
+}
+
+.wrapper {
+    text-align: center;
+    margin-top: 8px;
+}
+
+#refreshButton {
+    width: 20px;
+    opacity: 80%;
+    margin-left: 8px;
+    bottom: 15px;
+    position: relative
+}
+
+#refreshButton:hover {
+    width: 22px;
+    opacity: 100%;
+    left: 1px;
+    margin-left: 6px;
+    bottom: 14px;
+    cursor: pointer;
+}
+
+#chessImg {
+    position: relative;
+    margin-top: 24px;
+    margin-left: 15px;
+    width: 385px;
+}
+
+.chessBorders {
+    position: absolute;
+    z-index: 0;
+    width: 415px;
+    height: auto;
+    margin-top: 9px;
+}
+
+#deathMessageCenter {
+    background-color: rgb(0, 0, 0);
+    position: absolute;
+    height: 150px;
+    width: 100vw;
+    top: 48vh;
+    z-index: 10;
+    left: 0px;
+    box-shadow: 0px 0px 100vh 250px rgba(0, 0, 0, 0.952);
+}
+#deathMessageText {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    text-align: center;
+    position: relative;
+    top: -32px;
+    font-size: 70px;
+    color: red;
+    user-select: none;
+}
+#deathMessageOverlay {
+    background-color: rgba(66, 66, 66, 0.637);
+    height: 100vh;
+    width: 100vw;
+    z-index: 9;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    position: fixed;
+}
+#buttonWrapper {
+    position: relative;
+    background-color: white;
+    height: 45px;
+    width: 448px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 0px 0px 10px 10px;
+    border: 1px solid black;
+    border-top: 0px;
+    margin-top: -50px;
+    left: 3px;
+    transition-duration: 0.5s;
+    z-index: 0;
+}
+#boldButton {
+    text-align: center;
+    border: 1px solid grey;
+    position: relative;
+    top: 20%;
+    height: 60%;
+    width: 50px;
+    border-radius: 4px;
+    left: -190px;
+    display: inline-block;
+    font-size: 15px;
+    transition-duration: 0.5s;
+}
+#boldButton:hover{
+    cursor: pointer;
+}
+.activeButton{
+    background-color: black;
+    color: white;
+}
