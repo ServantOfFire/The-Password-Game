@@ -256,7 +256,6 @@ function bubble(number, text, statement, special) {
         const boldButton = document.createElement('button')
         boldButton.innerText = 'Bold'
         boldButton.type = 'button'
-
         boldButton.id = 'boldButton'
         buttonWrapper.appendChild(boldButton)
         setTimeout(function () {

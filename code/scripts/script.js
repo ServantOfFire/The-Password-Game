@@ -1,7 +1,7 @@
 clearConsole()
 getCheats()
 //GLOBAL_VARIABLES_GLOBAL_VARIABLES_GLOBAL_VARIABLES_GLOBAL_VARIABLES_GLOBAL_VARIABLES_GLOBAL_VARIABLES
-var inputfield = document.getElementById("inputfield")
+const inputfield = document.getElementById("inputfield")
 var eingabeText;
 let main = document.getElementById('mainfeld')
 let height = 114;
@@ -55,10 +55,14 @@ let highlightedStrings = []
 let greg;
 let gregEmoji = '';
 let gregRegExp = new RegExp(gregEmoji, 'g')
+let gregAlive = true
 
 //fire
-let burned = false
+let fireStarted = false
 let fireOut = false
+let openTags = []
+let closeTags = []
+let burning
 
 
 //RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_
@@ -82,6 +86,7 @@ let ruleMatrix = [
     [16, '<span oncopy="standardCopy()">🥚</span> This my chicken Greg. He hasn’t hatched yet. Please put him in your password and keep him safe.', 'stmt16(eingabeText)'],
     [17, 'The elements in your password must have atomic numbers that add up to 200.', 'stmt17(eingabeText)'],
     [18, 'All the vowels in your password must be bolded.', 'stmt18(eingabeText)', 'boldButton()'],
+ //   [19, 'Oh no! Your password is on fire 🔥. Quick, put it out!', 'stmt19(eingabeText)']
 ]
 copy = () => {
     navigator.clipboard.writeText(eingabeText)
@@ -117,6 +122,8 @@ function addAutoResize() {
         element.removeAttribute('data-autoresize');
     });
 }
+
+
 function setImages() {
     TheOwlClub.src = "images/sponsors/TheOwlClub.webp"
     Jimmy.src = "images/sponsors/Jimmy.png"

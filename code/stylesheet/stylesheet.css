@@ -6,7 +6,9 @@ body {
 mark {
     background-color: rgb(255, 199, 199);
 }
-
+button {
+    background-color: white;
+}
 #mainfeld {
     background-color: rgb(197, 190, 163);
     box-shadow: 10px 10px grey;

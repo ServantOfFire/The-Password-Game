@@ -22,7 +22,6 @@ function stmt5(input) {
     for (i = 0; i < num.length; i++)
         sum += parseInt(num.charAt(i));
     if (sum === 25) {
-
         deleteHighlight(true, 5)
         return true;
     }
@@ -32,24 +31,21 @@ function stmt5(input) {
 function stmt6(input) {
     var months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
     for (let month = 0; month <= months.length; month++) {
-        if (input.toLowerCase().includes(months[month]))
-            return true
+        if (input.toLowerCase().includes(months[month]))return true
     }
 }
 
 function stmt7(input) {
     var romanNum = ['I', 'V', 'X', 'L', 'C', 'D', 'M'];
     for (let num = 0; num <= romanNum.length; num++) {
-        if (input.includes(romanNum[num]))
-            return true
+        if (input.includes(romanNum[num])) return true
     }
 }
 
 function stmt8(input) {
     var sponsors = ['theowlclub', 'jimmy', 'lego'];
     for (let i = 0; i <= sponsors.length; i++) {
-        if (input.toLowerCase().includes(sponsors[i]))
-            return true
+        if (input.toLowerCase().includes(sponsors[i])) return true
     }
 }
 
@@ -58,8 +54,7 @@ function stmt9(input) {
     var romanNum = ['I', 'V', 'X', 'L', 'C', 'D', 'M'];
     const roman = [];
     for (const item of romanNumeralsWithSpaces) {
-        if (item !== '')
-            roman.push(item);
+        if (item !== '') roman.push(item);
     }
     const arabic = [];
     for (let i = 0; i < roman.length; i++)
@@ -68,7 +63,6 @@ function stmt9(input) {
     for (let i = 1; i < arabic.length; i++)
         product *= arabic[i]
     if (product === 35) {
-
         deleteHighlight(true, 9)
         return true
     }
@@ -189,9 +183,10 @@ function stmt16(input) {
     if (input.includes('🥚')) {
         greg = true;
         gregEmoji = '🥚'
-
+        gregRegExp = new RegExp(gregEmoji, 'g')
         return true
     }
+
 }
 
 function stmt17(input) {
@@ -289,6 +284,6 @@ function stmt18(input) {
 
 function stmt19(){
     let input = inputfield.innerText
+    if(fireOut) return true
     startFire()
-    return fireOut
 }
