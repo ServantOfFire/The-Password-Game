@@ -283,7 +283,6 @@ function stmt18(input) {
 }
 
 function stmt19(){
-    let input = inputfield.innerText
-    if(fireOut) return true
     startFire()
+    if(fireOut) return true
 }

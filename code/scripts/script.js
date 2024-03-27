@@ -10,7 +10,7 @@ let cLeft;
 main.style.height = height + 'px';
 let newOffsetheight = 55;
 let counter = document.getElementById('counter')
-
+const update = new Event('update')
 
 const buttonWrapper = document.createElement('div')
 buttonWrapper.id = 'buttonWrapper'
@@ -62,7 +62,11 @@ let fireStarted = false
 let fireOut = false
 let openTags = []
 let closeTags = []
-let burning
+let changedOpenTags = []
+let changedCloseTags = []
+let burning;
+let burnedText;
+let firstCharBefore;
 
 
 //RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_
@@ -86,15 +90,17 @@ let ruleMatrix = [
     [16, '<span oncopy="standardCopy()">🥚</span> This my chicken Greg. He hasn’t hatched yet. Please put him in your password and keep him safe.', 'stmt16(eingabeText)'],
     [17, 'The elements in your password must have atomic numbers that add up to 200.', 'stmt17(eingabeText)'],
     [18, 'All the vowels in your password must be bolded.', 'stmt18(eingabeText)', 'boldButton()'],
- //   [19, 'Oh no! Your password is on fire 🔥. Quick, put it out!', 'stmt19(eingabeText)']
+    [19, 'Oh no! Your password is on fire 🔥. Quick, put it out!', 'stmt19(eingabeText)']
 ]
 copy = () => {
     navigator.clipboard.writeText(eingabeText)
 }
 addAutoResize();
 
+document.addEventListener('input',() => {inputfield.dispatchEvent(update)})
+
 let currentRuleIndex = 0;
-inputfield.addEventListener("input", (event) => {
+inputfield.addEventListener('update', (event) => {
     eingabeText = inputfield.innerText;
     checkForGreg()
     setTimeout(() => {
@@ -115,7 +121,7 @@ function addAutoResize() {
     document.querySelectorAll('[data-autoresize]').forEach(function (element) {
         element.style.boxSizing = 'border-box';
         var offset = element.offsetHeight - element.clientHeight;
-        element.addEventListener('input', function (event) {
+        element.addEventListener('update', function (event) {
             event.target.style.height = 'auto';
             event.target.style.height = event.target.scrollHeight + offset + 'px';
         });

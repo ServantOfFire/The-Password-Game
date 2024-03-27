@@ -146,7 +146,7 @@ function preventChickenCloning() {
     }
 }
 
-function saveTagPositions(inputString, tagName) {
+function saveTagPositions(inputString, tagName, deleteTag) {
     openTags = []
     closeTags = []
     const tagLength = tagName.length;
@@ -165,6 +165,10 @@ function saveTagPositions(inputString, tagName) {
         closeTags.push(closeIndex)
 
         currentIndex = closeIndex; // Move to check after the closing tag
+    }
+    if (deleteTag) {
+        inputfield.innerHTML = inputfield.innerHTML.replaceAll(`<${tagName}>`, '')
+        inputfield.innerHTML = inputfield.innerHTML.replaceAll(`</${tagName}>`, '')
     }
 }
 
@@ -202,19 +206,28 @@ function startFire() {
     fireStarted = true
     saveTagPositions(inputfield.innerHTML, 'b')
     doSave()
-    let burnedText = inputfield.innerText.replaceAt(randomNumber(1, inputfield.innerText.length - 1), '🔥')
+    burnedText = inputfield.innerText.replaceAt(15, '🔥')//(randomNumber(1, inputfield.innerText.length - 1), '🔥')
+    let iteration = 1
     insertTags()
     inputfield.innerHTML = burnedText
     doRestore()
     var amountBurned = 0;
 
+    document.addEventListener('keydown', function (event) {
+        if (event.key == 'Escape') {
+            window.clearInterval(burning)
+            console.log('cleared burning')
+        }
+    })
     //fire is: \uD83D + \uDD25
     burning = setInterval(() => {
+        iteration++
         let fireIndexes = []
         amountBurned = 0;
         doSave()
-        saveTagPositions(inputfield.innerHTML, 'b')
-        let burnedText = inputfield.innerText
+        saveTagPositions(inputfield.innerHTML, 'b', true)
+        burnedText = inputfield.innerText
+        firstCharBefore = burnedText.split('')[0]
         for (let i = 0; i < inputfield.innerText.length; i++) {
             if (inputfield.innerText[i] == '\uD83D') {
                 fireIndexes.push(i)
@@ -228,8 +241,9 @@ function startFire() {
         fireIndexes.forEach((index) => {
             burnToRight((index + amountBurned), symbolArray)
         });
-        //insertTags()
+        insertTags()
         inputfield.innerHTML = burnedText
+        inputfield.dispatchEvent(update)
         doRestore()
         checkForGreg()
         function burnToLeft(index, symbolArray) {
@@ -248,34 +262,54 @@ function startFire() {
     }, 1000);
 
     function insertTags() {
-        console.log(openTags)
-        openTags.forEach(function (element) {
-            //console.log(element)
-            let slicedText = inputfield.innerText.slice(0, element)
-            if (slicedText.match('\uD83D') != null){
-                console.log(slicedText.match('a'))
-                element += slicedText.match('🔥').length
-                console.log(element)
-            }
 
-        });
-        closeTags.forEach(function (element) {
-            let slicedText = inputfield.innerText.slice(0, element)
-            if (slicedText.match('🔥') != null)
-                element += slicedText.match('🔥').length
-        });
-        //console.log(openTags)
-        for (let i = 0; i < openTags.length; i++) {//fire is two unicode characters so sometimes tags must be moved
-            if (burnedText.indexOf('\uD83D') < closeTags[i] && burnedText.indexOf('\uD83D') < openTags[i]) {
-                openTags[i]++
-                closeTags[i]++
+        openTags.forEach(function (element, index) {
+            let slicedText = burnedText.slice(0, element - (index * 3 + index * 4))
+            let numberOfFire = slicedText.split('').filter(item => item === '\uD83D').length;
+            if (numberOfFire > 0 &&
+                iteration != 1 &&
+                burnedText.split('')[0] != '\uD83D') {
+                changedOpenTags[index] = openTags[index] + 2
+                changedCloseTags[index] = closeTags[index] + 2
+                return
             }
-            if (burnedText.indexOf('🔥') == openTags[i] - 1) //fire is two unicode characters so sometimes tags must be moves
-                openTags[i]++
-            burnedText = burnedText.splice(openTags[i], '<b>')
-            if (burnedText.indexOf('🔥') < closeTags[i] && burnedText.indexOf('🔥') > openTags[i])
-                closeTags[i]++
-            burnedText = burnedText.splice(closeTags[i], '</b>')
+            if (numberOfFire > 0 && (burnedText.split('')[0] == '\uD83D' || iteration == 1)) {
+                changedOpenTags[index] = openTags[index] + 1
+                changedCloseTags[index] = closeTags[index] + 1
+                if (firstCharBefore != '\uD83D' && burnedText.split('')[0] == '\uD83D') {
+                    changedOpenTags[index]++
+                    changedCloseTags[index]++
+                }
+                return
+            }
+            changedOpenTags[index] = openTags[index]
+            changedCloseTags[index] = closeTags[index]
+        });
+
+
+        console.log('CURRENT ITERATION: ' + iteration)
+        for (let i = 0; i < changedOpenTags.length; i++) {
+            if (burnedText.split('')[changedOpenTags[i] - 1] == '\ud83d') {
+                changedOpenTags[i]++
+            }
+            if (burnedText.split('')[changedOpenTags[i]] == '>') {
+                changedOpenTags[i]++
+            }
+            burnedText = burnedText.splice(changedOpenTags[i], '<b>')
+            if (burnedText.split('')[changedCloseTags[i]] == '\udd25') {
+                console.log('INCREASED CLOSETAGS: ' + changedCloseTags[i])
+                changedCloseTags[i]++
+            }
+            if (burnedText.split('')[changedCloseTags[i]] == '>') {
+                changedCloseTags[i]++
+            }
+            burnedText = burnedText.splice(changedCloseTags[i], '</b>')
         }
+        console.log('open: ' + openTags)
+        console.log('changed open: ' + changedOpenTags)
+        console.log('close: ' + closeTags)
+        console.log('changed close: ' + changedCloseTags)
+        console.log(burnedText)
+        console.log('-----------------------')
     }
 }
