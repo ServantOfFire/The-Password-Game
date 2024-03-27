@@ -74,7 +74,7 @@ let firstCharBefore;
 let ruleMatrix = [
     [1, 'Your password must be at least 5 characters.', 'stmt1(eingabeText)'],
     [2, 'Your password must include a number.', 'stmt2(eingabeText)'],
-    [20, 'Your password must include the name of this country', 'stmt20(eingabeText)', 'checkForAPI(ruleText)']
+    [20, 'Your password must include the name of this country', 'stmt20(eingabeText)', 'checkForAPI(ruleText)'],
     [3, 'Your password must include an uppercase letter.', 'stmt3(eingabeText)'],
     [4, 'Your password must include a special character.', 'stmt4(eingabeText)'],
     [5, 'The digits in your password must add up to 25.', 'stmt5(eingabeText)'],
