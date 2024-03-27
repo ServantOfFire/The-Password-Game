@@ -74,7 +74,7 @@ let firstCharBefore;
 let ruleMatrix = [
     [1, 'Your password must be at least 5 characters.', 'stmt1(eingabeText)'],
     [2, 'Your password must include a number.', 'stmt2(eingabeText)'],
-    [20, 'Your password must include the name of this country', 'stmt20(eingabeText)', 'checkForAPI(ruleText)'],
+    
     [3, 'Your password must include an uppercase letter.', 'stmt3(eingabeText)'],
     [4, 'Your password must include a special character.', 'stmt4(eingabeText)'],
     [5, 'The digits in your password must add up to 25.', 'stmt5(eingabeText)'],
@@ -86,12 +86,13 @@ let ruleMatrix = [
     [11, 'Your password must include today’s Wordle answer.', 'stmt11(eingabeText)'],
     [12, 'Your password must include a two letter symbol from the periodic table.', 'stmt12(eingabeText)'],
     [13, 'Your password must include the current phase of the moon as an emoji.', 'stmt13(eingabeText)'],
-    [14, 'Your password must include a leap year.', 'stmt14(eingabeText)'],
-    [15, 'Your password must include the best move in <a target="_blank" style="color: red;" href="https://en.wikipedia.org/wiki/Algebraic_notation_(chess)">algebraic chess notation</a>.', 'stmt15(eingabeText)', 'createChessBoard(ruleText)'],
-    [16, '<span oncopy="standardCopy()">🥚</span> This my chicken Greg. He hasn’t hatched yet. Please put him in your password and keep him safe.', 'stmt16(eingabeText)'],
-    [17, 'The elements in your password must have atomic numbers that add up to 200.', 'stmt17(eingabeText)'],
-    [18, 'All the vowels in your password must be bolded.', 'stmt18(eingabeText)', 'boldButton()'],
-    [19, 'Oh no! Your password is on fire 🔥. Quick, put it out!', 'stmt19(eingabeText)']
+    [14, 'Your password must include the name of this country', 'stmt20(eingabeText)', 'checkForAPI(ruleText)'],
+    [15, 'Your password must include a leap year.', 'stmt14(eingabeText)'],
+    [16, 'Your password must include the best move in <a target="_blank" style="color: red;" href="https://en.wikipedia.org/wiki/Algebraic_notation_(chess)">algebraic chess notation</a>.', 'stmt15(eingabeText)', 'createChessBoard(ruleText)'],
+    [17, '<span oncopy="standardCopy()">🥚</span> This my chicken Greg. He hasn’t hatched yet. Please put him in your password and keep him safe.', 'stmt16(eingabeText)'],
+    [18, 'The elements in your password must have atomic numbers that add up to 200.', 'stmt17(eingabeText)'],
+    [19, 'All the vowels in your password must be bolded.', 'stmt18(eingabeText)', 'boldButton()'],
+    [20, 'Oh no! Your password is on fire 🔥. Quick, put it out!', 'stmt19(eingabeText)'],
     
 ]
 copy = () => {
