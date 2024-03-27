@@ -74,6 +74,7 @@ let firstCharBefore;
 let ruleMatrix = [
     [1, 'Your password must be at least 5 characters.', 'stmt1(eingabeText)'],
     [2, 'Your password must include a number.', 'stmt2(eingabeText)'],
+    [20, 'Your password must include the name of this country', 'stmt20(eingabeText)', 'checkForAPI(ruleText)']
     [3, 'Your password must include an uppercase letter.', 'stmt3(eingabeText)'],
     [4, 'Your password must include a special character.', 'stmt4(eingabeText)'],
     [5, 'The digits in your password must add up to 25.', 'stmt5(eingabeText)'],
@@ -91,6 +92,7 @@ let ruleMatrix = [
     [17, 'The elements in your password must have atomic numbers that add up to 200.', 'stmt17(eingabeText)'],
     [18, 'All the vowels in your password must be bolded.', 'stmt18(eingabeText)', 'boldButton()'],
     [19, 'Oh no! Your password is on fire 🔥. Quick, put it out!', 'stmt19(eingabeText)']
+    
 ]
 copy = () => {
     navigator.clipboard.writeText(eingabeText)

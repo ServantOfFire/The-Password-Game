@@ -285,6 +285,13 @@ function bubble(number, text, statement, special) {
             }, 1)
         }
     }
+    function checkForAPI(a){
+        if(typeof apiKey === 'undefined'){
+            a.innerHTML = `Rule 14 is not activated in the online version to prevent abuse of the owner's API key. \n Type "Google" in your password to pass this rule.`
+            return
+        }
+        a.innerHTML = apiKey
+    }
 }
 function changeMainElemHeight(reduce) {
     //reduce true => smaller; reduce false => bigger

@@ -31,7 +31,7 @@ function stmt5(input) {
 function stmt6(input) {
     var months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
     for (let month = 0; month <= months.length; month++) {
-        if (input.toLowerCase().includes(months[month]))return true
+        if (input.toLowerCase().includes(months[month])) return true
     }
 }
 
@@ -282,7 +282,13 @@ function stmt18(input) {
     highlight(usedVowels, 18)
 }
 
-function stmt19(){
+function stmt19() {
     startFire()
-    if(fireOut) return true
+    if (fireOut) return true
+}
+
+function stmt20(input) {
+    if (typeof apiKey === 'undefined') {
+        return input.includes('Google')
+    }
 }
