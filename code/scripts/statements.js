@@ -293,3 +293,13 @@ function stmt20() {
     if (fireOut) return true
 }
 
+function stmt21(input) {
+    if(!input.includes('🏋️')) return
+    if(firstTimeStrength && input.match(/🏋️/g).length > 2){
+        setTimeout(() => {
+            firstTimeStrength = false
+            return true
+        }, 1000)
+    }
+    return input.match(/🏋️/g).length > 2
+}

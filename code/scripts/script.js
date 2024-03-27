@@ -3,6 +3,7 @@ getCheats()
 //GLOBAL_VARIABLES_GLOBAL_VARIABLES_GLOBAL_VARIABLES_GLOBAL_VARIABLES_GLOBAL_VARIABLES_GLOBAL_VARIABLES
 const inputfield = document.getElementById("inputfield")
 var eingabeText;
+let ruleText;
 let main = document.getElementById('mainfeld')
 let height = 114;
 let cBottom;
@@ -68,7 +69,8 @@ let burning;
 let burnedText;
 let firstCharBefore;
 
-
+//strength
+let firstTimeStrength = true
 //RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_
 
 let ruleMatrix = [
@@ -88,18 +90,18 @@ let ruleMatrix = [
     [14, 'Your password must include the name of this country', 'stmt14(eingabeText)', 'checkForAPI(ruleText)'],
     [15, 'Your password must include a leap year.', 'stmt15(eingabeText)'],
     [16, 'Your password must include the best move in <a target="_blank" style="color: red;" href="https://en.wikipedia.org/wiki/Algebraic_notation_(chess)">algebraic chess notation</a>.', 'stmt16(eingabeText)', 'createChessBoard(ruleText)'],
-    [17, '<span oncopy="standardCopy()">🥚</span> This my chicken Greg. He hasn’t hatched yet. Please put him in your password and keep him safe.', 'stmt17(eingabeText)'],
+    [17, '<span oncopy="standardCopy(`egg`)">🥚</span> This my chicken Greg. He hasn’t hatched yet. Please put him in your password and keep him safe.', 'stmt17(eingabeText)'],
     [18, 'The elements in your password must have atomic numbers that add up to 200.', 'stmt18(eingabeText)'],
     [19, 'All the vowels in your password must be bolded.', 'stmt19(eingabeText)', 'boldButton()'],
     [20, 'Oh no! Your password is on fire 🔥. Quick, put it out!', 'stmt20(eingabeText)'],
-    //[21, 'Your password is not strong enough 🏋️‍♂️', 'stmt21(eingabeText)', 'measureStrength(ruleText)']
+    [21, 'Your password is not strong enough <span oncopy="standardCopy(`lifter`)">🏋️‍♂️</span>', 'stmt21(eingabeText)', 'measureStrength(ruleText)']
 ]
 copy = () => {
     navigator.clipboard.writeText(eingabeText)
 }
 addAutoResize();
 
-document.addEventListener('input',() => {inputfield.dispatchEvent(update)})
+document.addEventListener('input', () => { inputfield.dispatchEvent(update) })
 
 let currentRuleIndex = 0;
 inputfield.addEventListener('update', (event) => {
@@ -188,6 +190,13 @@ updateCounter = () => {
     cLeft = getTextWidth(counter.innerText, "18px arial")
     inputfield.style.marginLeft = cLeft - 10 + 'px'
 }
-standardCopy = () => {
-    navigator.clipboard.writeText('🥚')
+standardCopy = (emoji) => {
+    if (emoji == 'egg') {
+        navigator.clipboard.writeText('🥚')
+        return
+    }
+    if(emoji == 'lifter'){
+        navigator.clipboard.writeText('🏋️‍♂️')
+        return
+    }
 }

@@ -292,7 +292,63 @@ function bubble(number, text, statement, special) {
             }, 1)
         }
     }
+    function measureStrength(a) {
+        const strengthBar = document.createElement('p')
+        const red = document.createElement('p')
+        const orange = document.createElement('p')
+        const yellow = document.createElement('p')
+        const green = document.createElement('p')
+        strengthBar.id = 'strengthBar'
 
+        red.classList.add('strength', 'red')
+        orange.classList.add('strength', 'orange')
+        yellow.classList.add('strength', 'yellow')
+        green.classList.add('strength', 'green')
+        inputfield.addEventListener('input', animateStrength)
+        orange.style.visibility = 'hidden'
+        yellow.style.visibility = 'hidden'
+        green.style.visibility = 'hidden'
+
+        strengthBar.appendChild(red)
+        strengthBar.appendChild(orange)
+        strengthBar.appendChild(yellow)
+        strengthBar.appendChild(green)
+        a.appendChild(strengthBar)
+
+        function animateStrength() {
+            if (!inputfield.innerText.includes('🏋️')) {
+                orange.style.visibility = 'hidden'
+                yellow.style.visibility = 'hidden'
+                green.style.visibility = 'hidden'
+                orange.style.left = '13.5px'
+                orange.style.width = '90px'
+                yellow.style.left = '103.5px'
+                green.style.left = '207px'
+                return
+            }
+            if (inputfield.innerText.match(/🏋️/g).length == 1) {
+                orange.style.visibility = 'visible'
+                yellow.style.visibility = 'hidden'
+                green.style.visibility = 'hidden'
+                orange.style.width = '103.5px'
+                orange.style.left = '103.5px'
+                yellow.style.left = '103.5px'
+                green.style.left = '207px'
+            }
+            if (inputfield.innerText.match(/🏋️/g).length == 2) {
+                yellow.style.visibility = 'visible'
+                green.style.visibility = 'hidden'
+                yellow.style.left = '207px'
+                green.style.left = '207px'
+            }
+
+            if (inputfield.innerText.match(/🏋️/g).length > 2) {
+                green.style.visibility = 'visible'
+                green.style.left = '310.5px'
+            }
+        }
+
+    }
 }
 function changeMainElemHeight(reduce) {
     //reduce true => smaller; reduce false => bigger

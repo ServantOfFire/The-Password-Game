@@ -6,9 +6,11 @@ body {
 mark {
     background-color: rgb(255, 199, 199);
 }
+
 button {
     background-color: white;
 }
+
 #mainfeld {
     background-color: rgb(197, 190, 163);
     box-shadow: 10px 10px grey;
@@ -48,6 +50,7 @@ button {
     opacity: 50%;
     font-size: 29px;
 }
+
 [contenteditable]:focus {
     outline: 0px solid transparent;
 }
@@ -202,6 +205,7 @@ button {
     left: 0px;
     box-shadow: 0px 0px 100vh 250px rgba(0, 0, 0, 0.952);
 }
+
 #deathMessageText {
     font-family: Georgia, 'Times New Roman', Times, serif;
     text-align: center;
@@ -211,6 +215,7 @@ button {
     color: red;
     user-select: none;
 }
+
 #deathMessageOverlay {
     background-color: rgba(66, 66, 66, 0.637);
     height: 100vh;
@@ -221,6 +226,7 @@ button {
     left: 0px;
     position: fixed;
 }
+
 #buttonWrapper {
     position: relative;
     background-color: white;
@@ -236,6 +242,7 @@ button {
     transition-duration: 0.5s;
     z-index: 0;
 }
+
 #boldButton {
     text-align: center;
     border: 1px solid grey;
@@ -249,10 +256,63 @@ button {
     font-size: 15px;
     transition-duration: 0.5s;
 }
-#boldButton:hover{
+
+#boldButton:hover {
     cursor: pointer;
 }
-.activeButton{
+
+.activeButton {
     background-color: black;
     color: white;
+}
+
+#strengthBar {
+    width: 414px;
+    height: 22px;
+    margin-top: 10px;
+    border: 0.5px solid grey;
+    background-color: white;
+    border-radius: 35px;
+}
+
+.strength {
+    width: 103.5px;
+    height: 22px;
+    border-right: 1px solid grey;
+    position: relative;
+    top: -18px;
+    
+}
+
+.red {
+    background-color: rgb(234, 60, 61);
+    border-radius: 15px 0px 0px 15px;
+    top: -18px;
+    left: 0px;
+    z-index: 3;
+}
+
+.orange {
+    background-color: rgb(232, 151, 70);
+    transition-duration: 1s;
+    top: -58px;
+    left: 0px;
+    z-index: 2;
+}
+
+.yellow {
+    background-color: rgb(235, 235, 87);
+    transition-duration: 1s;
+    left: 0px;
+    top: -98px;
+    z-index: 1;
+}
+
+.green {
+    background-color: rgb(87, 235, 87);
+    border-radius: 0px 15px 15px 0px;
+    transition-duration: 1s;
+    left: 0px;
+    top: -138px;
+    z-index: 0;
 }
