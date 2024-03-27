@@ -212,13 +212,6 @@ function startFire() {
     inputfield.innerHTML = burnedText
     doRestore()
     var amountBurned = 0;
-
-    document.addEventListener('keydown', function (event) {
-        if (event.key == 'Escape') {
-            window.clearInterval(burning)
-            console.log('cleared burning')
-        }
-    })
     //fire is: \uD83D + \uDD25
     burning = setInterval(() => {
         iteration++
@@ -285,9 +278,6 @@ function startFire() {
             changedOpenTags[index] = openTags[index]
             changedCloseTags[index] = closeTags[index]
         });
-
-
-        console.log('CURRENT ITERATION: ' + iteration)
         for (let i = 0; i < changedOpenTags.length; i++) {
             if (burnedText.split('')[changedOpenTags[i] - 1] == '\ud83d') {
                 changedOpenTags[i]++
@@ -297,7 +287,6 @@ function startFire() {
             }
             burnedText = burnedText.splice(changedOpenTags[i], '<b>')
             if (burnedText.split('')[changedCloseTags[i]] == '\udd25') {
-                console.log('INCREASED CLOSETAGS: ' + changedCloseTags[i])
                 changedCloseTags[i]++
             }
             if (burnedText.split('')[changedCloseTags[i]] == '>') {
@@ -305,11 +294,5 @@ function startFire() {
             }
             burnedText = burnedText.splice(changedCloseTags[i], '</b>')
         }
-        console.log('open: ' + openTags)
-        console.log('changed open: ' + changedOpenTags)
-        console.log('close: ' + closeTags)
-        console.log('changed close: ' + changedCloseTags)
-        console.log(burnedText)
-        console.log('-----------------------')
     }
 }

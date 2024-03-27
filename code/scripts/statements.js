@@ -102,6 +102,12 @@ function stmt13(input) {
 }
 
 function stmt14(input) {
+    //if (typeof apiKey === 'undefined') {
+        return input.includes('Google')
+    //}
+}
+
+function stmt15(input) {
     var numbers = input.replace(/[^0-9]/g, ' ');
     let num = numbers.split(' ')
     for (let i = 0; i <= num.length; i++) {
@@ -117,7 +123,7 @@ function stmt14(input) {
     }
 }
 
-function stmt15(input) {
+function stmt16(input) {
     const move = chessPositions[board][2];
     //FALSEMOVES ARRAY IS DEFINED IN SCRIPT SO IT DOESN`T RESET ITSELF
     let possibleChessMoves = input.match(/[NBRQK]?[a-h]?[1-8]?[x-]?[a-h][1-8](\=[NBRQ])?(\+|\#)?/g)
@@ -179,7 +185,7 @@ function stmt15(input) {
     }
 }
 
-function stmt16(input) {
+function stmt17(input) {
     if (input.includes('🥚')) {
         greg = true;
         gregEmoji = '🥚'
@@ -189,7 +195,7 @@ function stmt16(input) {
 
 }
 
-function stmt17(input) {
+function stmt18(input) {
     var usedElements = []
     var sum = 0;
     const periodicTable = [
@@ -220,13 +226,13 @@ function stmt17(input) {
         sum += periodicTable.indexOf(usedElements[i]) + 1
     if (sum == 200) {
 
-        deleteHighlight(true, 17)
+        deleteHighlight(true, 18)
         return true
     }
-    highlight(usedElements, 17)
+    highlight(usedElements, 18)
 }
 
-function stmt18(input) {
+function stmt19(input) {
     const vowels = ['a', 'A', 'e', 'E', 'i', 'I', 'o', 'O', 'u', 'U', 'y', 'Y']
     var usedVowels = []
     vowels.forEach((elem) => {
@@ -276,19 +282,14 @@ function stmt18(input) {
     }
 
     if (areAllVowelsBolded() || usedVowels.length == 0) {
-        deleteHighlight(true, 18)
+        deleteHighlight(true, 19)
         return true
     }
-    highlight(usedVowels, 18)
+    highlight(usedVowels, 19)
 }
 
-function stmt19() {
+function stmt20() {
     startFire()
     if (fireOut) return true
 }
 
-function stmt20(input) {
-    if (typeof apiKey === 'undefined') {
-        return input.includes('Google')
-    }
-}
