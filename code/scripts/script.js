@@ -92,7 +92,7 @@ let ruleMatrix = [
     [18, 'The elements in your password must have atomic numbers that add up to 200.', 'stmt18(eingabeText)'],
     [19, 'All the vowels in your password must be bolded.', 'stmt19(eingabeText)', 'boldButton()'],
     [20, 'Oh no! Your password is on fire 🔥. Quick, put it out!', 'stmt20(eingabeText)'],
-    [21, 'Your password is not strong enough 🏋️‍♂️', 'stmt21(eingabeText)', 'measureStrength(ruleText)']
+    //[21, 'Your password is not strong enough 🏋️‍♂️', 'stmt21(eingabeText)', 'measureStrength(ruleText)']
 ]
 copy = () => {
     navigator.clipboard.writeText(eingabeText)
