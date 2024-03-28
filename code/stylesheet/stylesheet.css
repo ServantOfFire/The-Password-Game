@@ -11,6 +11,11 @@ button {
     background-color: white;
 }
 
+ul {
+    line-height: 150%;
+    margin-bottom: 0px;
+}
+
 #mainfeld {
     background-color: rgb(197, 190, 163);
     box-shadow: 10px 10px grey;

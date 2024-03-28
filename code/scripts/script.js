@@ -94,15 +94,15 @@ let ruleMatrix = [
     [18, 'The elements in your password must have atomic numbers that add up to 200.', 'stmt18(eingabeText)'],
     [19, 'All the vowels in your password must be bolded.', 'stmt19(eingabeText)', 'boldButton()'],
     [20, 'Oh no! Your password is on fire 🔥. Quick, put it out!', 'stmt20(eingabeText)'],
-    [21, 'Your password is not strong enough <span oncopy="standardCopy(`lifter`)">🏋️‍♂️</span>', 'stmt21(eingabeText)', 'measureStrength(ruleText)']
+    [21, 'Your password is not strong enough <span oncopy="standardCopy(`lifter`)">🏋️‍♂️</span>', 'stmt21(eingabeText)', 'measureStrength(ruleText)'],
+    [22, 'Your password must contain one of the following affirmations: <ul> <li>I am loved</li> <li>I am worthy</li> <li>I am enough</>', 'stmt22(eingabeText)']
 ]
 copy = () => {
     navigator.clipboard.writeText(eingabeText)
 }
 addAutoResize();
 
-document.addEventListener('input', () => { inputfield.dispatchEvent(update) })
-
+document.addEventListener('input', () => {inputfield.dispatchEvent(update)})
 let currentRuleIndex = 0;
 inputfield.addEventListener('update', (event) => {
     eingabeText = inputfield.innerText;

@@ -303,3 +303,7 @@ function stmt21(input) {
     }
     return input.match(/🏋️/g).length > 2
 }
+function stmt22(input) {
+    input = input.replaceAll(' ', '').toLowerCase()
+    return input.includes('iamloved') || input.includes('iamworthy') || input.includes('iamenough')
+}
