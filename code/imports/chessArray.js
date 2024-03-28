@@ -28,5 +28,5 @@ borderWhite.classList.add('chessBorders')
 let borderBlack = new Image()
 borderBlack.src = 'images/chess/borderBlack.png'
 borderBlack.classList.add('chessBorders')
-//const board = 16;
-const board = randomNumber(0, chessPositions.length)
+const board = randomNumber(0, chessPositions.length - 1)
+console.log(chessPositions.length)
