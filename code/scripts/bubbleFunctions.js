@@ -232,7 +232,18 @@ function bubble(number, text, statement, special) {
             a.innerHTML = `Rule 14 is not activated in the online version to prevent abuse of the owner's API key. \n Type "Google" in your password to pass this rule.`
             return
         }
-        a.innerHTML = apiKey
+        let map = document.createElement('div')
+        map.id = 'map'
+        let falseCountries = document.createElement('div')
+        falseCountries.id = 'falseCountries'
+        a.appendChild(falseCountries)
+        a.appendChild(map)
+        const apiScript = document.createElement('script')
+        apiScript.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=createStreetView&v=weekly`
+        apiScript.defer = true
+        setTimeout(() => {
+            document.querySelector('head').appendChild(apiScript)
+        }, 300);
     }
     function createChessBoard(a) {
         const wrapper = document.createElement('div')
@@ -314,7 +325,7 @@ function bubble(number, text, statement, special) {
         strengthBar.appendChild(yellow)
         strengthBar.appendChild(green)
         a.appendChild(strengthBar)
-
+        animateStrength()
         function animateStrength() {
             if (!inputfield.innerText.includes('🏋️')) {
                 orange.style.visibility = 'hidden'
@@ -330,21 +341,21 @@ function bubble(number, text, statement, special) {
                 orange.style.visibility = 'visible'
                 yellow.style.visibility = 'hidden'
                 green.style.visibility = 'hidden'
-                orange.style.width = '103.5px'
-                orange.style.left = '103.5px'
-                yellow.style.left = '103.5px'
-                green.style.left = '207px'
+                orange.style.width = '116.5px'
+                orange.style.left = '116.5px'
+                yellow.style.left = '116.5px'
+                green.style.left = '233px'
             }
             if (inputfield.innerText.match(/🏋️/g).length == 2) {
                 yellow.style.visibility = 'visible'
                 green.style.visibility = 'hidden'
-                yellow.style.left = '207px'
-                green.style.left = '207px'
+                yellow.style.left = '233px'
+                green.style.left = '233px'
             }
 
             if (inputfield.innerText.match(/🏋️/g).length > 2) {
                 green.style.visibility = 'visible'
-                green.style.left = '310.5px'
+                green.style.left = '349.5px'
             }
         }
 

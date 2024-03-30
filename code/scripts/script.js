@@ -11,7 +11,7 @@ let cLeft;
 main.style.height = height + 'px';
 let newOffsetheight = 55;
 let counter = document.getElementById('counter')
-const update = new Event('update')
+const updateInput = new Event('update')
 
 const buttonWrapper = document.createElement('div')
 buttonWrapper.id = 'buttonWrapper'
@@ -24,6 +24,10 @@ let falseBubbles = [];
 
 //RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_
 
+//highlighting
+let currentHNumber = 0;
+let highlightedStrings = []
+
 //sponsors
 const TheOwlClub = new Image()
 const Jimmy = new Image()
@@ -32,6 +36,7 @@ var checkmark = new Image();
 var error = new Image();
 setImages()
 let sponsors = [TheOwlClub, Jimmy, LEGO]
+
 
 //wordle
 let answer;
@@ -42,21 +47,22 @@ let moonPhase;
 getMoonPhase()
 let moonEmojis = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘']
 
+//geoguessr
+let usedCountries;
+
 //chess
 let falseMoves = [];
 
 //captcha
 var captchaSRC;
 
-//highlighting
-let currentHNumber = 0;
-let highlightedStrings = []
+
 
 //greg
 let greg;
-let gregEmoji = '';
-let gregRegExp = new RegExp(gregEmoji, 'g')
-let gregAlive = true
+let gregEmoji = '🥚';
+let gregRegExp;
+let firstTimeEgg = true
 
 //fire
 let fireStarted = false
@@ -71,6 +77,11 @@ let firstCharBefore;
 
 //strength
 let firstTimeStrength = true
+
+//evolvedGreg
+let firstTimeEvolving = true
+let alreadyEating = false
+let readyToEat = false
 //RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_
 
 let ruleMatrix = [
@@ -87,7 +98,7 @@ let ruleMatrix = [
     [11, 'Your password must include today’s Wordle answer.', 'stmt11(eingabeText)'],
     [12, 'Your password must include a two letter symbol from the periodic table.', 'stmt12(eingabeText)'],
     [13, 'Your password must include the current phase of the moon as an emoji.', 'stmt13(eingabeText)'],
-    [14, 'Your password must include the name of this country', 'stmt14(eingabeText)', 'checkForAPI(ruleText)'],
+    [14, 'Your password must include the name of this country.', 'stmt14(eingabeText)', 'checkForAPI(ruleText)'],
     [15, 'Your password must include a leap year.', 'stmt15(eingabeText)'],
     [16, 'Your password must include the best move in <a target="_blank" style="color: red;" href="https://en.wikipedia.org/wiki/Algebraic_notation_(chess)">algebraic chess notation</a>.', 'stmt16(eingabeText)', 'createChessBoard(ruleText)'],
     [17, '<span oncopy="standardCopy(`egg`)">🥚</span> This my chicken Greg. He hasn’t hatched yet. Please put him in your password and keep him safe.', 'stmt17(eingabeText)'],
@@ -95,18 +106,19 @@ let ruleMatrix = [
     [19, 'All the vowels in your password must be bolded.', 'stmt19(eingabeText)', 'boldButton()'],
     [20, 'Oh no! Your password is on fire 🔥. Quick, put it out!', 'stmt20(eingabeText)'],
     [21, 'Your password is not strong enough <span oncopy="standardCopy(`lifter`)">🏋️‍♂️</span>', 'stmt21(eingabeText)', 'measureStrength(ruleText)'],
-    [22, 'Your password must contain one of the following affirmations: <ul> <li>I am loved</li> <li>I am worthy</li> <li>I am enough</>', 'stmt22(eingabeText)']
+    [22, 'Your password must contain one of the following affirmations: <ul><li>I am loved</li><li>I am worthy</li><li>I am enough</li>', 'stmt22(eingabeText)'],
+    [23, `Paul has hatched! Please don't forget to feed him. He eats three <span oncopy="standardCopy('bug')">🐛</span> every minute.`, 'stmt23(eingabeText)'],
 ]
 copy = () => {
     navigator.clipboard.writeText(eingabeText)
 }
 addAutoResize();
 
-document.addEventListener('input', () => {inputfield.dispatchEvent(update)})
+document.addEventListener('input', () => { update() })
 let currentRuleIndex = 0;
 inputfield.addEventListener('update', (event) => {
     eingabeText = inputfield.innerText;
-    checkForGreg()
+    
     setTimeout(() => {
         for (let i = 0; i < currentRuleIndex; i++)
             bubble(ruleMatrix[i][0], ruleMatrix[i][1], ruleMatrix[i][2], ruleMatrix[i][3]);
@@ -119,6 +131,7 @@ inputfield.addEventListener('update', (event) => {
         moveIndex()
     }, 5);
     updateCounter()
+    checkForGreg()
 });
 
 function addAutoResize() {
@@ -177,7 +190,7 @@ function getCheats() {
         const keyPressed = event.key.toLowerCase();
         cheatsCommandBuffer += keyPressed;
         if (cheatsCommandBuffer.includes('cheats')) {
-            let cheatsArray = ['Wordle answer: ' + answer, 'MoonPhase: ' + moonEmojis[moonPhase], 'chessMove: ' + chessPositions[board][2]]
+            let cheatsArray = ['Wordle answer: ' + answer, 'MoonPhase: ' + moonEmojis[moonPhase], 'Country: ' + streetViewCoords[chosenLocation][2], 'chessMove: ' + chessPositions[board][2]]
             console.log(cheatsArray);
             cheatsCommandBuffer = '';
         }
@@ -195,8 +208,15 @@ standardCopy = (emoji) => {
         navigator.clipboard.writeText('🥚')
         return
     }
-    if(emoji == 'lifter'){
+    if (emoji == 'lifter') {
         navigator.clipboard.writeText('🏋️‍♂️')
         return
     }
+    if(emoji == 'bug'){
+        navigator.clipboard.writeText('🐛')
+        return
+    }
+}
+function update() {
+    inputfield.dispatchEvent(updateInput)
 }

@@ -108,6 +108,7 @@ function getMoonPhase() {
     }
     getLunarPhase()
 }
+
 function deathscreen(message) {
     inputfield.blur()
     let blackCenter = document.createElement('div')
@@ -126,9 +127,9 @@ function deathscreen(message) {
     return
 }
 function checkForGreg() {
-    if (greg && inputfield.innerHTML.match(gregRegExp) == null && gregAlive) {
+    if (greg && inputfield.innerHTML.match(gregRegExp) == null) {
         deathscreen('GREG HAS BEEN SLAIN')
-        gregAlive = false
+        greg = false
         inputfield.innerHTML = inputfield.innerHTML.replaceAll('\uD83E', '')
         inputfield.innerHTML = inputfield.innerHTML.replaceAll('\uDD5A', '')
         return
@@ -236,7 +237,7 @@ function startFire() {
         });
         insertTags()
         inputfield.innerHTML = burnedText
-        inputfield.dispatchEvent(update)
+        update()
         doRestore()
         checkForGreg()
         function burnToLeft(index, symbolArray) {
@@ -295,4 +296,27 @@ function startFire() {
             burnedText = burnedText.splice(changedCloseTags[i], '</b>')
         }
     }
+}
+function gregHatching() {
+    doSave()
+    inputfield.innerHTML = inputfield.innerHTML.replace('🥚', '🐔')
+    doRestore()
+}
+function gregEating() {
+    if (alreadyEating) return
+    alreadyEating = true
+    setInterval(() => {
+        if (inputfield.innerHTML.match(/🐛/g) == null) {
+            deathscreen('PAUL HAS STARVED')
+            inputfield.innerHTML = inputfield.innerHTML.replace('🐔', '')
+            return
+        }
+        if (inputfield.innerHTML.match(/🐛/g).length > 8) {
+            deathscreen('PAUL WAS OVERFED')
+            inputfield.innerHTML = inputfield.innerHTML.replace('🐔', '')
+            return
+        }
+        doSave()
+        inputfield.innerHTML = inputfield.innerHTML.replace('🐛', '')
+    }, 20000);
 }

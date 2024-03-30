@@ -102,9 +102,30 @@ function stmt13(input) {
 }
 
 function stmt14(input) {
-    //if (typeof apiKey === 'undefined') {
+    if (typeof apiKey === 'undefined') { //if google rule deactivated
         return input.includes('Google')
-    //}
+    }
+    input = input.toLowerCase().replaceAll(' ', '')
+    if (input.includes(streetViewCoords[chosenLocation][2]).toLowerCase) {
+        return true
+    }
+    document.getElementById('falseCountries').innerHTML = ''
+    if (usedCountries) {
+        height -= 42 * usedCountries.length
+        main.style.height = height + 'px'
+    }
+
+
+    usedCountries = allCountries.filter(function (element) {
+        return input.includes(element.toLowerCase())
+    })
+    usedCountries.forEach(function (element) {
+        let wrongCountry = document.createElement('p')
+        wrongCountry.innerHTML = `${error.outerHTML}${element}`
+        document.getElementById('falseCountries').appendChild(wrongCountry)
+        height += 42
+        main.style.height = height + 'px'
+    })
 }
 
 function stmt15(input) {
@@ -186,13 +207,14 @@ function stmt16(input) {
 }
 
 function stmt17(input) {
-    if (input.includes('🥚')) {
-        greg = true;
-        gregEmoji = '🥚'
-        gregRegExp = new RegExp(gregEmoji, 'g')
-        return true
+    if (input.includes(gregEmoji)) {
+        if (firstTimeEgg) {
+            firstTimeEgg = false
+            greg = true;
+            gregRegExp = new RegExp(gregEmoji, 'g')
+        }
     }
-
+    if (greg) return true
 }
 
 function stmt18(input) {
@@ -294,16 +316,29 @@ function stmt20() {
 }
 
 function stmt21(input) {
-    if(!input.includes('🏋️')) return
-    if(firstTimeStrength && input.match(/🏋️/g).length > 2){
+    if (!input.includes('🏋️')) return
+    if (firstTimeStrength && input.match(/🏋️/g).length > 2) {
         setTimeout(() => {
             firstTimeStrength = false
             return true
         }, 1000)
-    }
-    return input.match(/🏋️/g).length > 2
+    } else { return input.match(/🏋️/g).length > 2 }
+    update()
 }
 function stmt22(input) {
     input = input.replaceAll(' ', '').toLowerCase()
     return input.includes('iamloved') || input.includes('iamworthy') || input.includes('iamenough')
+}
+
+function stmt23(input) {
+    if(firstTimeEvolving && !alreadyEating){
+        firstTimeEvolving = false
+        gregEmoji = '🐔'
+        gregRegExp = new RegExp(gregEmoji, 'g')
+        gregHatching()
+    }
+    if (input.includes('🐛')) {
+        gregEating()
+        return true
+    }
 }
