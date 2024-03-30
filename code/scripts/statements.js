@@ -106,7 +106,7 @@ function stmt14(input) {
         return input.includes('Google')
     }
     input = input.toLowerCase().replaceAll(' ', '')
-    if (input.includes(streetViewCoords[chosenLocation][2]).toLowerCase) {
+    if (input.includes(streetViewCoords[chosenLocation][2].toLowerCase())) {
         return true
     }
     document.getElementById('falseCountries').innerHTML = ''
