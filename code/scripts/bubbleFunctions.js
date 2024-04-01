@@ -360,6 +360,15 @@ function bubble(number, text, statement, special) {
         }
 
     }
+    function embedYouTubeVideo(a) {
+        let script = document.createElement('script')
+        script.src = 'https://apis.google.com/js/api.js'
+        let iframe = document.createElement('iframe')
+        iframe.width = '0px'
+        iframe.height = '0px'
+        document.querySelector('head').appendChild(script)
+        a.appendChild(iframe)
+    }
 }
 function changeMainElemHeight(reduce) {
     //reduce true => smaller; reduce false => bigger

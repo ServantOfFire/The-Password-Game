@@ -56,8 +56,6 @@ let falseMoves = [];
 //captcha
 var captchaSRC;
 
-
-
 //greg
 let greg;
 let gregEmoji = '🥚';
@@ -82,6 +80,15 @@ let firstTimeStrength = true
 let firstTimeEvolving = true
 let alreadyEating = false
 let readyToEat = false
+
+//youtube 
+let minutes = randomNumber(2, 25)
+let seconds = randomNumber(1, 59)
+var googleApiKey = "AIzaSyBvfLlx76qK2n3gDGJMC-wufrqV6xGYMC0"
+let time;
+let firstTimeYouTube = true
+var workingLink = ' ';
+var canUpdate;
 //RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_
 
 let ruleMatrix = [
@@ -107,7 +114,8 @@ let ruleMatrix = [
     [20, 'Oh no! Your password is on fire 🔥. Quick, put it out!', 'stmt20(eingabeText)'],
     [21, 'Your password is not strong enough <span oncopy="standardCopy(`lifter`)">🏋️‍♂️</span>', 'stmt21(eingabeText)', 'measureStrength(ruleText)'],
     [22, 'Your password must contain one of the following affirmations: <ul><li>I am loved</li><li>I am worthy</li><li>I am enough</li>', 'stmt22(eingabeText)'],
-    [23, `Paul has hatched! Please don't forget to feed him. He eats three <span oncopy="standardCopy('bug')">🐛</span> every minute.`, 'stmt23(eingabeText)'],
+    [23, `Greg has hatched! Please don't forget to feed him. He eats three <span oncopy="standardCopy('bug')">🐛</span> every minute.`, 'stmt23(eingabeText)'],
+    [24, `Your password must include the URL of a ${minutes} minute ${seconds} second long YouTube video.`, 'stmt24(eingabeText)', 'embedYouTubeVideo(ruleText)'],
 ]
 copy = () => {
     navigator.clipboard.writeText(eingabeText)

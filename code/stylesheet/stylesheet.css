@@ -339,3 +339,9 @@ ul {
 .gm-style a[href^="https://maps.google.com/maps"] {
     display: none !important;
 }
+
+iframe {
+    border: none;
+    border-radius: 15px;
+    margin-top: 15px;
+}

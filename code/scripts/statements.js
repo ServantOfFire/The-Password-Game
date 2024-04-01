@@ -331,7 +331,7 @@ function stmt22(input) {
 }
 
 function stmt23(input) {
-    if(firstTimeEvolving && !alreadyEating){
+    if (firstTimeEvolving && !alreadyEating) {
         firstTimeEvolving = false
         gregEmoji = '🐔'
         gregRegExp = new RegExp(gregEmoji, 'g')
@@ -341,4 +341,36 @@ function stmt23(input) {
         gregEating()
         return true
     }
+}
+
+function stmt24(input) {
+    let iframe = document.querySelector('iframe');
+    if (!input.includes('youtube.com/watch?v=')) {
+        iframe.src = ''
+        if (iframe.width != '0px') {
+            iframe.width = '0px'
+            iframe.height = '0px'
+            height -= 273
+            main.style.height = height + 'px'
+        }
+        return false
+    }
+
+    if (input.includes(workingLink) && workingLink != '') return true
+    let indexOfLink = inputfield.innerText.indexOf('youtube.com/watch?v=')
+    let videoId = inputfield.innerText.slice(indexOfLink + 20, indexOfLink + 31)
+    if (workingLink == videoId) {
+        return true
+    }
+    if (iframe.height == '0px') {
+        iframe.width = '468px'
+        iframe.height = '263px'
+        height += 273
+        main.style.height = height + 'px'
+    }
+    iframe.src = `https://www.youtube.com/embed/${videoId}`
+    if (workingLink != videoId) {
+        getVideoDuration(videoId)
+    }
+    return workingLink === videoId
 }

@@ -307,16 +307,36 @@ function gregEating() {
     alreadyEating = true
     setInterval(() => {
         if (inputfield.innerHTML.match(/🐛/g) == null) {
-            deathscreen('PAUL HAS STARVED')
+            deathscreen('GREG HAS STARVED')
             inputfield.innerHTML = inputfield.innerHTML.replace('🐔', '')
             return
         }
         if (inputfield.innerHTML.match(/🐛/g).length > 8) {
-            deathscreen('PAUL WAS OVERFED')
+            deathscreen('GREG WAS OVERFED')
             inputfield.innerHTML = inputfield.innerHTML.replace('🐔', '')
             return
         }
         doSave()
         inputfield.innerHTML = inputfield.innerHTML.replace('🐛', '')
     }, 20000);
+}
+async function getVideoDuration(videoId) {
+    var response = await fetch("https://www.googleapis.com/youtube/v3/videos?id=" + videoId + "&part=contentDetails&key=" + googleApiKey);
+    var result = await response.json();
+    if (result) {
+        var item = result.items[0];
+        var duration = item?.contentDetails?.duration;
+        if (duration == `PT${minutes}M${seconds}S`) {
+            workingLink = videoId
+            setTimeout(() => {
+                update()
+            }, 500);
+            return
+        } else {
+            workingLink = ' '
+            return
+        }
+    }
+    workingLink = ' '
+    return false
 }
