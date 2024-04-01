@@ -129,6 +129,7 @@ function deathscreen(message) {
 function checkForGreg() {
     if (greg && inputfield.innerHTML.match(gregRegExp) == null) {
         deathscreen('GREG HAS BEEN SLAIN')
+        clearInterval(intervalEating)
         greg = false
         inputfield.innerHTML = inputfield.innerHTML.replaceAll('\uD83E', '')
         inputfield.innerHTML = inputfield.innerHTML.replaceAll('\uDD5A', '')
@@ -305,14 +306,16 @@ function gregHatching() {
 function gregEating() {
     if (alreadyEating) return
     alreadyEating = true
-    setInterval(() => {
+    intervalEating = setInterval(() => {
         if (inputfield.innerHTML.match(/🐛/g) == null) {
             deathscreen('GREG HAS STARVED')
+            clearInterval(intervalEating)
             inputfield.innerHTML = inputfield.innerHTML.replace('🐔', '')
             return
         }
         if (inputfield.innerHTML.match(/🐛/g).length > 8) {
             deathscreen('GREG WAS OVERFED')
+            clearInterval(intervalEating)
             inputfield.innerHTML = inputfield.innerHTML.replace('🐔', '')
             return
         }
