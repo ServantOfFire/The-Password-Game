@@ -83,8 +83,7 @@ let readyToEat = false
 let intervalEating;
 //youtube 
 let minutes = randomNumber(2, 25)
-let seconds = randomNumber(1, 59)
-var googleApiKey = "AIzaSyBvfLlx76qK2n3gDGJMC-wufrqV6xGYMC0"
+let seconds = randomNumber(2, 58)
 let time;
 let firstTimeYouTube = true
 var workingLink = ' ';
@@ -92,29 +91,29 @@ var canUpdate;
 //RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_
 
 let ruleMatrix = [
-    [1, 'Your password must be at least 5 characters.', 'stmt1(eingabeText)'],
-    [2, 'Your password must include a number.', 'stmt2(eingabeText)'],
-    [3, 'Your password must include an uppercase letter.', 'stmt3(eingabeText)'],
-    [4, 'Your password must include a special character.', 'stmt4(eingabeText)'],
-    [5, 'The digits in your password must add up to 25.', 'stmt5(eingabeText)'],
-    [6, 'Your password must include a month of the year.', 'stmt6(eingabeText)'],
-    [7, 'Your password must include a roman numeral.', 'stmt7(eingabeText)'],
-    [8, 'Your password must include one of my sponsors: ', 'stmt8(eingabeText)', 'addSponsors(ruleText)'],
-    [9, 'The roman numerals in your password should multiply to 35.', 'stmt9(eingabeText)'],
-    [10, 'Your password must include this CAPTCHA:', 'stmt10(eingabeText)', 'createCaptcha(ruleText)'],
-    [11, 'Your password must include today’s Wordle answer.', 'stmt11(eingabeText)'],
-    [12, 'Your password must include a two letter symbol from the periodic table.', 'stmt12(eingabeText)'],
-    [13, 'Your password must include the current phase of the moon as an emoji.', 'stmt13(eingabeText)'],
-    [14, 'Your password must include the name of this country.', 'stmt14(eingabeText)', 'checkForAPI(ruleText)'],
-    [15, 'Your password must include a leap year.', 'stmt15(eingabeText)'],
-    [16, 'Your password must include the best move in <a target="_blank" style="color: red;" href="https://en.wikipedia.org/wiki/Algebraic_notation_(chess)">algebraic chess notation</a>.', 'stmt16(eingabeText)', 'createChessBoard(ruleText)'],
-    [17, '<span oncopy="standardCopy(`egg`)">🥚</span> This my chicken Greg. He hasn’t hatched yet. Please put him in your password and keep him safe.', 'stmt17(eingabeText)'],
-    [18, 'The elements in your password must have atomic numbers that add up to 200.', 'stmt18(eingabeText)'],
-    [19, 'All the vowels in your password must be bolded.', 'stmt19(eingabeText)', 'boldButton()'],
-    [20, 'Oh no! Your password is on fire 🔥. Quick, put it out!', 'stmt20(eingabeText)'],
-    [21, 'Your password is not strong enough <span oncopy="standardCopy(`lifter`)">🏋️‍♂️</span>', 'stmt21(eingabeText)', 'measureStrength(ruleText)'],
-    [22, 'Your password must contain one of the following affirmations: <ul><li>I am loved</li><li>I am worthy</li><li>I am enough</li>', 'stmt22(eingabeText)'],
-    [23, `Greg has hatched! Please don't forget to feed him. He eats three <span oncopy="standardCopy('bug')">🐛</span> every minute.`, 'stmt23(eingabeText)'],
+    // [1, 'Your password must be at least 5 characters.', 'stmt1(eingabeText)'],
+    // [2, 'Your password must include a number.', 'stmt2(eingabeText)'],
+    // [3, 'Your password must include an uppercase letter.', 'stmt3(eingabeText)'],
+    // [4, 'Your password must include a special character.', 'stmt4(eingabeText)'],
+    // [5, 'The digits in your password must add up to 25.', 'stmt5(eingabeText)'],
+    // [6, 'Your password must include a month of the year.', 'stmt6(eingabeText)'],
+    // [7, 'Your password must include a roman numeral.', 'stmt7(eingabeText)'],
+    // [8, 'Your password must include one of my sponsors: ', 'stmt8(eingabeText)', 'addSponsors(ruleText)'],
+    // [9, 'The roman numerals in your password should multiply to 35.', 'stmt9(eingabeText)'],
+    // [10, 'Your password must include this CAPTCHA:', 'stmt10(eingabeText)', 'createCaptcha(ruleText)'],
+    // [11, 'Your password must include today’s Wordle answer.', 'stmt11(eingabeText)'],
+    // [12, 'Your password must include a two letter symbol from the periodic table.', 'stmt12(eingabeText)'],
+    // [13, 'Your password must include the current phase of the moon as an emoji.', 'stmt13(eingabeText)'],
+    // [14, 'Your password must include the name of this country.', 'stmt14(eingabeText)', 'checkForAPI(ruleText)'],
+    // [15, 'Your password must include a leap year.', 'stmt15(eingabeText)'],
+    // [16, 'Your password must include the best move in <a target="_blank" style="color: red;" href="https://en.wikipedia.org/wiki/Algebraic_notation_(chess)">algebraic chess notation</a>.', 'stmt16(eingabeText)', 'createChessBoard(ruleText)'],
+    // [17, '<span oncopy="standardCopy(`egg`)">🥚</span> This my chicken Greg. He hasn’t hatched yet. Please put him in your password and keep him safe.', 'stmt17(eingabeText)'],
+    // [18, 'The elements in your password must have atomic numbers that add up to 200.', 'stmt18(eingabeText)'],
+    // [19, 'All the vowels in your password must be bolded.', 'stmt19(eingabeText)', 'boldButton()'],
+    // [20, 'Oh no! Your password is on fire 🔥. Quick, put it out!', 'stmt20(eingabeText)'],
+    // [21, 'Your password is not strong enough <span oncopy="standardCopy(`lifter`)">🏋️‍♂️</span>', 'stmt21(eingabeText)', 'measureStrength(ruleText)'],
+    // [22, 'Your password must contain one of the following affirmations: <ul><li>I am loved</li><li>I am worthy</li><li>I am enough</li>', 'stmt22(eingabeText)'],
+    // [23, `Greg has hatched! Please don't forget to feed him. He eats three <span oncopy="standardCopy('bug')">🐛</span> every minute.`, 'stmt23(eingabeText)'],
     [24, `Your password must include the URL of a ${minutes} minute ${seconds} second long YouTube video.`, 'stmt24(eingabeText)', 'embedYouTubeVideo(ruleText)'],
 ]
 copy = () => {
@@ -223,6 +222,9 @@ standardCopy = (emoji) => {
     if(emoji == 'bug'){
         navigator.clipboard.writeText('🐛')
         return
+    }
+    if(emoji == 'url'){
+        navigator.clipboard.writeText('https://www.youtube.com/watch?v=H10xp3u5AxE')
     }
 }
 function update() {

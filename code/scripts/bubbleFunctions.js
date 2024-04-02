@@ -361,6 +361,11 @@ function bubble(number, text, statement, special) {
 
     }
     function embedYouTubeVideo(a) {
+        if (typeof YouTubeApiKey === 'undefined'){
+            a.style.userSelect = 'text'
+            a.style.lineHeight = '120%'
+            a.innerHTML = `Rule 24 is not activated in the online version to prevent abuse of the owner's API key. \n Copy this YouTube URL <span oncopy="standardCopy('url')" style="text-decoration: underline">https://www.youtube.com/watch?v=H10xp3u5AxE</span> in your password to pass this rule.`
+        }
         let script = document.createElement('script')
         script.src = 'https://apis.google.com/js/api.js'
         let iframe = document.createElement('iframe')

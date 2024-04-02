@@ -257,7 +257,6 @@ function startFire() {
     }, 1000);
 
     function insertTags() {
-
         openTags.forEach(function (element, index) {
             let slicedText = burnedText.slice(0, element - (index * 3 + index * 4))
             let numberOfFire = slicedText.split('').filter(item => item === '\uD83D').length;
@@ -324,22 +323,28 @@ function gregEating() {
     }, 20000);
 }
 async function getVideoDuration(videoId) {
-    var response = await fetch("https://www.googleapis.com/youtube/v3/videos?id=" + videoId + "&part=contentDetails&key=" + googleApiKey);
-    var result = await response.json();
-    if (result) {
-        var item = result.items[0];
-        var duration = item?.contentDetails?.duration;
-        if (duration == `PT${minutes}M${seconds}S`) {
-            workingLink = videoId
-            setTimeout(() => {
-                update()
-            }, 500);
-            return
-        } else {
-            workingLink = ' '
-            return
+    if (typeof YouTubeApiKey == 'undefined' && inputfield.innerText.includes('https://www.youtube.com/watch?v=H10xp3u5AxE')) {
+        workingLink = videoId
+        return
+    } else if (typeof YouTubeApiKey != 'undefined'){
+        var response = await fetch("https://www.googleapis.com/youtube/v3/videos?id=" + videoId + "&part=contentDetails&key=" + YouTubeApiKey);
+        var result = await response.json();
+        if (result) {
+            var item = result.items[0];
+            var duration = item?.contentDetails?.duration
+            if (duration == `PT${minutes}M${seconds}S` || duration == `PT${minutes}M${seconds - 1}S`|| duration == `PT${minutes}M${seconds + 1}S`) {
+                workingLink = videoId
+                setTimeout(() => {
+                    update()
+                }, 500);
+                return
+            } else {
+                workingLink = ' '
+                return
+            }
         }
+        workingLink = ' '
+        return false
     }
-    workingLink = ' '
-    return false
+
 }
