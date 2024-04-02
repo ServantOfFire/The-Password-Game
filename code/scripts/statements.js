@@ -103,7 +103,7 @@ function stmt13(input) {
 
 function stmt14(input) {
     if (typeof apiKey === 'undefined') { //if google rule deactivated
-        return input.includes('Google')
+        return input.includes('Netherlands')
     }
     input = input.toLowerCase().replaceAll(' ', '')
     if (input.includes(streetViewCoords[chosenLocation][2].toLowerCase())) {
