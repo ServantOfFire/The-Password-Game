@@ -229,7 +229,7 @@ function bubble(number, text, statement, special) {
     }
     function checkForAPI(a) {
         if (typeof apiKey === 'undefined') {
-            a.innerHTML = `Rule 14 is not activated in the online version to prevent abuse of the owner's API key. \n Type "Netherlands" in your password to pass this rule.`
+            a.innerHTML = `Rule 14 is not activated in the online version to prevent abuse of the owner's API key. \n Type "${chosenLocation[2]}" in your password to pass this rule.`
             return
         }
         let map = document.createElement('div')
@@ -361,7 +361,7 @@ function bubble(number, text, statement, special) {
 
     }
     function embedYouTubeVideo(a) {
-        if (typeof YouTubeApiKey === 'undefined'){
+        if (typeof YouTubeApiKey === 'undefined') {
             a.style.userSelect = 'text'
             a.style.lineHeight = '120%'
             a.innerHTML = `Rule 24 is not activated in the online version to prevent abuse of the owner's API key. \n Copy this YouTube URL <span oncopy="standardCopy('url')" style="text-decoration: underline">https://www.youtube.com/watch?v=H10xp3u5AxE</span> in your password to pass this rule.`
@@ -373,6 +373,58 @@ function bubble(number, text, statement, special) {
         iframe.height = '0px'
         document.querySelector('head').appendChild(script)
         a.appendChild(iframe)
+    }
+    function proposeSacrifices(a) {
+        a.innerHTML += '<br>'
+        const alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+        const letterDIV = document.createElement('div')
+        letterDIV.id = 'letterDIV'
+        alphabet.forEach((elem) => {
+            let letterButton = document.createElement('button')
+            letterButton.classList.add('letterButtons')
+            letterButton.classList.add('letterButtonsHOVER')
+            letterButton.innerText = elem
+            letterDIV.appendChild(letterButton)
+            letterButton.onclick = () => {
+                toggleActiveClass(letterButton)
+            }
+        })
+        let sacrificeButton = document.createElement('button')
+        sacrificeButton.classList.add('sacrificeButton')
+        sacrificeButton.innerHTML = `${sacrificeFire.outerHTML} Sacrifice`
+        letterDIV.appendChild(sacrificeButton)
+        a.appendChild(letterDIV)
+
+        function toggleActiveClass(element) {
+            if ((sacrificedLetters.length > 1 && sacrificedLetters.indexOf(element.innerText) == -1) || sacrificed) return
+            element.classList.toggle('activeButton')
+            if (sacrificedLetters.indexOf(element.innerText) == -1) {
+                sacrificedLetters.push(element.innerText)
+                if (sacrificedLetters.length == 2) {
+                    sacrificeButton.id = 'sacrificeButtonReady'
+                    sacrificeButton.onclick = () => {
+                        sacrificeLetters()
+                    }
+                }
+                return
+            }
+            sacrificeButton.id = ''
+            sacrificeButton.onclick = () => { }
+            sacrificedLetters.splice(sacrificedLetters.indexOf(element.innerText), 1)
+        }
+        function sacrificeLetters() {
+            //make buttons non-interactible
+            sacrificeButton.onclick = () => {}
+            sacrificeButton.id = ''
+            document.querySelectorAll('.letterButtons').forEach((elem) => { elem.onclick = () => { }; elem.classList.remove('letterButtonsHOVER') })
+            document.querySelectorAll('.letterButtons.activeButton').forEach((elem) => { elem.classList.add('sacrificedLetter') })
+            sacrificed = true
+            sacrificedLetters.push(sacrificedLetters[0].toLowerCase())
+            sacrificedLetters.push(sacrificedLetters[1].toLowerCase())
+            setTimeout(() => {
+                update()
+            }, 2000);
+        }
     }
 }
 function changeMainElemHeight(reduce) {

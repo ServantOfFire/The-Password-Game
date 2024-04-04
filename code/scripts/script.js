@@ -1,5 +1,3 @@
-clearConsole()
-getCheats()
 //GLOBAL_VARIABLES_GLOBAL_VARIABLES_GLOBAL_VARIABLES_GLOBAL_VARIABLES_GLOBAL_VARIABLES_GLOBAL_VARIABLES
 const inputfield = document.getElementById("inputfield")
 var eingabeText;
@@ -28,12 +26,13 @@ let falseBubbles = [];
 let currentHNumber = 0;
 let highlightedStrings = []
 
-//sponsors
+//sponsors and icons
 const TheOwlClub = new Image()
 const Jimmy = new Image()
 const LEGO = new Image()
 var checkmark = new Image();
 var error = new Image();
+var sacrificeFire = new Image()
 setImages()
 let sponsors = [TheOwlClub, Jimmy, LEGO]
 
@@ -81,14 +80,22 @@ let firstTimeEvolving = true
 let alreadyEating = false
 let readyToEat = false
 let intervalEating;
+
 //youtube 
-let minutes = randomNumber(2, 25)
+let minutes = randomNumber(2, 26)
 let seconds = randomNumber(2, 58)
 let time;
 let firstTimeYouTube = true
 var workingLink = ' ';
-var canUpdate;
+
+//sacrifice
+let sacrificedLetters = [];
+let sacrificed = false;
+
 //RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_
+
+clearConsole()
+getCheats()
 
 let ruleMatrix = [
     [1, 'Your password must be at least 5 characters.', 'stmt1(eingabeText)'],
@@ -112,9 +119,10 @@ let ruleMatrix = [
     [19, 'All the vowels in your password must be bolded.', 'stmt19(eingabeText)', 'boldButton()'],
     [20, 'Oh no! Your password is on fire 🔥. Quick, put it out!', 'stmt20(eingabeText)'],
     [21, 'Your password is not strong enough <span oncopy="standardCopy(`lifter`)">🏋️‍♂️</span>', 'stmt21(eingabeText)', 'measureStrength(ruleText)'],
-    [22, 'Your password must contain one of the following affirmations: <ul><li>I am loved</li><li>I am worthy</li><li>I am enough</li>', 'stmt22(eingabeText)'],
+    [22, 'Your password must contain one of the following affirmations: <ul><li>I am loved</li><li>I am worthy</li><li>I am enough</li></ul>', 'stmt22(eingabeText)'],
     [23, `Greg has hatched! Please don't forget to feed him. He eats three <span oncopy="standardCopy('bug')">🐛</span> every minute.`, 'stmt23(eingabeText)'],
     [24, `Your password must include the URL of a ${minutes} minute ${seconds} second long YouTube video.`, 'stmt24(eingabeText)', 'embedYouTubeVideo(ruleText)'],
+    [25, 'A sacrifice must be made. Pick two letters that you will no longer be able to use.', 'stmt25(eingabeText)', 'proposeSacrifices(ruleText)'],
 ]
 copy = () => {
     navigator.clipboard.writeText(eingabeText)
@@ -160,11 +168,13 @@ function setImages() {
     LEGO.src = "images/sponsors/LEGO.png"
     checkmark.src = "images/icons/checkmark.svg"
     error.src = "images/icons/error.svg"
+    sacrificeFire.src = "images/icons/fire.svg"
     TheOwlClub.classList.add('sponsor')
     Jimmy.classList.add('sponsor')
     LEGO.classList.add('sponsor')
     checkmark.classList.add('pictogram')
     error.classList.add('pictogram')
+    sacrificeFire.classList.add('pictogram')
 }
 
 /**

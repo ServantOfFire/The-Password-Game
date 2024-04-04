@@ -103,7 +103,7 @@ function stmt13(input) {
 
 function stmt14(input) {
     if (typeof apiKey === 'undefined') { //if google rule deactivated
-        return input.includes('Netherlands')
+        return input.toLowerCase().includes(chosenLocation[2])
     }
     input = input.toLowerCase().replaceAll(' ', '')
     if (input.includes(streetViewCoords[chosenLocation][2].toLowerCase())) {
@@ -373,4 +373,14 @@ function stmt24(input) {
         getVideoDuration(videoId)
     }
     return workingLink === videoId
+}
+function stmt25(input) {
+    if (sacrificed) {
+        let regEx = new RegExp(sacrificedLetters.join("|"), 'g');
+        if (input.match(regEx) == null){
+            deleteHighlight(true, 25)
+            return true
+        }
+        highlight(sacrificedLetters, 25)
+    }
 }
