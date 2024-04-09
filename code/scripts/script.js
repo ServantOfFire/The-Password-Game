@@ -123,6 +123,7 @@ let ruleMatrix = [
     [23, `Greg has hatched! Please don't forget to feed him. He eats three <span oncopy="standardCopy('bug')">🐛</span> every minute.`, 'stmt23(eingabeText)'],
     [24, `Your password must include the URL of a ${minutes} minute ${seconds} second long YouTube video.`, 'stmt24(eingabeText)', 'embedYouTubeVideo(ruleText)'],
     [25, 'A sacrifice must be made. Pick two letters that you will no longer be able to use.', 'stmt25(eingabeText)', 'proposeSacrifices(ruleText)'],
+    // [26, 'Your password must contain twice as many italic characters as bold.', 'stmt26(eingabeText)', 'italicButton(ruleText)'],
 ]
 copy = () => {
     navigator.clipboard.writeText(eingabeText)

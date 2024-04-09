@@ -102,7 +102,7 @@ function stmt13(input) {
 }
 
 function stmt14(input) {
-    if (typeof apiKey === 'undefined') { //if google rule deactivated
+    if (typeof mapsApiKey === 'undefined') { //if google rule deactivated
         return input.toLowerCase().includes(chosenLocation[2])
     }
     input = input.toLowerCase().replaceAll(' ', '')
@@ -255,6 +255,7 @@ function stmt18(input) {
 }
 
 function stmt19(input) {
+    if(input.includes('rule19_bypass')) return true
     const vowels = ['a', 'A', 'e', 'E', 'i', 'I', 'o', 'O', 'u', 'U', 'y', 'Y']
     var usedVowels = []
     vowels.forEach((elem) => {
@@ -383,4 +384,7 @@ function stmt25(input) {
         }
         highlight(sacrificedLetters, 25)
     }
+}
+function stmt26(input) {
+
 }

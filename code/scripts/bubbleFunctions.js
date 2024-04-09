@@ -171,6 +171,7 @@ function bubble(number, text, statement, special) {
         if (oldPosition !== falseIndexOfRule)
             moveElement(ruleId, falseIndexOfRule)
     }
+
     function assignTrue(a, b, c) {
         a.classList.add('trueName')
         b.classList.add('trueText')
@@ -202,6 +203,8 @@ function bubble(number, text, statement, special) {
         });
         oldPosition = children.indexOf(ruleId)
     }
+
+    // a is the ruleText element in all following functions
     function addSponsors(a) {
         let sponsorsP = document.createElement('p')
         sponsorsP.id = 'sponsorsP'
@@ -228,7 +231,7 @@ function bubble(number, text, statement, special) {
         main.style.height = height + 'px'
     }
     function checkForAPI(a) {
-        if (typeof apiKey === 'undefined') {
+        if (typeof mapsApiKey === 'undefined') {
             a.innerHTML = `Rule 14 is not activated in the online version to prevent abuse of the owner's API key. \n Type "${chosenLocation[2]}" in your password to pass this rule.`
             return
         }
@@ -239,7 +242,7 @@ function bubble(number, text, statement, special) {
         a.appendChild(falseCountries)
         a.appendChild(map)
         const apiScript = document.createElement('script')
-        apiScript.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=createStreetView&v=weekly`
+        apiScript.src = `https://maps.googleapis.com/maps/api/js?key=${mapsApiKey}&callback=createStreetView&v=weekly`
         apiScript.defer = true
         setTimeout(() => {
             document.querySelector('head').appendChild(apiScript)
@@ -275,6 +278,7 @@ function bubble(number, text, statement, special) {
         boldButton.innerText = 'Bold'
         boldButton.type = 'button'
         boldButton.id = 'boldButton'
+        boldButton.classList.add('stylingButtons')
         buttonWrapper.appendChild(boldButton)
         setTimeout(function () {
             buttonWrapper.style.marginTop = '-5px'
@@ -290,6 +294,7 @@ function bubble(number, text, statement, special) {
             modifyText('bold', false, null);
             isBold()
             highlight(highlightedStrings, currentHNumber)
+            update()
         });
 
         let neededEvents = 'mouseup input click'.split(' ')
@@ -300,7 +305,7 @@ function bubble(number, text, statement, special) {
                 deleteHighlight()
                 isBold()
                 highlight(highlightedStrings, currentHNumber)
-            }, 1)
+            }, 11)
         }
     }
     function measureStrength(a) {
@@ -414,7 +419,7 @@ function bubble(number, text, statement, special) {
         }
         function sacrificeLetters() {
             //make buttons non-interactible
-            sacrificeButton.onclick = () => {}
+            sacrificeButton.onclick = () => { }
             sacrificeButton.id = ''
             document.querySelectorAll('.letterButtons').forEach((elem) => { elem.onclick = () => { }; elem.classList.remove('letterButtonsHOVER') })
             document.querySelectorAll('.letterButtons.activeButton').forEach((elem) => { elem.classList.add('sacrificedLetter') })
@@ -424,6 +429,33 @@ function bubble(number, text, statement, special) {
             setTimeout(() => {
                 update()
             }, 2000);
+        }
+    }
+    function italicButton(a) {
+        //buttonWrapper-div already defined in script as global variable
+        const italicButton = document.createElement('button')
+        italicButton.innerText = 'Italic'
+        italicButton.type = 'button'
+        italicButton.id = 'italicButton'
+        italicButton.classList.add('stylingButtons')
+        document.getElementById('boldButton').style.left = '-187px'
+        buttonWrapper.appendChild(italicButton)
+        italicButton.addEventListener("click", () => { //making text italic
+            deleteHighlight()
+            modifyText('italic', false, null);
+            isItalic()
+            highlight(highlightedStrings, currentHNumber)
+            update()
+        });
+
+        let neededEvents = 'mouseup input click'.split(' ')
+        neededEvents.forEach(event => document.getElementById('inputWrapper').addEventListener(event, buttonActiveColor))
+        function buttonActiveColor() {
+            timer = setTimeout(() => {
+                deleteHighlight()
+                isItalic()
+                highlight(highlightedStrings, currentHNumber)
+            }, 11)
         }
     }
 }

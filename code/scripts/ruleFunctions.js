@@ -68,35 +68,35 @@ function getMoonPhase() {
     }
     const getLunarPhase = (date = new Date()) => {
         const age = getLunarAge(date);
-        if (age < 1.84566) {
+        if (age <= 1) {
             //        moonPhase = "New";
             moonPhase = 0
             return moonPhase
-        } else if (age < 5.53699) {
+        } else if (age <= 6.38264692644001) {
             //        moonPhase = "Waxing Crescent";
             moonPhase = 1
             return moonPhase
-        } else if (age < 9.22831) {
+        } else if (age < 8.38264692644) {
             //        moonPhase = "First Quarter";
             moonPhase = 2
             return moonPhase
-        } else if (age < 12.91963) {
+        } else if (age < 13.76529385288) {
             //        moonPhase = "Waxing Gibbous";
             moonPhase = 3
             return moonPhase
-        } else if (age < 16.61096) {
+        } else if (age < 15.76529385288) {
             //        moonPhase = "Full";
             moonPhase = 4
             return moonPhase
-        } else if (age < 20.30228) {
+        } else if (age < 21.14794077932) {
             //        moonPhase = "Waning Gibbous";
             moonPhase = 5
             return moonPhase
-        } else if (age < 23.99361) {
+        } else if (age < 23.14794077932) {
             //        moonPhase = "Last Quarter";
             moonPhase = 6
             return moonPhase
-        } else if (age < 27.68493) {
+        } else if (age < 28.53058770576) {
             //        moonPhase = "Waning Crescent";
             moonPhase = 7
             return moonPhase
@@ -208,7 +208,7 @@ function startFire() {
     fireStarted = true
     saveTagPositions(inputfield.innerHTML, 'b')
     doSave()
-    burnedText = inputfield.innerText.replaceAt(15, '🔥')//(randomNumber(1, inputfield.innerText.length - 1), '🔥')
+    burnedText = inputfield.innerText.replaceAt(randomNumber(1, inputfield.innerText.length - 1), '🔥')
     let iteration = 1
     insertTags()
     inputfield.innerHTML = burnedText
@@ -320,5 +320,6 @@ function gregEating() {
         }
         doSave()
         inputfield.innerHTML = inputfield.innerHTML.replace('🐛', '')
+        doRestore()
     }, 20000);
 }

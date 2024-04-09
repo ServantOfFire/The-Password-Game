@@ -98,7 +98,7 @@ ul {
 
 .ruleText {
     padding: 15px;
-    font-size: 17.7px;
+    font-size: 17.8px;
     text-align: left;
     border-radius: 0px 0px 10px 10px;
     margin: 0px;
@@ -249,20 +249,24 @@ ul {
 }
 
 #boldButton {
-    text-align: center;
-    border: 1px solid grey;
     position: relative;
     top: 20%;
+    left: -212px;
+}
+.stylingButtons{
+    text-align: center;
+    border: 1px solid grey;
+
     height: 60%;
     width: 50px;
     border-radius: 4px;
-    left: -212px;
+
     display: inline-block;
     font-size: 15px;
-    transition-duration: 0.5s;
+    transition:background-color 0.5s, color 0.5s;
 }
 
-#boldButton:hover {
+.stylingButtons:hover {
     cursor: pointer;
 }
 
@@ -391,4 +395,10 @@ iframe {
     position: relative;
     top: -50px;
     opacity: 0;
+}
+
+#italicButton {
+    position: relative;
+    top: 20%;
+    left: -175px;
 }
