@@ -74,7 +74,7 @@ function stmt10(input) {
 }
 
 function stmt11(input) {
-    return input.includes(answer)
+    return input.toLowerCase().includes(answer.toLowerCase())
 }
 
 function stmt12(input) {
@@ -255,7 +255,6 @@ function stmt18(input) {
 }
 
 function stmt19(input) {
-    if(input.includes('rule19_bypass')) return true
     const vowels = ['a', 'A', 'e', 'E', 'i', 'I', 'o', 'O', 'u', 'U', 'y', 'Y']
     var usedVowels = []
     vowels.forEach((elem) => {
@@ -263,48 +262,31 @@ function stmt19(input) {
             usedVowels.push(elem)
         }
     })
+    function areAllVowelsFormatted(modifier) {
+        let alternateModifiers = ['b', 'i', 'mark', 'span']
+        alternateModifiers.splice(alternateModifiers.indexOf(modifier), 1)
+        //replace All other modifiers
+        alternateModifiers = alternateModifiers.flatMap(e => [`<${e}>`, `</${e}>`]);
+        let modifierRegEx = new RegExp(alternateModifiers.join('|'), 'g');
+        let html = inputfield.innerHTML
+        html = html.replace(modifierRegEx, '')
 
-    function areAllVowelsBolded() {
-        // Create a temporary div element to work with the HTML content
-        deleteHighlight()
-        var tempDiv = document.createElement("div");
-        let htmlContent = inputfield.innerHTML
-        tempDiv.innerHTML = htmlContent;
 
-        // Get all the text nodes within the editor
-        var textNodes = tempDiv.childNodes;
+        const formatRegExp = new RegExp(`<${modifier}>(.*?)</${modifier}>`, 'gi')
+        let matches = html.match(formatRegExp)
+        if (matches == null) return
+        matches = matches.join('')
+        matches = matches.replaceAll(`<${modifier}>`, '')
+        matches = matches.replaceAll(`</${modifier}>`, '')
 
-        // Define the vowels
+        // only leave vowels
+        let NotVowelRegExp = new RegExp('[^aeiouy]', 'gi')
+        let vowelRegExp = new RegExp('[aeiouy]', 'gi')
+        let matchedVowels = matches.replace(NotVowelRegExp, '')
 
-        // Track if all vowels are bolded
-        var allBolded = true;
-
-        // Iterate through each text node to check if any vowel is not bolded
-        for (var i = 0; i < textNodes.length; i++) {
-            var currentNode = textNodes[i];
-            if (currentNode.nodeType === Node.TEXT_NODE) {
-                // Iterate through each character in the text node
-                for (var j = 0; j < currentNode.textContent.length; j++) {
-                    var char = currentNode.textContent.charAt(j).toLowerCase();
-                    if (vowels.includes(char)) {
-                        // If the character is a vowel, check if it's bolded
-                        var parentElement = currentNode.parentElement;
-                        if (!(parentElement.nodeName === "STRONG" || parentElement.style.fontWeight === "bold")) {
-                            allBolded = false; // If any vowel is not bolded, set allBolded to false
-                            break; // No need to continue checking this text node
-                        }
-                    }
-                }
-            }
-            if (!allBolded) {
-                break; // No need to check further if any vowel is not bolded
-            }
-        }
-        // Return whether all vowels are bolded
-        return allBolded;
+        return matchedVowels.length == inputfield.innerText.match(vowelRegExp).length
     }
-
-    if (areAllVowelsBolded() || usedVowels.length == 0) {
+    if (areAllVowelsFormatted('b') || usedVowels.length == 0) {
         deleteHighlight(true, 19)
         return true
     }
@@ -378,13 +360,33 @@ function stmt24(input) {
 function stmt25(input) {
     if (sacrificed) {
         let regEx = new RegExp(sacrificedLetters.join("|"), 'g');
-        if (input.match(regEx) == null){
+        if (input.match(regEx) == null) {
             deleteHighlight(true, 25)
             return true
         }
         highlight(sacrificedLetters, 25)
     }
 }
-function stmt26(input) {
+function stmt26() {
+    let numberOfBolded = numberOfFormats('b')
+    let numberOfItalics = numberOfFormats('i')
+    return numberOfItalics >= 2 * numberOfBolded
+    function numberOfFormats(modifier) {
+        let alternateModifiers = ['b', 'i', 'mark', 'span']
+        alternateModifiers.splice(alternateModifiers.indexOf(modifier), 1)
+        //replace All other modifiers
+        alternateModifiers = alternateModifiers.flatMap(e => [`<${e}>`, `</${e}>`]);
+        let modifierRegEx = new RegExp(alternateModifiers.join('|'), 'g');
+        let html = inputfield.innerHTML
+        html = html.replace(modifierRegEx, '')
+        const formatRegExp = new RegExp(`<${modifier}>(.*?)</${modifier}>`, 'gi');
+        let matches = html.match(formatRegExp)
+
+        if (matches == null) return 0
+        matches = matches.join('')
+        matches = matches.replaceAll(`<${modifier}>`, '')
+        matches = matches.replaceAll(`</${modifier}>`, '')
+        return matches.length
+    }
 
 }

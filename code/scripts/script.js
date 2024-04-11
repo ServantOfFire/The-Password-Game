@@ -114,16 +114,16 @@ let ruleMatrix = [
     [14, 'Your password must include the name of this country.', 'stmt14(eingabeText)', 'checkForAPI(ruleText)'],
     [15, 'Your password must include a leap year.', 'stmt15(eingabeText)'],
     [16, 'Your password must include the best move in <a target="_blank" style="color: red;" href="https://en.wikipedia.org/wiki/Algebraic_notation_(chess)">algebraic chess notation</a>.', 'stmt16(eingabeText)', 'createChessBoard(ruleText)'],
-    [17, '<span oncopy="standardCopy(`egg`)">🥚</span> This my chicken Greg. He hasn’t hatched yet. Please put him in your password and keep him safe.', 'stmt17(eingabeText)'],
+    [17, '<span oncopy="standardCopy(`egg`)">🥚</span> This is my chicken Greg. He hasn’t hatched yet. Please put him in your password and keep him safe.', 'stmt17(eingabeText)'],
     [18, 'The elements in your password must have atomic numbers that add up to 200.', 'stmt18(eingabeText)'],
-    [19, 'All the vowels in your password must be bolded.', 'stmt19(eingabeText)', 'boldButton()'],
+    [19, 'All the vowels in your password must be bolded.', 'stmt19(eingabeText)', 'createBoldButton(ruleText)'],
     [20, 'Oh no! Your password is on fire 🔥. Quick, put it out!', 'stmt20(eingabeText)'],
     [21, 'Your password is not strong enough <span oncopy="standardCopy(`lifter`)">🏋️‍♂️</span>', 'stmt21(eingabeText)', 'measureStrength(ruleText)'],
     [22, 'Your password must contain one of the following affirmations: <ul><li>I am loved</li><li>I am worthy</li><li>I am enough</li></ul>', 'stmt22(eingabeText)'],
     [23, `Greg has hatched! Please don't forget to feed him. He eats three <span oncopy="standardCopy('bug')">🐛</span> every minute.`, 'stmt23(eingabeText)'],
     [24, `Your password must include the URL of a ${minutes} minute ${seconds} second long YouTube video.`, 'stmt24(eingabeText)', 'embedYouTubeVideo(ruleText)'],
     [25, 'A sacrifice must be made. Pick two letters that you will no longer be able to use.', 'stmt25(eingabeText)', 'proposeSacrifices(ruleText)'],
-    // [26, 'Your password must contain twice as many italic characters as bold.', 'stmt26(eingabeText)', 'italicButton(ruleText)'],
+    [26, 'Your password must contain twice as many italic characters as bold.', 'stmt26(eingabeText)', 'createItalicButton(ruleText)'],
 ]
 copy = () => {
     navigator.clipboard.writeText(eingabeText)
@@ -134,7 +134,6 @@ document.addEventListener('input', () => { update() })
 let currentRuleIndex = 0;
 inputfield.addEventListener('update', (event) => {
     eingabeText = inputfield.innerText;
-    
     setTimeout(() => {
         for (let i = 0; i < currentRuleIndex; i++)
             bubble(ruleMatrix[i][0], ruleMatrix[i][1], ruleMatrix[i][2], ruleMatrix[i][3]);

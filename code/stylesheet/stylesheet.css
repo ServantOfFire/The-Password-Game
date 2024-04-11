@@ -301,7 +301,7 @@ ul {
 
 .orange {
     background-color: rgb(232, 151, 70);
-    transition-duration: 1s;
+    transition-duration: 0.7s;
     top: -57px;
     left: 0px;
     z-index: 2;
@@ -309,7 +309,7 @@ ul {
 
 .yellow {
     background-color: rgb(235, 235, 87);
-    transition-duration: 1s;
+    transition-duration: 0.7s;
     left: 0px;
     top: -97px;
     z-index: 1;
@@ -318,9 +318,9 @@ ul {
 .green {
     background-color: rgb(87, 235, 87);
     border-radius: 0px 15px 15px 0px;
-    transition-duration: 1s;
+    transition-duration: 0.7s;
     left: 0px;
-    top: -136px;
+    top: -137px;
     z-index: 0;
 }
 
@@ -401,4 +401,5 @@ iframe {
     position: relative;
     top: 20%;
     left: -175px;
+    opacity: 0;
 }

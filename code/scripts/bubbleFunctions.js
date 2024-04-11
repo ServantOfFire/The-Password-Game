@@ -43,7 +43,6 @@ function moveElement(elementId, place, behind) {
 }
 function unfade(element, time) {
     var op = 0.1;
-    element.style.display = 'block';
     var timer = setInterval(function () {
         if (op >= 1)
             clearInterval(timer);
@@ -272,7 +271,7 @@ function bubble(number, text, statement, special) {
         height += 405
         main.style.height = height + 'px'
     }
-    function boldButton(a) {
+    function createBoldButton(a) {
         //buttonWrapper-div already defined in script as global variable
         const boldButton = document.createElement('button')
         boldButton.innerText = 'Bold'
@@ -290,10 +289,9 @@ function bubble(number, text, statement, special) {
         document.getElementById('inputWrapper').appendChild(buttonWrapper)
 
         boldButton.addEventListener("click", () => { //making text bold
-            deleteHighlight()
+
             modifyText('bold', false, null);
             isBold()
-            highlight(highlightedStrings, currentHNumber)
             update()
         });
 
@@ -301,11 +299,8 @@ function bubble(number, text, statement, special) {
         neededEvents.forEach(event => document.getElementById('inputWrapper').addEventListener(event, buttonActiveColor))
 
         function buttonActiveColor() {
-            timer = setTimeout(() => {
-                deleteHighlight()
-                isBold()
-                highlight(highlightedStrings, currentHNumber)
-            }, 11)
+
+            isBold()
         }
     }
     function measureStrength(a) {
@@ -431,7 +426,7 @@ function bubble(number, text, statement, special) {
             }, 2000);
         }
     }
-    function italicButton(a) {
+    function createItalicButton(a) {
         //buttonWrapper-div already defined in script as global variable
         const italicButton = document.createElement('button')
         italicButton.innerText = 'Italic'
@@ -439,23 +434,19 @@ function bubble(number, text, statement, special) {
         italicButton.id = 'italicButton'
         italicButton.classList.add('stylingButtons')
         document.getElementById('boldButton').style.left = '-187px'
+
         buttonWrapper.appendChild(italicButton)
+        unfade(italicButton, 10)
         italicButton.addEventListener("click", () => { //making text italic
-            deleteHighlight()
             modifyText('italic', false, null);
             isItalic()
-            highlight(highlightedStrings, currentHNumber)
             update()
         });
 
         let neededEvents = 'mouseup input click'.split(' ')
         neededEvents.forEach(event => document.getElementById('inputWrapper').addEventListener(event, buttonActiveColor))
         function buttonActiveColor() {
-            timer = setTimeout(() => {
-                deleteHighlight()
-                isItalic()
-                highlight(highlightedStrings, currentHNumber)
-            }, 11)
+            isItalic()
         }
     }
 }
