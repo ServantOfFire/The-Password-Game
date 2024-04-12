@@ -255,6 +255,7 @@ function stmt18(input) {
 }
 
 function stmt19(input) {
+    return true
     const vowels = ['a', 'A', 'e', 'E', 'i', 'I', 'o', 'O', 'u', 'U', 'y', 'Y']
     var usedVowels = []
     vowels.forEach((elem) => {
@@ -263,7 +264,7 @@ function stmt19(input) {
         }
     })
     function areAllVowelsFormatted(modifier) {
-        let alternateModifiers = ['b', 'i', 'mark', 'span']
+        let alternateModifiers = ['b', 'i', 'mark', 'font']
         alternateModifiers.splice(alternateModifiers.indexOf(modifier), 1)
         //replace All other modifiers
         alternateModifiers = alternateModifiers.flatMap(e => [`<${e}>`, `</${e}>`]);
@@ -368,11 +369,12 @@ function stmt25(input) {
     }
 }
 function stmt26() {
+    return true
     let numberOfBolded = numberOfFormats('b')
     let numberOfItalics = numberOfFormats('i')
     return numberOfItalics >= 2 * numberOfBolded
     function numberOfFormats(modifier) {
-        let alternateModifiers = ['b', 'i', 'mark', 'span']
+        let alternateModifiers = ['b', 'i', 'mark', 'font']
         alternateModifiers.splice(alternateModifiers.indexOf(modifier), 1)
         //replace All other modifiers
         alternateModifiers = alternateModifiers.flatMap(e => [`<${e}>`, `</${e}>`]);
@@ -388,5 +390,12 @@ function stmt26() {
         matches = matches.replaceAll(`</${modifier}>`, '')
         return matches.length
     }
+}
 
+function stmt27() {
+    let wingDingsTags = Array.from(document.querySelectorAll('font[face="Wingdings"]'));
+    if(wingDingsTags.length == 0) return
+    let wingdingsText = ''
+    wingDingsTags.forEach((e) => {wingdingsText += e.innerText})
+    return wingdingsText.length >= inputfield.innerText.length * 0.3
 }

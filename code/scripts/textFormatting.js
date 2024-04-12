@@ -1,3 +1,8 @@
+const modifyText = (command, defaultUi, value) => {
+    //execCommand executes command on selected text
+    document.execCommand(command, defaultUi, value);
+};
+
 function highlight(strings, ruleNum) {
     setTimeout(() => { // cant make the whole function a timeout idk why 
         if (falseBubbles[0] != ruleNum)
@@ -47,7 +52,7 @@ function deleteHighlight(completelyDelete, ruleNum) {
 
 function isSelectionXYZ(modifier) {
     let acceptedModifiers;
-    acceptedModifiers = ['i', 'b', 'mark']
+    acceptedModifiers = ['i', 'b', 'mark', 'font']
 
     let sel;
     if (window.getSelection()) {
@@ -58,7 +63,12 @@ function isSelectionXYZ(modifier) {
                 parent = parent.parentNode;
             }
             while (acceptedModifiers.some((e) => { return parent.tagName.toLowerCase() == e })) {
-                if (parent.tagName.toLowerCase() == modifier) { return true }
+                if (parent.tagName.toLowerCase() == modifier) { 
+                    if(modifier == 'font'){
+                        return parent
+                    }
+                    return true 
+                }
                 parent = parent.parentNode
             }
             return false

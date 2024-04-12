@@ -1,7 +1,3 @@
-const modifyText = (command, defaultUi, value) => {
-    //execCommand executes command on selected text
-    document.execCommand(command, defaultUi, value);
-};
 function deromanize(str) {
     var str = str.toUpperCase();
     var validator = /^M*(?:D?C{0,3}|C[MD])(?:L?X{0,3}|X[CL])(?:V?I{0,3}|I[XV])$/;

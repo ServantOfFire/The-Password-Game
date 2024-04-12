@@ -11,8 +11,8 @@ let newOffsetheight = 55;
 let counter = document.getElementById('counter')
 const updateInput = new Event('update')
 
-const buttonWrapper = document.createElement('div')
-buttonWrapper.id = 'buttonWrapper'
+const formattingWrapper = document.createElement('div')
+formattingWrapper.id = 'formattingWrapper'
 
 //for moving bubbles
 let trueBubbles = [];
@@ -124,13 +124,14 @@ let ruleMatrix = [
     [24, `Your password must include the URL of a ${minutes} minute ${seconds} second long YouTube video.`, 'stmt24(eingabeText)', 'embedYouTubeVideo(ruleText)'],
     [25, 'A sacrifice must be made. Pick two letters that you will no longer be able to use.', 'stmt25(eingabeText)', 'proposeSacrifices(ruleText)'],
     [26, 'Your password must contain twice as many italic characters as bold.', 'stmt26(eingabeText)', 'createItalicButton(ruleText)'],
+    [27, 'At least 30% of your password must be in the Wingdings font.', 'stmt27()', 'createSelect(ruleText)'],
 ]
 copy = () => {
     navigator.clipboard.writeText(eingabeText)
 }
 addAutoResize();
-
-document.addEventListener('input', () => { update() })
+document.addEventListener('keydown', update)
+document.addEventListener('input', update)
 let currentRuleIndex = 0;
 inputfield.addEventListener('update', (event) => {
     eingabeText = inputfield.innerText;

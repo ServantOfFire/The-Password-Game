@@ -272,24 +272,23 @@ function bubble(number, text, statement, special) {
         main.style.height = height + 'px'
     }
     function createBoldButton(a) {
-        //buttonWrapper-div already defined in script as global variable
+        //formattingWrapper-div already defined in script as global variable
         const boldButton = document.createElement('button')
         boldButton.innerText = 'Bold'
         boldButton.type = 'button'
         boldButton.id = 'boldButton'
         boldButton.classList.add('stylingButtons')
-        buttonWrapper.appendChild(boldButton)
+        formattingWrapper.appendChild(boldButton)
         setTimeout(function () {
-            buttonWrapper.style.marginTop = '-5px'
+            formattingWrapper.style.marginTop = '-5px'
         }, 1)
         height += 45
         main.style.height = height + 'px'
         inputfield.style.borderBottomRightRadius = '0px'
         inputfield.style.borderBottomLeftRadius = '0px'
-        document.getElementById('inputWrapper').appendChild(buttonWrapper)
+        document.getElementById('inputWrapper').appendChild(formattingWrapper)
 
         boldButton.addEventListener("click", () => { //making text bold
-
             modifyText('bold', false, null);
             isBold()
             update()
@@ -299,7 +298,6 @@ function bubble(number, text, statement, special) {
         neededEvents.forEach(event => document.getElementById('inputWrapper').addEventListener(event, buttonActiveColor))
 
         function buttonActiveColor() {
-
             isBold()
         }
     }
@@ -427,15 +425,14 @@ function bubble(number, text, statement, special) {
         }
     }
     function createItalicButton(a) {
-        //buttonWrapper-div already defined in script as global variable
+        //formattingWrapper-div already defined in script as global variable
         const italicButton = document.createElement('button')
         italicButton.innerText = 'Italic'
         italicButton.type = 'button'
         italicButton.id = 'italicButton'
         italicButton.classList.add('stylingButtons')
-        document.getElementById('boldButton').style.left = '-187px'
 
-        buttonWrapper.appendChild(italicButton)
+        formattingWrapper.appendChild(italicButton)
         unfade(italicButton, 10)
         italicButton.addEventListener("click", () => { //making text italic
             modifyText('italic', false, null);
@@ -448,6 +445,45 @@ function bubble(number, text, statement, special) {
         function buttonActiveColor() {
             isItalic()
         }
+    }
+    function createSelect(a) {
+        const select = document.createElement('select')
+        select.id = 'fontSelector'
+
+        const wingdings = document.createElement('option')
+        wingdings.value = 'Wingdings'
+        wingdings.innerText = 'Wingdings'
+
+        const monospace = document.createElement('option')
+        monospace.value = 'Monospace'
+        monospace.innerText = 'Monospace'
+
+        const comicSans = document.createElement('option')
+        comicSans.value = 'Comic Sans MS'
+        comicSans.innerText = 'Comic Sans'
+
+        select.appendChild(monospace)
+        select.appendChild(comicSans)
+        select.appendChild(wingdings)
+
+        select.oninput = () => {
+            modifyText('fontName', false, select.value)
+        }
+
+        let events = ['click', 'update']
+        checkFont = () => {
+            setTimeout(() => {
+                if (!isSelectionXYZ('font')) {
+                    select.value = 'Monospace'
+                    return
+                }
+                select.value = isSelectionXYZ('font').face
+            }, 1)
+        }
+        events.forEach((e) => { inputfield.addEventListener(e, checkFont) })
+
+
+        formattingWrapper.appendChild(select)
     }
 }
 function changeMainElemHeight(reduce) {
