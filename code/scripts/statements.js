@@ -399,3 +399,18 @@ function stmt27() {
     wingDingsTags.forEach((e) => {wingdingsText += e.innerText})
     return wingdingsText.length >= inputfield.innerText.length * 0.3
 }
+
+function stmt28(input) {
+    return input.toLowerCase().includes(hexColor.toLowerCase())
+}
+
+function stmt29(input){
+    let timesNewRomanTags = Array.from(document.querySelectorAll('font[face="Times New Roman"]'));
+    let romanNumerals = input.match(/[IVXLCDM]/g)
+    if(timesNewRomanTags.length == 0 || romanNumerals == null) return
+    let romanText = ''
+    timesNewRomanTags.forEach((e) => {romanText += e.innerText})
+    romanText=romanText.replace(/[^IVXLCDM]/g, '')
+    console.log(romanNumerals, romanText)
+    return romanText.length == romanNumerals.length
+}

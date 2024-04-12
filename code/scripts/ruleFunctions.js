@@ -319,3 +319,8 @@ function gregEating() {
         doRestore()
     }, 20000);
 }
+function randomColor() {
+    let n = (Math.random() * 0xfffff * 1000000).toString(16);
+    hexColor = '#' + n.slice(0, 6)
+    return '#' + n.slice(0, 6);
+};

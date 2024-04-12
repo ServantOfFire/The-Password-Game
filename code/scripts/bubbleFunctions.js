@@ -449,7 +449,7 @@ function bubble(number, text, statement, special) {
     function createSelect(a) {
         const select = document.createElement('select')
         select.id = 'fontSelector'
-
+        select.style.width = '130px'
         const wingdings = document.createElement('option')
         wingdings.value = 'Wingdings'
         wingdings.innerText = 'Wingdings'
@@ -482,8 +482,32 @@ function bubble(number, text, statement, special) {
         }
         events.forEach((e) => { inputfield.addEventListener(e, checkFont) })
 
-
         formattingWrapper.appendChild(select)
+    }
+    function createColorDIV(a){
+        const colorDIV = document.createElement('div')
+        colorDIV.id = 'colorDIV'
+        colorDIV.style.backgroundColor =  randomColor();
+
+        const newColorButton = document.createElement('button')
+        newColorButton.id = 'newColorButton'
+
+        const refresh = document.createElement('img')
+        refresh.src = "images/icons/refresh.svg"
+        refresh.id = 'colorRefresh'
+
+        newColorButton.onclick = () => {colorDIV.style.backgroundColor =  randomColor(); update()}
+        newColorButton.appendChild(refresh)
+        colorDIV.appendChild(newColorButton)
+        a.appendChild(colorDIV)
+    }
+    function addTimesNewRoman(){
+        let timesNewRoman = document.createElement('option')
+        timesNewRoman.value = 'Times New Roman'
+        timesNewRoman.innerText = 'Times New Roman'
+
+        document.getElementById('fontSelector').appendChild(timesNewRoman)
+        document.getElementById('fontSelector').style.width = '130px'
     }
 }
 function changeMainElemHeight(reduce) {

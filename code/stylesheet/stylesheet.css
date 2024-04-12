@@ -412,9 +412,39 @@ iframe {
     display: inline-block;
     position: relative;
     height: 60%;
-    width: 130px;
     left: -100px;
     top: 20%;
     font-size: 15px;
     text-align: left;
+}
+
+#colorDIV {
+    margin-top: 15px;
+    width: 468px;
+    height: 160px;
+    border-radius: 20px;
+}
+
+#newColorButton {
+    background-color: white;
+    height: 40px;
+    width: 40px;
+    border: 1px solid grey;
+    border-radius: 17px;
+    position: relative;
+    top: 113px;
+    left: 421px;
+}
+#colorRefresh {
+    margin-top: 1px;
+    height: 24px;
+    width: 24px;
+}
+#newColorButton:hover {
+    height: 42px;
+    width: 42px;
+    top: 112px;
+    left: 420px;
+    border-radius: 18px;
+    cursor: pointer;
 }
