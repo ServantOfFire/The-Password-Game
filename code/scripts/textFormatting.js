@@ -2,13 +2,11 @@ const modifyText = (command, defaultUi, value) => {
     //execCommand executes command on selected text
     document.execCommand(command, defaultUi, value);
 };
-
+/*
 function highlight(strings, ruleNum) {
     setTimeout(() => { // cant make the whole function a timeout idk why 
         if (falseBubbles[0] != ruleNum)
             return false
-        highlightedStrings = strings;
-        currentHNumber = ruleNum
         doSave()
         deleteHighlight()
         var highlighted = inputfield.innerHTML
@@ -22,7 +20,7 @@ function highlight(strings, ruleNum) {
         });
 
         //initialising the regExp
-        let regExpString = filteredStrings.map(element => element.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
+        let regExpString = filteredStrings.join('|');
         let regExp = new RegExp(regExpString, 'g')
 
         function replaceCallback(match) {
@@ -31,19 +29,30 @@ function highlight(strings, ruleNum) {
         inputfield.innerHTML = highlighted.replace(regExp, replaceCallback);
         doRestore()
     }, 0)
+}*/
+function highlight(strings, ruleNum) {
+        if (falseBubbles[0] != ruleNum)
+            return false
+        deleteHighlight()
+        doSave()
+        var htmlContent = inputfield.innerHTML;
+        strings.forEach(string => {
+            const regex = new RegExp(`(${string})(?![^<]*>)`, 'gi');
+            htmlContent = htmlContent.replace(regex, '<mark>$1</mark>');
+        });
+        inputfield.innerHTML = htmlContent;
+        doRestore()
 }
+
+
 
 
 function deleteHighlight(completelyDelete, ruleNum) {
     if ((falseBubbles[0] != ruleNum || !falseBubbles.includes(ruleNum)) && ruleNum === 0)
         return
-    if (completelyDelete) {
-        currentHNumber = 0;
-        highlightedStrings = [];
-    }
     let newText = inputfield.innerHTML;
     doSave()
-    newText = newText.replaceAll(/<mark(.*?)>/g, '')
+    newText = newText.replace(/<mark(.*?)>/g, '')
     newText = newText.replaceAll('</mark>', '')
     inputfield.innerHTML = newText
     doRestore()
@@ -63,11 +72,11 @@ function isSelectionXYZ(modifier) {
                 parent = parent.parentNode;
             }
             while (acceptedModifiers.some((e) => { return parent.tagName.toLowerCase() == e })) {
-                if (parent.tagName.toLowerCase() == modifier) { 
-                    if(modifier == 'font'){
+                if (parent.tagName.toLowerCase() == modifier) {
+                    if (modifier == 'font') {
                         return parent
                     }
-                    return true 
+                    return true
                 }
                 parent = parent.parentNode
             }

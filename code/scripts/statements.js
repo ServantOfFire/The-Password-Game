@@ -103,7 +103,7 @@ function stmt13(input) {
 
 function stmt14(input) {
     if (typeof mapsApiKey === 'undefined') { //if google rule deactivated
-        return input.toLowerCase().includes(chosenLocation[2])
+        return input.toLowerCase().includes(allCountries[chosenLocation].toLowerCase())
     }
     input = input.toLowerCase().replaceAll(' ', '')
     if (input.includes(streetViewCoords[chosenLocation][2].toLowerCase())) {
@@ -255,7 +255,6 @@ function stmt18(input) {
 }
 
 function stmt19(input) {
-    return true
     const vowels = ['a', 'A', 'e', 'E', 'i', 'I', 'o', 'O', 'u', 'U', 'y', 'Y']
     var usedVowels = []
     vowels.forEach((elem) => {
@@ -267,7 +266,7 @@ function stmt19(input) {
         let alternateModifiers = ['b', 'i', 'mark', 'font']
         alternateModifiers.splice(alternateModifiers.indexOf(modifier), 1)
         //replace All other modifiers
-        alternateModifiers = alternateModifiers.flatMap(e => [`<${e}>`, `</${e}>`]);
+        alternateModifiers = alternateModifiers.flatMap(e => [`<${e}(.*?)>`, `</${e}>`]);
         let modifierRegEx = new RegExp(alternateModifiers.join('|'), 'g');
         let html = inputfield.innerHTML
         html = html.replace(modifierRegEx, '')
@@ -369,7 +368,6 @@ function stmt25(input) {
     }
 }
 function stmt26() {
-    return true
     let numberOfBolded = numberOfFormats('b')
     let numberOfItalics = numberOfFormats('i')
     return numberOfItalics >= 2 * numberOfBolded
@@ -377,7 +375,7 @@ function stmt26() {
         let alternateModifiers = ['b', 'i', 'mark', 'font']
         alternateModifiers.splice(alternateModifiers.indexOf(modifier), 1)
         //replace All other modifiers
-        alternateModifiers = alternateModifiers.flatMap(e => [`<${e}>`, `</${e}>`]);
+        alternateModifiers = alternateModifiers.flatMap(e => [`<${e}(.*?)>`, `</${e}>`]);
         let modifierRegEx = new RegExp(alternateModifiers.join('|'), 'g');
         let html = inputfield.innerHTML
         html = html.replace(modifierRegEx, '')
@@ -411,6 +409,5 @@ function stmt29(input){
     let romanText = ''
     timesNewRomanTags.forEach((e) => {romanText += e.innerText})
     romanText=romanText.replace(/[^IVXLCDM]/g, '')
-    console.log(romanNumerals, romanText)
     return romanText.length == romanNumerals.length
 }

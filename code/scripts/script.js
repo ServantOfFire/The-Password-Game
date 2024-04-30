@@ -22,10 +22,6 @@ let falseBubbles = [];
 
 //RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_
 
-//highlighting
-let currentHNumber = 0;
-let highlightedStrings = []
-
 //sponsors and icons
 const TheOwlClub = new Image()
 const Jimmy = new Image()

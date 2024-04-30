@@ -231,7 +231,7 @@ function bubble(number, text, statement, special) {
     }
     function checkForAPI(a) {
         if (typeof mapsApiKey === 'undefined') {
-            a.innerHTML = `Rule 14 is not activated in the online version to prevent abuse of the owner's API key. \n Type "${chosenLocation[2]}" in your password to pass this rule.`
+            a.innerHTML = `Rule 14 is not activated in the online version to prevent abuse of the owner's API key. \n Type "${allCountries[chosenLocation]}" in your password to pass this rule.`
             return
         }
         let map = document.createElement('div')
@@ -484,10 +484,10 @@ function bubble(number, text, statement, special) {
 
         formattingWrapper.appendChild(select)
     }
-    function createColorDIV(a){
+    function createColorDIV(a) {
         const colorDIV = document.createElement('div')
         colorDIV.id = 'colorDIV'
-        colorDIV.style.backgroundColor =  randomColor();
+        colorDIV.style.backgroundColor = randomColor();
 
         const newColorButton = document.createElement('button')
         newColorButton.id = 'newColorButton'
@@ -496,18 +496,20 @@ function bubble(number, text, statement, special) {
         refresh.src = "images/icons/refresh.svg"
         refresh.id = 'colorRefresh'
 
-        newColorButton.onclick = () => {colorDIV.style.backgroundColor =  randomColor(); update()}
+        newColorButton.onclick = () => { colorDIV.style.backgroundColor = randomColor(); update() }
+        let testXY = ''
+
         newColorButton.appendChild(refresh)
         colorDIV.appendChild(newColorButton)
         a.appendChild(colorDIV)
     }
-    function addTimesNewRoman(){
+    function addTimesNewRoman() {
         let timesNewRoman = document.createElement('option')
         timesNewRoman.value = 'Times New Roman'
         timesNewRoman.innerText = 'Times New Roman'
 
         document.getElementById('fontSelector').appendChild(timesNewRoman)
-        document.getElementById('fontSelector').style.width = '130px'
+        document.getElementById('fontSelector').style.width = '155px'
     }
 }
 function changeMainElemHeight(reduce) {
