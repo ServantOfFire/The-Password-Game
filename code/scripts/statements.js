@@ -283,13 +283,14 @@ function stmt19(input) {
         let vowelRegExp = new RegExp('[aeiouy]', 'gi')
         let matchedVowels = matches.replace(NotVowelRegExp, '')
 
+        if(inputfield.innerText.match(vowelRegExp) == null) return false
         return matchedVowels.length == inputfield.innerText.match(vowelRegExp).length
     }
     if (areAllVowelsFormatted('b') || usedVowels.length == 0) {
         deleteHighlight(19)
         return true
     }
-    highlight(usedVowels, 19)
+    highlight(usedVowels, 19, true)
 }
 
 function stmt20() {
@@ -411,5 +412,5 @@ function stmt29(input) {
     if (romanText.length == romanNumerals.length) {
         deleteHighlight(29)
         return true
-    } else highlight(['I', 'V', 'X', 'L', 'C', 'D', 'M'], 29)
+    } else highlight(['I', 'V', 'X', 'L', 'C', 'D', 'M'], 29, true)
 }

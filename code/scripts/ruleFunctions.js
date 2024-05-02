@@ -1,3 +1,9 @@
+updateCounter = () => {
+    counter.innerText = eingabeText.actualLength()
+    cLeft = getTextWidth(counter.innerText, "18px arial")
+    inputfield.style.marginLeft = cLeft - 10 + 'px'
+}
+
 function deromanize(str) {
     var str = str.toUpperCase();
     var validator = /^M*(?:D?C{0,3}|C[MD])(?:L?X{0,3}|X[CL])(?:V?I{0,3}|I[XV])$/;
@@ -323,4 +329,11 @@ function randomColor() {
     let n = (Math.random() * 0xfffff * 1000000).toString(16);
     hexColor = '#' + n.slice(0, 6)
     return '#' + n.slice(0, 6);
+};
+
+
+String.prototype.actualLength = function() {
+    var surrogatePairs = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g;
+    var stringWithoutSurrogates = this.replace(surrogatePairs, 'a');
+    return stringWithoutSurrogates.length;
 };

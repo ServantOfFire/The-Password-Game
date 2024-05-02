@@ -213,12 +213,7 @@ function getCheats() {
     });
 }
 
-updateCounter = () => {
-    eingabeText = eingabeText.replaceAll('\n', '');
-    counter.innerText = eingabeText.length
-    cLeft = getTextWidth(counter.innerText, "18px arial")
-    inputfield.style.marginLeft = cLeft - 10 + 'px'
-}
+
 standardCopy = (emoji) => {
     if (emoji == 'egg') {
         navigator.clipboard.writeText('🥚')

@@ -2,22 +2,31 @@ const modifyText = (command, defaultUi, value) => {
     document.execCommand(command, defaultUi, value);
 };
 
-function highlight(strings, ruleNum) {
+function highlight(strings, ruleNum, bolded) {
     if (falseBubbles[0] != ruleNum)
-        return false
+        return;
     setTimeout(() => {
-        doSave()
+        doSave();
         var htmlContent = inputfield.innerHTML;
-        htmlContent = htmlContent.replace(/<mark(.*?)>|<\/mark>/g, '')
-        strings.forEach(string => {
-            const regex = new RegExp(`(${string})(?![^<]*>)`, 'g');
-            htmlContent = htmlContent.replace(regex, '<mark>$1</mark>');
-        });
-        inputfield.innerHTML = htmlContent;
-        doRestore()
-    }, 1);
+        htmlContent = htmlContent.replace(/<mark(.*?)>|<\/mark>/g, '');
 
+        strings.forEach(string => {
+            const regex = new RegExp(`([^<]*?)(${string})(?![^<]*<\/b>)`, 'g');
+            htmlContent = htmlContent.replace(regex, (match, prefix, matchedString) => {
+                if (bolded && prefix.includes('<b>') && prefix.includes('</b>')) {
+                    return `${prefix}${matchedString}`;
+                } else {
+                    return `${prefix}<mark>${matchedString}</mark>`;
+                }
+            });
+        });
+
+        inputfield.innerHTML = htmlContent;
+        doRestore();
+    }, 1);
 }
+
+
 
 function deleteHighlight(ruleNum) {
     if ((falseBubbles[0] != ruleNum || (!falseBubbles.includes(ruleNum)) && ruleNum === 0))
