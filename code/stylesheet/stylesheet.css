@@ -40,12 +40,27 @@ ul {
     padding: 10px;
     background-color: white;
     text-align: left;
-    margin-right: auto;
     color: black;
     display: inline-block;
     left: 10px;
     z-index: 1;
     font-family: monospace;
+}
+#formattingWrapper {
+    position: relative;
+    background-color: white;
+    height: 45px;
+    width: 498px;
+    margin-right: auto;
+    border-radius: 0px 0px 10px 10px;
+    border: 1px solid black;
+    border-top: 0px;
+    top: -50px;
+    left: 3px;
+    transition:top 0.5s;
+    z-index: 0;
+    text-align: left;
+    display: inline-block;
 }
 
 [contenteditable=true]:empty:before {
@@ -233,22 +248,7 @@ ul {
 }
 
 
-#formattingWrapper {
-    position: relative;
-    background-color: white;
-    height: 45px;
-    width: 498px;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 0px 0px 10px 10px;
-    border: 1px solid black;
-    border-top: 0px;
-    margin-top: -50px;
-    ;
-    transition-duration: 0.5s;
-    z-index: 0;
-    text-align: left;
-}
+
 
 #boldButton {
     position: relative;

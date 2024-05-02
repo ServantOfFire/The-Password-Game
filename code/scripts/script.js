@@ -127,9 +127,6 @@ let ruleMatrix = [
     [28, 'Your password must include this color in hex.', 'stmt28(eingabeText)', 'createColorDIV(ruleText)'],
     [29, 'All roman numerals must be in Times New Roman', 'stmt29(eingabeText)', 'addTimesNewRoman()'],
 ]
-copy = () => {
-    navigator.clipboard.writeText(eingabeText)
-}
 addAutoResize();
 document.addEventListener('keydown', update)
 document.addEventListener('input', update)
@@ -209,7 +206,7 @@ function getCheats() {
         const keyPressed = event.key.toLowerCase();
         cheatsCommandBuffer += keyPressed;
         if (cheatsCommandBuffer.includes('cheats')) {
-            let cheatsArray = ['Wordle answer: ' + answer, 'MoonPhase: ' + moonEmojis[moonPhase], 'Country: ' + streetViewCoords[chosenLocation][2], 'chessMove: ' + chessPositions[board][2]]
+            let cheatsArray = ['Wordle answer: ' + answer, 'MoonPhase: ' + moonEmojis[moonPhase], 'Country: ' + streetViewCoords[chosenLocation][2], 'chessMove: ' + chessPositions[board][2], 'HEX:' + hexColor]
             console.log(cheatsArray);
             cheatsCommandBuffer = '';
         }

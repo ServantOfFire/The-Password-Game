@@ -1,54 +1,26 @@
 const modifyText = (command, defaultUi, value) => {
-    //execCommand executes command on selected text
     document.execCommand(command, defaultUi, value);
 };
-/*
-function highlight(strings, ruleNum) {
-    setTimeout(() => { // cant make the whole function a timeout idk why 
-        if (falseBubbles[0] != ruleNum)
-            return false
-        doSave()
-        deleteHighlight()
-        var highlighted = inputfield.innerHTML
-        //initialising the strings and the replacements
-        let filteredStrings = strings.filter((value, index, self) => self.indexOf(value) === index).sort().reverse();
-        if (filteredStrings.length == 0)
-            return
-        let replacements = [...filteredStrings]
-        replacements.forEach((element, index) => { //replace the items with the Items in a mark tag
-            replacements[index] = `<mark>${element}</mark>`
-        });
 
-        //initialising the regExp
-        let regExpString = filteredStrings.join('|');
-        let regExp = new RegExp(regExpString, 'g')
-
-        function replaceCallback(match) {
-            return replacements[filteredStrings.indexOf(match)]; // Replace with specific string
-        }
-        inputfield.innerHTML = highlighted.replace(regExp, replaceCallback);
-        doRestore()
-    }, 0)
-}*/
 function highlight(strings, ruleNum) {
-        if (falseBubbles[0] != ruleNum)
-            return false
-        deleteHighlight()
+    if (falseBubbles[0] != ruleNum)
+        return false
+    setTimeout(() => {
         doSave()
         var htmlContent = inputfield.innerHTML;
+        htmlContent = htmlContent.replace(/<mark(.*?)>|<\/mark>/g, '')
         strings.forEach(string => {
-            const regex = new RegExp(`(${string})(?![^<]*>)`, 'gi');
+            const regex = new RegExp(`(${string})(?![^<]*>)`, 'g');
             htmlContent = htmlContent.replace(regex, '<mark>$1</mark>');
         });
         inputfield.innerHTML = htmlContent;
         doRestore()
+    }, 1);
+
 }
 
-
-
-
-function deleteHighlight(completelyDelete, ruleNum) {
-    if ((falseBubbles[0] != ruleNum || !falseBubbles.includes(ruleNum)) && ruleNum === 0)
+function deleteHighlight(ruleNum) {
+    if ((falseBubbles[0] != ruleNum || (!falseBubbles.includes(ruleNum)) && ruleNum === 0))
         return
     let newText = inputfield.innerHTML;
     doSave()
@@ -103,4 +75,13 @@ function isItalic() {
     } else {
         document.getElementById('italicButton').classList.remove('activeButton')
     }
+}
+
+function resizeWrapper() {
+    setTimeout(() => {
+        if(document.getElementById('inputfield').offsetLeft == document.getElementById('formattingWrapper').offsetLeft) return
+        let wrapper = document.getElementById('formattingWrapper')
+        wrapper.style.left = '0px'
+        wrapper.style.left = (document.getElementById('inputfield').offsetLeft - document.getElementById('formattingWrapper').offsetLeft) + 'px'
+    }, 1);
 }

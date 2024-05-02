@@ -22,7 +22,7 @@ function stmt5(input) {
     for (i = 0; i < num.length; i++)
         sum += parseInt(num.charAt(i));
     if (sum === 25) {
-        deleteHighlight(true, 5)
+        deleteHighlight(5)
         return true;
     }
     highlight(numbers, 5)
@@ -43,7 +43,7 @@ function stmt7(input) {
 }
 
 function stmt8(input) {
-    var sponsors = ['theowlclub', 'jimmy', 'lego'];
+    var sponsors = ['theowlclub', 'jimmy', 'lego', 'simi'];
     for (let i = 0; i <= sponsors.length; i++) {
         if (input.toLowerCase().includes(sponsors[i])) return true
     }
@@ -63,7 +63,7 @@ function stmt9(input) {
     for (let i = 1; i < arabic.length; i++)
         product *= arabic[i]
     if (product === 35) {
-        deleteHighlight(true, 9)
+        deleteHighlight(9)
         return true
     }
     highlight(romanNum, 9)
@@ -247,8 +247,7 @@ function stmt18(input) {
     for (var i = 0; i < usedElements.length; i++)
         sum += periodicTable.indexOf(usedElements[i]) + 1
     if (sum == 200) {
-
-        deleteHighlight(true, 18)
+        deleteHighlight(18)
         return true
     }
     highlight(usedElements, 18)
@@ -287,7 +286,7 @@ function stmt19(input) {
         return matchedVowels.length == inputfield.innerText.match(vowelRegExp).length
     }
     if (areAllVowelsFormatted('b') || usedVowels.length == 0) {
-        deleteHighlight(true, 19)
+        deleteHighlight(19)
         return true
     }
     highlight(usedVowels, 19)
@@ -361,7 +360,7 @@ function stmt25(input) {
     if (sacrificed) {
         let regEx = new RegExp(sacrificedLetters.join("|"), 'g');
         if (input.match(regEx) == null) {
-            deleteHighlight(true, 25)
+            deleteHighlight(25)
             return true
         }
         highlight(sacrificedLetters, 25)
@@ -392,9 +391,9 @@ function stmt26() {
 
 function stmt27() {
     let wingDingsTags = Array.from(document.querySelectorAll('font[face="Wingdings"]'));
-    if(wingDingsTags.length == 0) return
+    if (wingDingsTags.length == 0) return
     let wingdingsText = ''
-    wingDingsTags.forEach((e) => {wingdingsText += e.innerText})
+    wingDingsTags.forEach((e) => { wingdingsText += e.innerText })
     return wingdingsText.length >= inputfield.innerText.length * 0.3
 }
 
@@ -402,12 +401,15 @@ function stmt28(input) {
     return input.toLowerCase().includes(hexColor.toLowerCase())
 }
 
-function stmt29(input){
+function stmt29(input) {
     let timesNewRomanTags = Array.from(document.querySelectorAll('font[face="Times New Roman"]'));
     let romanNumerals = input.match(/[IVXLCDM]/g)
-    if(timesNewRomanTags.length == 0 || romanNumerals == null) return
+    if (romanNumerals == null) return
     let romanText = ''
-    timesNewRomanTags.forEach((e) => {romanText += e.innerText})
-    romanText=romanText.replace(/[^IVXLCDM]/g, '')
-    return romanText.length == romanNumerals.length
+    timesNewRomanTags.forEach((e) => { romanText += e.innerText })
+    romanText = romanText.replace(/[^IVXLCDM]/g, '')
+    if (romanText.length == romanNumerals.length) {
+        deleteHighlight(29)
+        return true
+    } else highlight(['I', 'V', 'X', 'L', 'C', 'D', 'M'], 29)
 }

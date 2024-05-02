@@ -279,15 +279,20 @@ function bubble(number, text, statement, special) {
         boldButton.id = 'boldButton'
         boldButton.classList.add('stylingButtons')
         formattingWrapper.appendChild(boldButton)
+        setTimeout(() => {
+            inputfield.addEventListener('update', (event) => {
+                resizeWrapper()
+            })
+        }, 500);
+
         setTimeout(function () {
-            formattingWrapper.style.marginTop = '-5px'
+            formattingWrapper.style.top = '-5px'
         }, 1)
         height += 45
         main.style.height = height + 'px'
         inputfield.style.borderBottomRightRadius = '0px'
         inputfield.style.borderBottomLeftRadius = '0px'
         document.getElementById('inputWrapper').appendChild(formattingWrapper)
-
         boldButton.addEventListener("click", () => { //making text bold
             modifyText('bold', false, null);
             isBold()
@@ -434,6 +439,7 @@ function bubble(number, text, statement, special) {
 
         formattingWrapper.appendChild(italicButton)
         unfade(italicButton, 10)
+
         italicButton.addEventListener("click", () => { //making text italic
             modifyText('italic', false, null);
             isItalic()
@@ -447,6 +453,8 @@ function bubble(number, text, statement, special) {
         }
     }
     function createSelect(a) {
+        let selected = 0;   //2 to not change the select value for 2 clicks; 
+                            // one for manual selection of select element and one for focusing the inputfield
         const select = document.createElement('select')
         select.id = 'fontSelector'
         select.style.width = '130px'
@@ -468,16 +476,21 @@ function bubble(number, text, statement, special) {
 
         select.oninput = () => {
             modifyText('fontName', false, select.value)
+            selected = 2
         }
 
         let events = ['click', 'update']
         checkFont = () => {
+            if(selected != 0) {
+                selected--
+                return
+            }
             setTimeout(() => {
                 if (!isSelectionXYZ('font')) {
                     select.value = 'Monospace'
                     return
-                }
-                select.value = isSelectionXYZ('font').face
+                } else
+                    select.value = isSelectionXYZ('font').face
             }, 1)
         }
         events.forEach((e) => { inputfield.addEventListener(e, checkFont) })
@@ -497,7 +510,6 @@ function bubble(number, text, statement, special) {
         refresh.id = 'colorRefresh'
 
         newColorButton.onclick = () => { colorDIV.style.backgroundColor = randomColor(); update() }
-        let testXY = ''
 
         newColorButton.appendChild(refresh)
         colorDIV.appendChild(newColorButton)
