@@ -332,8 +332,44 @@ function randomColor() {
 };
 
 
-String.prototype.actualLength = function() {
+String.prototype.actualLength = function () {
     var surrogatePairs = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g;
     var stringWithoutSurrogates = this.replace(surrogatePairs, 'a');
     return stringWithoutSurrogates.length;
 };
+
+function initiateRetype() {
+    document.getElementById('counter').outerHTML = ''
+
+    inputfield.style.left = '2px'
+    let rulesDIV = document.getElementById('rules')
+    rulesDIV.innerHTML = '<br>'
+    document.getElementById('ChoosePassword').innerText = 'Your Password'
+    document.getElementById('ChoosePassword').style.left = '-188px'
+    let retypeMessage = document.createElement('p')
+
+    rulesDIV.appendChild(retypeMessage)
+    retypeMessage.outerHTML = '<p id="retypeMessage" style="position: relative; left: -127px; font-size: 18px; margin-bottom: 5px;">Please re-type your password</p>'
+    rulesDIV.appendChild(document.getElementById('inputWrapper'))
+    document.getElementById('formattingWrapper').style.top = '0px'
+
+
+    let oldPassword = inputfield.cloneNode(true)
+    document.getElementById('game').appendChild(oldPassword)
+    
+    oldPassword.style.userSelect = 'none'
+    oldPassword.contentEditable = 'false'
+    oldPassword.style.borderRadius = '10px'
+    oldPassword.style.left = '0px'
+    oldPassword.classList.add('oldPassword')
+    inputfield.innerHTML = ''
+
+    let lastBubble = document.createElement('div')
+    lastBubble.classList.add('ruleBubble', 'falseBubble', 'falseText')
+    lastBubble.innerText = 'Your passwords must match'
+    lastBubble.id = 'theLastBubble'
+    rulesDIV.appendChild(lastBubble)
+
+    inputfield.addEventListener('update', () => {finalPassword(true)})
+
+}

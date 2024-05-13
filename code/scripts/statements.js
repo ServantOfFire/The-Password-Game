@@ -74,6 +74,7 @@ function stmt10(input) {
 }
 
 function stmt11(input) {
+    return true
     return input.toLowerCase().includes(answer.toLowerCase())
 }
 
@@ -254,6 +255,7 @@ function stmt18(input) {
 }
 
 function stmt19(input) {
+    return true
     const vowels = ['a', 'A', 'e', 'E', 'i', 'I', 'o', 'O', 'u', 'U', 'y', 'Y']
     var usedVowels = []
     vowels.forEach((elem) => {
@@ -283,14 +285,15 @@ function stmt19(input) {
         let vowelRegExp = new RegExp('[aeiouy]', 'gi')
         let matchedVowels = matches.replace(NotVowelRegExp, '')
 
-        if(inputfield.innerText.match(vowelRegExp) == null) return false
+        if (inputfield.innerText.match(vowelRegExp) == null) return false
         return matchedVowels.length == inputfield.innerText.match(vowelRegExp).length
     }
     if (areAllVowelsFormatted('b') || usedVowels.length == 0) {
         deleteHighlight(19)
         return true
     }
-    highlight(usedVowels, 19, true)
+    // highlight(usedVowels, 19, true, false)
+    highlight(usedVowels, 19, 'bolded')
 }
 
 function stmt20() {
@@ -368,6 +371,8 @@ function stmt25(input) {
     }
 }
 function stmt26() {
+    return true
+    deleteHighlight()
     let numberOfBolded = numberOfFormats('b')
     let numberOfItalics = numberOfFormats('i')
     return numberOfItalics >= 2 * numberOfBolded
@@ -386,23 +391,28 @@ function stmt26() {
         matches = matches.join('')
         matches = matches.replaceAll(`<${modifier}>`, '')
         matches = matches.replaceAll(`</${modifier}>`, '')
-        return matches.length
+        return matches.actualLength()
+        // return matches.length
     }
+
 }
 
 function stmt27() {
+    return true
     let wingDingsTags = Array.from(document.querySelectorAll('font[face="Wingdings"]'));
     if (wingDingsTags.length == 0) return
     let wingdingsText = ''
     wingDingsTags.forEach((e) => { wingdingsText += e.innerText })
-    return wingdingsText.length >= inputfield.innerText.length * 0.3
+    return wingdingsText.actualLength() >= inputfield.innerText.actualLength() * 0.3
 }
 
 function stmt28(input) {
+    return true
     return input.toLowerCase().includes(hexColor.toLowerCase())
 }
 
 function stmt29(input) {
+    return true
     let timesNewRomanTags = Array.from(document.querySelectorAll('font[face="Times New Roman"]'));
     let romanNumerals = input.match(/[IVXLCDM]/g)
     if (romanNumerals == null) return
@@ -412,5 +422,114 @@ function stmt29(input) {
     if (romanText.length == romanNumerals.length) {
         deleteHighlight(29)
         return true
-    } else highlight(['I', 'V', 'X', 'L', 'C', 'D', 'M'], 29, true)
+    } else highlight(romanNumerals, 29, 'Times New Roman')
+}
+
+function stmt30(input) {
+    return true
+    let numbers = input.match(/[0-9]/g)
+    if (numbers == null) return
+    numbers = numbers.filter((value, index, self) => self.indexOf(value) === index).sort().reverse();
+
+    function allRightSize() {
+        return numbers.every(num => {
+            let fontSizeTag = Array.from(document.querySelectorAll(`font[style="font-size: ${Math.pow(num, 2)}px;"]`))
+            let contents = ''
+            fontSizeTag.forEach(e => { contents += e.innerText })
+            let regex = new RegExp(`${num}`, 'g')
+            contents = contents.match(regex)
+            if (contents == null || contents.length != input.match(regex).length) {
+                return false
+            }
+            return true
+        })
+    }
+
+    if (allRightSize()) {
+        deleteHighlight(30)
+        return true
+    }
+    highlight(numbers, 30, 'squared')
+}
+
+function stmt31() {
+    return true
+    let fontSizes = [0, 1, 4, 9, 12, 16, 25, 32, 36, 42, 49, 64, 81]
+    usedFontsizes = []
+    let remainingText = inputfield.cloneNode(true)
+    for (let i = 0; i < fontSizes.length; i++) {
+        let num = fontSizes[i]
+        let fontSizeTags = Array.from(remainingText.querySelectorAll(`font[style="font-size: ${num}px;"]`))
+        if (fontSizeTags.length == 0)
+            continue
+        usedFontsizes.push(num)
+        fontSizeTags.forEach(e => { remainingText.innerHTML = remainingText.innerHTML.replace(e.outerHTML, '') })//remainingText.innerHTML = remainingText.innerHTML.replace(e.innerHTML, '')})
+        let contents = ''
+        fontSizeTags.forEach(e => { contents += e.innerText.toLowerCase() })
+        contents = contents.replace(/[^a-zA-Z]/g, '').split('');
+        if (contents.join('') != contents.filter((item, index) => contents.indexOf(item) === index).join(''))
+            return false
+    }
+    remainingText = remainingText.innerText.replace(/[^a-zA-Z]/g, '').split('')
+    if (remainingText.join('') == remainingText.filter((item, index) => remainingText.indexOf(item) === index).join('')) {
+        deleteHighlight(31)
+        return true
+    }
+    let letters = inputfield.innerText.match(/[a-z]/gi)
+
+    highlight(letters, 31, 'differentSize')
+}
+
+function stmt32(input) {
+    return true
+    return input.includes(input.actualLength())
+}
+function stmt33() {
+    return true
+    function isPrime(number) {
+        let start = 2;
+        const limit = Math.sqrt(number);
+        while (start <= limit) {
+            if (number % start++ < 1) return false;
+        }
+        return number > 1;
+    }
+    return isPrime(inputfield.innerText.actualLength())
+}
+
+function stmt34() {
+    return true
+}
+
+function stmt35(input) {
+    return true
+    var currentTime = new Date();
+    var hours = currentTime.getHours();
+    var minutes = currentTime.getMinutes();
+    hours = hours % 12;
+    hours = hours ? hours : 12; // Handle midnight (0 hours)
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    var time12h = hours + ':' + minutes
+    return input.includes(time12h)
+}
+
+function finalPassword(check){
+    if(!check) return
+    if(document.querySelector('.oldPassword').innerHTML == inputfield.innerHTML){
+        document.getElementById('theLastBubble').classList.remove('falseBubble', 'falseText')
+        document.getElementById('theLastBubble').classList.add('trueBubble', 'trueText')
+        document.getElementById('theLastBubble').style.borderTop = '1px solid green'
+        document.getElementById('theLastBubble').style.height = '60px'
+        document.getElementById('theLastBubble').style.paddingTop = '3.5%'
+        document.getElementById('theLastBubble'). innerHTML = `<b>Congratulations!</b> You have succesfully chosen a<br>password in ${inputfield.innerText.actualLength()} characters.`
+        
+        document.querySelector('#inputWrapper').removeChild(document.querySelector('#rules').querySelector('#formattingWrapper'))
+
+        inputfield.style.borderRadius = '10px'
+        inputfield.style.userSelect = 'none'
+        inputfield.contentEditable = 'false'
+    
+    }
+
+    
 }

@@ -59,6 +59,7 @@ function moveIndex() {
     }
 }
 function bubble(number, text, statement, special) {
+
     //check if ID is taken
     let ruleId = 'rule' + number;
     let ruleElement = document.getElementById(ruleId);
@@ -279,20 +280,24 @@ function bubble(number, text, statement, special) {
         boldButton.id = 'boldButton'
         boldButton.classList.add('stylingButtons')
         formattingWrapper.appendChild(boldButton)
+        formattingWrapper.style.opacity = 0
+
         setTimeout(() => {
-            inputfield.addEventListener('update', (event) => {
+            document.addEventListener('update', (event) => {
                 resizeWrapper()
             })
         }, 500);
+        document.getElementById('inputWrapper').appendChild(formattingWrapper)
 
         setTimeout(function () {
+            formattingWrapper.style.opacity = 1
             formattingWrapper.style.top = '-5px'
-        }, 1)
-        height += 45
-        main.style.height = height + 'px'
-        inputfield.style.borderBottomRightRadius = '0px'
-        inputfield.style.borderBottomLeftRadius = '0px'
-        document.getElementById('inputWrapper').appendChild(formattingWrapper)
+            height += 45
+            main.style.height = height + 'px'
+            inputfield.style.borderBottomRightRadius = '0px'
+            inputfield.style.borderBottomLeftRadius = '0px'
+        }, 100)
+
         boldButton.addEventListener("click", () => { //making text bold
             modifyText('bold', false, null);
             isBold()
@@ -454,10 +459,10 @@ function bubble(number, text, statement, special) {
     }
     function createSelect(a) {
         let selected = 0;   //2 to not change the select value for 2 clicks; 
-                            // one for manual selection of select element and one for focusing the inputfield
-        const select = document.createElement('select')
-        select.id = 'fontSelector'
-        select.style.width = '130px'
+        // one for manual selection of select element and one for focusing the inputfield
+        const fontSelector = document.createElement('select')
+        fontSelector.id = 'fontSelector'
+        fontSelector.style.width = '130px'
         const wingdings = document.createElement('option')
         wingdings.value = 'Wingdings'
         wingdings.innerText = 'Wingdings'
@@ -470,32 +475,32 @@ function bubble(number, text, statement, special) {
         comicSans.value = 'Comic Sans MS'
         comicSans.innerText = 'Comic Sans'
 
-        select.appendChild(monospace)
-        select.appendChild(comicSans)
-        select.appendChild(wingdings)
+        fontSelector.appendChild(monospace)
+        fontSelector.appendChild(comicSans)
+        fontSelector.appendChild(wingdings)
 
-        select.oninput = () => {
-            modifyText('fontName', false, select.value)
+        fontSelector.oninput = () => {
+            modifyText('fontName', false, fontSelector.value)
             selected = 2
         }
 
         let events = ['click', 'update']
         checkFont = () => {
-            if(selected != 0) {
+            if (selected != 0) {
                 selected--
                 return
             }
             setTimeout(() => {
-                if (!isSelectionXYZ('font')) {
-                    select.value = 'Monospace'
+                if (!isSelectionXYZ('font', 'face')) {
+                    fontSelector.value = 'Monospace'
                     return
                 } else
-                    select.value = isSelectionXYZ('font').face
+                    fontSelector.value = isSelectionXYZ('font', 'face')
             }, 1)
         }
         events.forEach((e) => { inputfield.addEventListener(e, checkFont) })
 
-        formattingWrapper.appendChild(select)
+        formattingWrapper.appendChild(fontSelector)
     }
     function createColorDIV(a) {
         const colorDIV = document.createElement('div')
@@ -523,7 +528,80 @@ function bubble(number, text, statement, special) {
         document.getElementById('fontSelector').appendChild(timesNewRoman)
         document.getElementById('fontSelector').style.width = '155px'
     }
+    function createFontSize() {
+        let selected = 0;
+        let sizeSelector = document.createElement('select')
+        sizeSelector.id = 'sizeSelector'
+
+        const sizes = [0, 1, 4, 9, 12, 16, 25, 28, 32, 36, 42, 49, 64, 81]
+        sizes.forEach((e) => {
+            let sizeOption = document.createElement('option')
+            sizeOption.value = e
+            sizeOption.innerText = e + 'px'
+            sizeSelector.appendChild(sizeOption)
+        })
+        sizeSelector.value = 28
+        formattingWrapper.insertBefore(sizeSelector, document.getElementById('fontSelector'))
+        update()
+
+        sizeSelector.oninput = () => {
+            modifyText('fontSize', false, sizeSelector.value)
+            selected = 2
+        }
+        let events = ['click', 'update']
+        checkSize = () => {
+            if (selected != 0) {
+                selected--
+                return
+            }
+            setTimeout(() => {
+                if (!isSelectionXYZ('font', 'size')) {
+                    sizeSelector.value = '28'
+                    return
+                } else
+                    sizeSelector.value = isSelectionXYZ('font', 'size').replace('px', '')
+            }, 1)
+        }
+        events.forEach((e) => { inputfield.addEventListener(e, checkSize) })
+    }
+    function finalPasswordCheck(a) {
+        let margin = 10
+        let finalButtonDIV = document.createElement('div')
+        let yes = document.createElement('button')
+        let no = document.createElement('button')
+        yes.innerText = 'Yes'
+        no.innerText = 'No'
+        yes.id = 'YesButton'
+        no.id = 'NoButton'
+        finalButtonDIV.style.marginTop = margin + 'px'
+        finalButtonDIV.id = 'finalButtonDIV'
+        yes.classList.add('stylingButtons', 'finalButtons')
+        no.classList.add('stylingButtons', 'finalButtons')
+
+        yes.addEventListener('mouseover', () => { finalButtonDIV.style.marginTop = margin - 2 + 'px' })
+        no.addEventListener('mouseover', () => { finalButtonDIV.style.marginTop = margin - 2 + 'px' })
+
+        yes.addEventListener('mouseout', () => { finalButtonDIV.style.marginTop = margin + 'px' })
+        no.addEventListener('mouseout', () => { finalButtonDIV.style.marginTop = margin + 'px' })
+        yes.onclick = () => { initiateRetype() }
+        no.onclick = () => { no.outerHTML = ''; finalButtonDIV.style.marginTop = margin + 'px' }
+        finalButtonDIV.appendChild(yes)
+        finalButtonDIV.appendChild(no)
+        a.appendChild(finalButtonDIV)
+
+        document.getElementById('rule').removeChild(document.getElementById('rule').querySelector('p'))
+        document.getElementById('rule').querySelector('p').style.borderTop = '1px solid red'
+        document.getElementById('rule').querySelector('p').style.borderRadius = '10px'
+
+        //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        //styling
+
+
+
+    }
 }
+
+
 function changeMainElemHeight(reduce) {
     //reduce true => smaller; reduce false => bigger
     if (reduce) {

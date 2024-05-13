@@ -91,7 +91,12 @@ let sacrificed = false;
 //hex color
 let hexColor = ''
 
+
+//different Sizes
+let usedFontsizes = []
 //RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_
+
+
 
 clearConsole()
 getCheats()
@@ -126,6 +131,13 @@ let ruleMatrix = [
     [27, 'At least 30% of your password must be in the Wingdings font.', 'stmt27()', 'createSelect(ruleText)'],
     [28, 'Your password must include this color in hex.', 'stmt28(eingabeText)', 'createColorDIV(ruleText)'],
     [29, 'All roman numerals must be in Times New Roman', 'stmt29(eingabeText)', 'addTimesNewRoman()'],
+    [30, 'The font size of every digit must be equal to its square', 'stmt30(eingabeText)', 'createFontSize(ruleText)'],
+    [31, 'Every instance of the same letter must have a different font size.', 'stmt31()'],
+    [32, 'Your password must include the length of your password.', 'stmt32(eingabeText)'],
+    [33, 'The length of your password must be a prime number.', 'stmt33()'],
+    [34, "Uhhh let's skip this one.", 'stmt34()'],
+    [35, 'Your password must include the current time.', 'stmt35(eingabeText)'],
+    ['', 'Is this your final password?', 'finalPassword(false)', 'finalPasswordCheck(ruleText)'],
 ]
 addAutoResize();
 document.addEventListener('keydown', update)
@@ -207,7 +219,7 @@ function getCheats() {
         cheatsCommandBuffer += keyPressed;
         if (cheatsCommandBuffer.includes('cheats')) {
             let cheatsArray = ['Wordle answer: ' + answer, 'MoonPhase: ' + moonEmojis[moonPhase], 'Country: ' + streetViewCoords[chosenLocation][2], 'chessMove: ' + chessPositions[board][2], 'HEX:' + hexColor]
-            console.log(cheatsArray);
+            cheatsArray.forEach((e)=>{console.log(e)})
             cheatsCommandBuffer = '';
         }
     });
