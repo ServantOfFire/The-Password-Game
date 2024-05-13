@@ -99,7 +99,6 @@ let usedFontsizes = []
 
 
 clearConsole()
-getCheats()
 
 let ruleMatrix = [
     [1, 'Your password must be at least 5 characters.', 'stmt1(eingabeText)'],
