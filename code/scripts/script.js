@@ -134,7 +134,7 @@ let ruleMatrix = [
     [31, 'Every instance of the same letter must have a different font size.', 'stmt31()'],
     [32, 'Your password must include the length of your password.', 'stmt32(eingabeText)'],
     [33, 'The length of your password must be a prime number.', 'stmt33()'],
-    [34, "Uhhh let's skip this one.", 'stmt34()'],
+    [34, "Uhhh let's skip this one.", 'true'],
     [35, 'Your password must include the current time.', 'stmt35(eingabeText)'],
     ['', 'Is this your final password?', 'finalPassword(false)', 'finalPasswordCheck(ruleText)'],
 ]

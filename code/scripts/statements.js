@@ -255,7 +255,6 @@ function stmt18(input) {
 }
 
 function stmt19(input) {
-    return true
     const vowels = ['a', 'A', 'e', 'E', 'i', 'I', 'o', 'O', 'u', 'U', 'y', 'Y']
     var usedVowels = []
     vowels.forEach((elem) => {
@@ -371,7 +370,6 @@ function stmt25(input) {
     }
 }
 function stmt26() {
-    return true
     deleteHighlight()
     let numberOfBolded = numberOfFormats('b')
     let numberOfItalics = numberOfFormats('i')
@@ -398,7 +396,6 @@ function stmt26() {
 }
 
 function stmt27() {
-    return true
     let wingDingsTags = Array.from(document.querySelectorAll('font[face="Wingdings"]'));
     if (wingDingsTags.length == 0) return
     let wingdingsText = ''
@@ -407,12 +404,10 @@ function stmt27() {
 }
 
 function stmt28(input) {
-    return true
     return input.toLowerCase().includes(hexColor.toLowerCase())
 }
 
 function stmt29(input) {
-    return true
     let timesNewRomanTags = Array.from(document.querySelectorAll('font[face="Times New Roman"]'));
     let romanNumerals = input.match(/[IVXLCDM]/g)
     if (romanNumerals == null) return
@@ -426,7 +421,6 @@ function stmt29(input) {
 }
 
 function stmt30(input) {
-    return true
     let numbers = input.match(/[0-9]/g)
     if (numbers == null) return
     numbers = numbers.filter((value, index, self) => self.indexOf(value) === index).sort().reverse();
@@ -453,7 +447,6 @@ function stmt30(input) {
 }
 
 function stmt31() {
-    return true
     let fontSizes = [0, 1, 4, 9, 12, 16, 25, 32, 36, 42, 49, 64, 81]
     usedFontsizes = []
     let remainingText = inputfield.cloneNode(true)
@@ -481,11 +474,9 @@ function stmt31() {
 }
 
 function stmt32(input) {
-    return true
     return input.includes(input.actualLength())
 }
 function stmt33() {
-    return true
     function isPrime(number) {
         let start = 2;
         const limit = Math.sqrt(number);
@@ -497,12 +488,7 @@ function stmt33() {
     return isPrime(inputfield.innerText.actualLength())
 }
 
-function stmt34() {
-    return true
-}
-
 function stmt35(input) {
-    return true
     var currentTime = new Date();
     var hours = currentTime.getHours();
     var minutes = currentTime.getMinutes();
@@ -519,17 +505,14 @@ function finalPassword(check){
         document.getElementById('theLastBubble').classList.remove('falseBubble', 'falseText')
         document.getElementById('theLastBubble').classList.add('trueBubble', 'trueText')
         document.getElementById('theLastBubble').style.borderTop = '1px solid green'
-        document.getElementById('theLastBubble').style.height = '60px'
-        document.getElementById('theLastBubble').style.paddingTop = '3.5%'
-        document.getElementById('theLastBubble'). innerHTML = `<b>Congratulations!</b> You have succesfully chosen a<br>password in ${inputfield.innerText.actualLength()} characters.`
+        document.getElementById('theLastBubble').style.height = '80px'
+        document.getElementById('theLastBubble').style.paddingTop = '20px'
+        document.getElementById('theLastBubble'). innerHTML = `<b>Congratulations!</b> You have succesfully chosen a<br>password in ${inputfield.innerText.actualLength()} characters. <br><b>This was 7 Months of my life.</b>`
         
         document.querySelector('#inputWrapper').removeChild(document.querySelector('#rules').querySelector('#formattingWrapper'))
 
         inputfield.style.borderRadius = '10px'
         inputfield.style.userSelect = 'none'
         inputfield.contentEditable = 'false'
-    
     }
-
-    
 }

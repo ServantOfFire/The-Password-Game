@@ -7,7 +7,7 @@ const modifyText = (command, defaultUi, value) => {
         case command == 'fontSize':
             document.execCommand("fontSize", false, "7");
             var fontElements = window.getSelection().anchorNode.parentNode
-            if (fontElements.tagName == 'MARK') fontElements = fontElements.parentElement
+            while (fontElements.tagName != 'FONT'){fontElements = fontElements.parentElement} 
             fontElements.removeAttribute("size");
             fontElements.style.fontSize = value + 'px';
             break;

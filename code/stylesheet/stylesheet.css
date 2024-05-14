@@ -498,9 +498,9 @@ iframe {
 
 #theLastBubble{
     margin-top: 20px;
-    height: 50px;
+    height: 60px;
     border-top: 1px solid red;
-    padding-top: 5%;
+    padding-top: 40px;
     text-align: center;
     position: relative;
     left: 2px;
