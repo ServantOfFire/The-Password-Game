@@ -43,7 +43,7 @@ function stmt7(input) {
 }
 
 function stmt8(input) {
-    var sponsors = ['theowlclub', 'jimmy', 'lego', 'simi'];
+    var sponsors = ['theowlclub', 'jimmy', 'lego', ''];
     for (let i = 0; i <= sponsors.length; i++) {
         if (input.toLowerCase().includes(sponsors[i])) return true
     }
@@ -70,11 +70,10 @@ function stmt9(input) {
 }
 
 function stmt10(input) {
-    return input.includes(getCaptchaText()) || input.includes('chase')
+    return input.includes(getCaptchaText())
 }
 
 function stmt11(input) {
-    return true
     return input.toLowerCase().includes(answer.toLowerCase())
 }
 
