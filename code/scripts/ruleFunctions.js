@@ -371,6 +371,6 @@ function initiateRetype() {
     rulesDIV.appendChild(lastBubble)
 
     clearInterval(intervalEating)
-    inputfield.addEventListener('update', () => {finalPassword(true)})
+    inputfield.addEventListener('update', () => {finalPassword()})
 
 }

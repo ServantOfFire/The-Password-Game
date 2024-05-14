@@ -498,8 +498,7 @@ function stmt35(input) {
     return input.includes(time12h)
 }
 
-function finalPassword(check){
-    if(!check) return
+function finalPassword(){
     if(document.querySelector('.oldPassword').innerHTML == inputfield.innerHTML){
         document.getElementById('theLastBubble').classList.remove('falseBubble', 'falseText')
         document.getElementById('theLastBubble').classList.add('trueBubble', 'trueText')
