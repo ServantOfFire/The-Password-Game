@@ -129,15 +129,18 @@ function deathscreen(message) {
     return
 }
 function checkForGreg() {
-    if (greg && inputfield.innerHTML.match(gregRegExp) == null) {
-        deathscreen('GREG HAS BEEN SLAIN')
-        clearInterval(intervalEating)
-        greg = false
-        inputfield.innerHTML = inputfield.innerHTML.replaceAll('\uD83E', '')
-        inputfield.innerHTML = inputfield.innerHTML.replaceAll('\uDD5A', '')
-        return
-    }
-    preventChickenCloning()
+    setTimeout(() => {
+        if (greg && inputfield.innerHTML.match(gregRegExp) == null) {
+            deathscreen('GREG HAS BEEN SLAIN')
+            clearInterval(intervalEating)
+            greg = false
+            inputfield.innerHTML = inputfield.innerHTML.replaceAll('\uD83E', '')
+            inputfield.innerHTML = inputfield.innerHTML.replaceAll('\uDD5A', '')
+            return
+        }
+        preventChickenCloning()
+    }, 10);
+
 }
 function preventChickenCloning() {
     if (greg && eingabeText.match(gregRegExp).length > 1) {
@@ -356,7 +359,7 @@ function initiateRetype() {
 
     let oldPassword = inputfield.cloneNode(true)
     document.getElementById('game').appendChild(oldPassword)
-    
+
     oldPassword.style.userSelect = 'none'
     oldPassword.contentEditable = 'false'
     oldPassword.style.borderRadius = '10px'
@@ -371,6 +374,6 @@ function initiateRetype() {
     rulesDIV.appendChild(lastBubble)
 
     clearInterval(intervalEating)
-    inputfield.addEventListener('update', () => {finalPassword()})
+    inputfield.addEventListener('update', () => { finalPassword() })
 
 }

@@ -117,13 +117,13 @@ let ruleMatrix = [
     [14, 'Your password must include the name of this country.', 'stmt14(eingabeText)', 'checkForAPI(ruleText)'],
     [15, 'Your password must include a leap year.', 'stmt15(eingabeText)'],
     [16, 'Your password must include the best move in <a target="_blank" style="color: red;" href="https://en.wikipedia.org/wiki/Algebraic_notation_(chess)">algebraic chess notation</a>.', 'stmt16(eingabeText)', 'createChessBoard(ruleText)'],
-    [17, '<span oncopy="standardCopy(`egg`)">🥚</span> This is my chicken Greg. He hasn’t hatched yet. Please put him in your password and keep him safe.', 'stmt17(eingabeText)'],
+    [17, '🥚 This is my chicken Greg. He hasn’t hatched yet. Please put him in your password and keep him safe.', 'stmt17(eingabeText)'],
     [18, 'The elements in your password must have atomic numbers that add up to 200.', 'stmt18(eingabeText)'],
     [19, 'All the vowels in your password must be bolded.', 'stmt19(eingabeText)', 'createBoldButton(ruleText)'],
     [20, 'Oh no! Your password is on fire 🔥. Quick, put it out!', 'stmt20(eingabeText)'],
-    [21, 'Your password is not strong enough <span oncopy="standardCopy(`lifter`)">🏋️‍♂️</span>', 'stmt21(eingabeText)', 'measureStrength(ruleText)'],
+    [21, 'Your password is not strong enough 🏋️‍♂️', 'stmt21(eingabeText)', 'measureStrength(ruleText)'],
     [22, 'Your password must contain one of the following affirmations: <ul><li>I am loved</li><li>I am worthy</li><li>I am enough</li></ul>', 'stmt22(eingabeText)'],
-    [23, `Greg has hatched! Please don't forget to feed him. He eats three <span oncopy="standardCopy('bug')">🐛</span> every minute.`, 'stmt23(eingabeText)'],
+    [23, `Greg has hatched! Please don't forget to feed him. He eats three 🐛 every minute.`, 'stmt23(eingabeText)'],
     [24, `Your password must include the URL of a ${minutes} minute ${seconds} second long YouTube video.`, 'stmt24(eingabeText)', 'embedYouTubeVideo(ruleText)'],
     [25, 'A sacrifice must be made. Pick two letters that you will no longer be able to use.', 'stmt25(eingabeText)', 'proposeSacrifices(ruleText)'],
     [26, 'Your password must contain twice as many italic characters as bold.', 'stmt26(eingabeText)', 'createItalicButton(ruleText)'],
@@ -138,11 +138,73 @@ let ruleMatrix = [
     [35, 'Your password must include the current time.', 'stmt35(eingabeText)'],
     ['', 'Is this your final password?', 'false', 'finalPasswordCheck(ruleText)'],
 ]
+document.addEventListener('copy', (e) => {
+    e.preventDefault();
+    let selectedText = window.getSelection().toString();
+    e.clipboardData.setData('text/plain', selectedText);
+});
+
+document.addEventListener('paste', handlePaste);
+document.addEventListener('drop', handleDrop);
+
+// Prevent the default dragover event to enable drop
+document.addEventListener('dragover', function(event) {
+    event.preventDefault();
+});
+
+function handlePaste(e) {
+    // Prevent the default paste action
+    e.preventDefault();
+
+    // Retrieve the pasted text from the clipboard data
+    let pastedText = (e.clipboardData || window.clipboardData).getData('text/plain');
+
+    // Insert the plain text at the cursor position
+    insertPlainText(pastedText);
+}
+
+function handleDrop(e) {
+    // Prevent the default drop action
+    e.preventDefault();
+
+    // Retrieve the dropped text from the DataTransfer object
+    let droppedText = e.dataTransfer.getData('text/plain');
+
+    // Insert the plain text at the cursor position
+    insertPlainText(droppedText);
+}
+
+function insertPlainText(plainText) {
+    // Insert the plain text at the cursor position
+    if (document.activeElement && document.activeElement.value !== undefined) {
+        // If the active element is an input or textarea
+        let input = document.activeElement;
+        let start = input.selectionStart;
+        let end = input.selectionEnd;
+        
+        // Insert the text at the current cursor position
+        input.value = input.value.substring(0, start) + plainText + input.value.substring(end);
+        
+        // Move the cursor to the end of the inserted text
+        input.selectionStart = input.selectionEnd = start + plainText.length;
+    } else if (document.activeElement && document.activeElement.isContentEditable) {
+        // If the active element is a contenteditable element
+        document.execCommand('insertText', false, plainText);
+    } else {
+        // If there's no active element or it's not an input/textarea or contenteditable element
+        console.log('No valid element to insert text into.');
+    }
+}
+
+
+
+
+
 addAutoResize();
-document.addEventListener('keydown', update)
-document.addEventListener('input', update)
+inputfield.addEventListener('keydown', (e) => {if(!e.key.includes('Arrow')){update()}})
+inputfield.addEventListener('input', () => {update()})
 let currentRuleIndex = 0;
-inputfield.addEventListener('update', (event) => {
+inputfield.addEventListener('update', () => {
     eingabeText = inputfield.innerText;
     setTimeout(() => {
         for (let i = 0; i < currentRuleIndex; i++)
@@ -200,17 +262,6 @@ function getTextWidth(text, font) {
     return metrics.width;
 }
 
-function getCssStyle(element, prop) {
-    return window.getComputedStyle(element, null).getPropertyValue(prop);
-}
-
-function getCanvasFont(el = document.body) {
-    const fontWeight = getCssStyle(el, 'font-weight') || 'normal';
-    const fontSize = getCssStyle(el, 'font-size') || '16px';
-    const fontFamily = getCssStyle(el, 'font-family') || 'Times New Roman';
-    return `${fontWeight} ${fontSize} ${fontFamily}`;
-}
-
 function getCheats() {
     let cheatsCommandBuffer = '';
     document.addEventListener('keydown', function (event) {
@@ -224,24 +275,6 @@ function getCheats() {
     });
 }
 
-
-standardCopy = (emoji) => {
-    if (emoji == 'egg') {
-        navigator.clipboard.writeText('🥚')
-        return
-    }
-    if (emoji == 'lifter') {
-        navigator.clipboard.writeText('🏋️‍♂️')
-        return
-    }
-    if(emoji == 'bug'){
-        navigator.clipboard.writeText('🐛')
-        return
-    }
-    if(emoji == 'url'){
-        navigator.clipboard.writeText('https://www.youtube.com/watch?v=H10xp3u5AxE')
-    }
-}
 function update() {
     inputfield.dispatchEvent(updateInput)
 }

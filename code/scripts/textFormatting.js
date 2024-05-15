@@ -7,7 +7,7 @@ const modifyText = (command, defaultUi, value) => {
         case command == 'fontSize':
             document.execCommand("fontSize", false, "7");
             var fontElements = window.getSelection().anchorNode.parentNode
-            while (fontElements.tagName != 'FONT'){fontElements = fontElements.parentElement} 
+            while (fontElements.tagName != 'FONT') { fontElements = fontElements.parentElement }
             fontElements.removeAttribute("size");
             fontElements.style.fontSize = value + 'px';
             break;
@@ -75,16 +75,19 @@ function highlight(strings, ruleNum, exception = null) {
         });
         inputfield.innerHTML = htmlContent;
         doRestore();
-
     }, 1);
 }
 
 function deleteHighlight(ruleNum) {
-    // if ((falseBubbles[0] != ruleNum || (!falseBubbles.includes(ruleNum)) && ruleNum === 0))
-    //     return
-    doSave()
-    inputfield.innerHTML = inputfield.innerHTML.replace(/<mark(.*?)>|<\/mark>/g, ''); //get rid of old mark tags
-    doRestore()
+    
+    if ((falseBubbles[0] != ruleNum )) //|| (!falseBubbles.includes(ruleNum))
+        return
+    console.log(ruleNum)    
+    setTimeout(() => {
+        doSave()
+        inputfield.innerHTML = inputfield.innerHTML.replace(/<mark(.*?)>|<\/mark>/g, ''); //get rid of old mark tags
+        doRestore()
+    }, 5);
 }
 
 
