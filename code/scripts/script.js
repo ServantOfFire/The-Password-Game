@@ -60,13 +60,8 @@ let firstTimeEgg = true
 //fire
 let fireStarted = false
 let fireOut = false
-let openTags = []
-let closeTags = []
-let changedOpenTags = []
-let changedCloseTags = []
 let burning;
 let burnedText;
-let firstCharBefore;
 
 //strength
 let firstTimeStrength = true
@@ -99,6 +94,7 @@ let usedFontsizes = []
 
 
 clearConsole()
+getCheats()
 
 let ruleMatrix = [
     [1, 'Your password must be at least 5 characters.', 'stmt1(eingabeText)'],
@@ -144,24 +140,12 @@ document.addEventListener('copy', (e) => {
     e.clipboardData.setData('text/plain', selectedText);
 });
 
-document.addEventListener('paste', handlePaste);
-document.addEventListener('drop', handleDrop);
-
-// Prevent the default dragover event to enable drop
-document.addEventListener('dragover', function(event) {
-    event.preventDefault();
+document.addEventListener('paste', function(e){
+    e.preventDefault();
+    let pastedText = (e.clipboardData || window.clipboardData).getData('text/plain');
+    insertPlainText(pastedText);
 });
 
-function handlePaste(e) {
-    // Prevent the default paste action
-    e.preventDefault();
-
-    // Retrieve the pasted text from the clipboard data
-    let pastedText = (e.clipboardData || window.clipboardData).getData('text/plain');
-
-    // Insert the plain text at the cursor position
-    insertPlainText(pastedText);
-}
 
 function handleDrop(e) {
     // Prevent the default drop action
@@ -195,10 +179,6 @@ function insertPlainText(plainText) {
         console.log('No valid element to insert text into.');
     }
 }
-
-
-
-
 
 addAutoResize();
 inputfield.addEventListener('keydown', (e) => {if(!e.key.includes('Arrow')){update()}})

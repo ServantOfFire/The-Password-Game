@@ -30,6 +30,7 @@ function getCaptchaText() {
     captchaText = captchaText.replace('.png', '')
     return captchaText
 }
+
 function getWordle() {
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
@@ -110,7 +111,6 @@ function getMoonPhase() {
     }
     getLunarPhase()
 }
-
 function deathscreen(message) {
     inputfield.blur()
     let blackCenter = document.createElement('div')
@@ -143,62 +143,17 @@ function checkForGreg() {
 
 }
 function preventChickenCloning() {
-    if (greg && eingabeText.match(gregRegExp).length > 1) {
-        doSave(2)
-        for (let i = 0; i < eingabeText.match(gregRegExp).length - 1; i++) {
-            inputfield.innerText = inputfield.innerText.replace(gregEmoji, '')
+    if (greg && eingabeText.match(gregRegExp)) {
+        if (eingabeText.match(gregRegExp).length > 1) {
+            doSave(2)
+            for (let i = 0; i < eingabeText.match(gregRegExp).length - 1; i++) {
+                inputfield.innerText = inputfield.innerText.replace(gregEmoji, '')
+            }
+            eingabeText = inputfield.innerText;
+            doRestore()
         }
-        eingabeText = inputfield.innerText;
-        doRestore()
-    }
-}
-
-function saveTagPositions(inputString, tagName, deleteTag) {
-    openTags = []
-    closeTags = []
-    const tagLength = tagName.length;
-    const openTag = `<${tagName}>`;
-    const closeTag = `</${tagName}>`;
-
-    let currentIndex = 0;
-    while (currentIndex < inputString.length) {
-        const openIndex = inputString.indexOf(openTag, currentIndex);
-        if (openIndex === -1) break; // No more open tags found
-
-        const closeIndex = inputString.indexOf(closeTag, openIndex + tagLength);
-        if (closeIndex === -1) break; // No corresponding close tag found
-
-        openTags.push(openIndex)
-        closeTags.push(closeIndex)
-
-        currentIndex = closeIndex; // Move to check after the closing tag
-    }
-    if (deleteTag) {
-        inputfield.innerHTML = inputfield.innerHTML.replaceAll(`<${tagName}>`, '')
-        inputfield.innerHTML = inputfield.innerHTML.replaceAll(`</${tagName}>`, '')
-    }
-}
-
-String.prototype.replaceAt = function (index, replacement) {
-    if (index >= this.length) {
-        return this.valueOf();
     }
 
-    return this.substring(0, index) + replacement + this.substring(index + 1);
-};
-if (String.prototype.splice === undefined) {
-    /**
-     * Splices text within a string.
-     * @param {int} offset The position to insert the text at (before)
-     * @param {string} text The text to insert
-     * @param {int} [removeCount=0] An optional number of characters to overwrite
-     * @returns {string} A modified string containing the spliced text.
-     */
-    String.prototype.splice = function (offset, text, removeCount = 0) {
-        let calculatedOffset = offset < 0 ? this.length + offset : offset;
-        return this.substring(0, calculatedOffset) +
-            text + this.substring(calculatedOffset + removeCount);
-    };
 }
 
 function startFire() {
@@ -211,96 +166,20 @@ function startFire() {
         return
     }
     fireStarted = true
-    saveTagPositions(inputfield.innerHTML, 'b')
     doSave()
-    burnedText = inputfield.innerText.replaceAt(randomNumber(1, inputfield.innerText.length - 1), '🔥')
-    let iteration = 1
-    insertTags()
+    burnedText = inputfield.innerHTML.replaceRandomMatch(/[^<>](?![^<]*>)/g, '🔥')
     inputfield.innerHTML = burnedText
     doRestore()
-    var amountBurned = 0;
+    let fireRegEx = new RegExp('((?<=\uDD25(<[^>]*>)*)[^\uD83D\uDD25<>]|(?![^<]*>)[^\uD83D\uDD25<>](?=(<[^>]*>)*\uD83D))', 'g')
     //fire is: \uD83D + \uDD25
     burning = setInterval(() => {
-        iteration++
-        let fireIndexes = []
-        amountBurned = 0;
         doSave()
-        saveTagPositions(inputfield.innerHTML, 'b', true)
-        burnedText = inputfield.innerText
-        firstCharBefore = burnedText.split('')[0]
-        for (let i = 0; i < inputfield.innerText.length; i++) {
-            if (inputfield.innerText[i] == '\uD83D') {
-                fireIndexes.push(i)
-            }
-        }
-        let symbolArray = burnedText.split('')
-        fireIndexes.forEach((index) => {
-            burnToLeft(index, symbolArray)
-        });
-        symbolArray = burnedText.split('')
-        fireIndexes.forEach((index) => {
-            burnToRight((index + amountBurned), symbolArray)
-        });
-        insertTags()
-        inputfield.innerHTML = burnedText
-        update()
+        burnedText = inputfield.innerHTML
+        inputfield.innerHTML = burnedText.replace(fireRegEx, '🔥')
         doRestore()
-        checkForGreg()
-        function burnToLeft(index, symbolArray) {
-            if (symbolArray[index - 1] != '\uDD25' && symbolArray[index - 1] != undefined) {
-                burnedText = burnedText.replaceAt(index - 1, '\uD83D')
-                burnedText = burnedText.splice(index, '\uDD25')
-                amountBurned++
-            }
-        }
-        function burnToRight(index, symbolArray) {
-            if (symbolArray[index + 2] != '\uD83D' && symbolArray[index + 2] != undefined) {
-                burnedText = burnedText.replaceAt(index + 2, '\uD83D')
-                burnedText = burnedText.splice(index + 3, '\uDD25')
-            }
-        }
+        update()
     }, 1000);
 
-    function insertTags() {
-        openTags.forEach(function (element, index) {
-            let slicedText = burnedText.slice(0, element - (index * 3 + index * 4))
-            let numberOfFire = slicedText.split('').filter(item => item === '\uD83D').length;
-            if (numberOfFire > 0 &&
-                iteration != 1 &&
-                burnedText.split('')[0] != '\uD83D') {
-                changedOpenTags[index] = openTags[index] + 2
-                changedCloseTags[index] = closeTags[index] + 2
-                return
-            }
-            if (numberOfFire > 0 && (burnedText.split('')[0] == '\uD83D' || iteration == 1)) {
-                changedOpenTags[index] = openTags[index] + 1
-                changedCloseTags[index] = closeTags[index] + 1
-                if (firstCharBefore != '\uD83D' && burnedText.split('')[0] == '\uD83D') {
-                    changedOpenTags[index]++
-                    changedCloseTags[index]++
-                }
-                return
-            }
-            changedOpenTags[index] = openTags[index]
-            changedCloseTags[index] = closeTags[index]
-        });
-        for (let i = 0; i < changedOpenTags.length; i++) {
-            if (burnedText.split('')[changedOpenTags[i] - 1] == '\ud83d') {
-                changedOpenTags[i]++
-            }
-            if (burnedText.split('')[changedOpenTags[i]] == '>') {
-                changedOpenTags[i]++
-            }
-            burnedText = burnedText.splice(changedOpenTags[i], '<b>')
-            if (burnedText.split('')[changedCloseTags[i]] == '\udd25') {
-                changedCloseTags[i]++
-            }
-            if (burnedText.split('')[changedCloseTags[i]] == '>') {
-                changedCloseTags[i]++
-            }
-            burnedText = burnedText.splice(changedCloseTags[i], '</b>')
-        }
-    }
 }
 function gregHatching() {
     doSave()
@@ -323,22 +202,16 @@ function gregEating() {
             inputfield.innerHTML = inputfield.innerHTML.replace('🐔', '')
             return
         }
-        doSave()
+        doSave('greg')
         inputfield.innerHTML = inputfield.innerHTML.replace('🐛', '')
         doRestore()
+        update()
     }, 20000);
 }
 function randomColor() {
     let n = (Math.random() * 0xfffff * 1000000).toString(16);
     hexColor = '#' + n.slice(0, 6)
     return '#' + n.slice(0, 6);
-};
-
-
-String.prototype.actualLength = function () {
-    var surrogatePairs = /[\uD800-\uDBFF][\uDC00-\uDFFF]/g;
-    var stringWithoutSurrogates = this.replace(surrogatePairs, 'a');
-    return stringWithoutSurrogates.length;
 };
 
 function initiateRetype() {

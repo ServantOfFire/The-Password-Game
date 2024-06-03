@@ -1,7 +1,7 @@
 var saveSelection, restoreSelection;
 
 if (window.getSelection && document.createRange) {
-    
+
     saveSelection = function (containerEl) {
         var range = window.getSelection().getRangeAt(0);
         var preSelectionRange = range.cloneRange();
@@ -68,15 +68,19 @@ if (window.getSelection && document.createRange) {
     };
 }
 var savedSelection;
-function doSave(a) {
+function doSave(exception) {
     savedSelection = saveSelection(document.getElementById("inputfield"))
-    if (a) {
-        savedSelection.start -= a
-        savedSelection.end -= a
+    switch (exception) {
+        case 'greg':
+            if (savedSelection.start > inputfield.innerText.indexOf('🐛')) {
+                savedSelection.start -= 2
+                savedSelection.end -= 2
+            }
+            break;
     }
 }
 
 function doRestore() {
-    if (savedSelection) 
+    if (savedSelection)
         restoreSelection(document.getElementById("inputfield"), savedSelection);
 }

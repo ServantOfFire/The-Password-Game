@@ -1,5 +1,5 @@
 function stmt1(input) {
-    return input.length >= 5
+    return input.actualLength() >= 5
 }
 
 function stmt2(input) {

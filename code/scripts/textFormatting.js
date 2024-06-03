@@ -18,15 +18,12 @@ function highlight(strings, ruleNum, exception = null) {
     if (falseBubbles[0] != ruleNum) return;
     if (!strings) return;
     setTimeout(() => {
-
         doSave();
         let htmlContent = inputfield.innerHTML.replace(/<mark(.*?)>|<\/mark>/g, ''); //get rid of old mark tags
         let exceptionTag = false
         let regex;
-
         strings = strings.filter((value, index, self) => self.indexOf(value) === index);
         strings.forEach(string => {
-            let firstTime = true
             switch (exception) {
                 default:
                     regex = new RegExp(`${string}(?![^<]*>)`, "gm");
@@ -79,10 +76,9 @@ function highlight(strings, ruleNum, exception = null) {
 }
 
 function deleteHighlight(ruleNum) {
-    
-    if ((falseBubbles[0] != ruleNum )) //|| (!falseBubbles.includes(ruleNum))
+    if ((falseBubbles[0] != ruleNum || (!falseBubbles.includes(ruleNum)))) 
         return
-    console.log(ruleNum)    
+    //console.log(ruleNum)    
     setTimeout(() => {
         doSave()
         inputfield.innerHTML = inputfield.innerHTML.replace(/<mark(.*?)>|<\/mark>/g, ''); //get rid of old mark tags
