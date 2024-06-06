@@ -58,6 +58,7 @@ function moveIndex() {
         moveIndex()
     }
 }
+
 function bubble(number, text, statement, special) {
 
     //check if ID is taken
@@ -86,8 +87,6 @@ function bubble(number, text, statement, special) {
             rulesDIV.insertBefore(ruleBubble, rulesDIV.children[0])
             oldPosition = 0
             eval(special)
-            height += ruleBubble.offsetHeight + 20
-            main.style.height = height + 'px'
 
             unfade(ruleBubble, 10)
             //------------------------------------------------------------------------------
@@ -120,8 +119,11 @@ function bubble(number, text, statement, special) {
                 // move to new position
                 defineFamily()
                 let falseIndexOfRule = falseBubbles.indexOf(number)
-                if (oldPosition !== falseIndexOfRule)
+                if (oldPosition != falseIndexOfRule) {
                     moveElement(ruleId, falseIndexOfRule)
+                    if (falseIndexOfRule == 0)
+                        deleteHighlight(0)
+                }
             }
         }
     } else if (eval(statement)) {
@@ -168,8 +170,12 @@ function bubble(number, text, statement, special) {
         //move to new position
         defineFamily()
         let falseIndexOfRule = falseBubbles.indexOf(number)
-        if (oldPosition !== falseIndexOfRule)
+        if (oldPosition != falseIndexOfRule) {
             moveElement(ruleId, falseIndexOfRule)
+            if (falseIndexOfRule == 0)
+                deleteHighlight(0)
+        }
+
     }
 
     function assignTrue(a, b, c) {
@@ -192,6 +198,7 @@ function bubble(number, text, statement, special) {
         a.classList.remove('trueName')
         b.classList.remove('trueText')
         c.classList.remove('trueBubble')
+        // deleteHighlight()
     }
     function defineFamily(tBubble) {
         parent = document.getElementById("rules");
@@ -227,8 +234,6 @@ function bubble(number, text, statement, special) {
         wrapper.appendChild(captchaImage)
         wrapper.appendChild(refresh)
         a.appendChild(wrapper)
-        height += 40
-        main.style.height = height + 'px'
     }
     function checkForAPI(a) {
         if (typeof mapsApiKey === 'undefined') {
@@ -269,8 +274,6 @@ function bubble(number, text, statement, special) {
         wrapper.appendChild(boardWrapper)
         wrapper.appendChild(playerMove)
         a.appendChild(wrapper)
-        height += 405
-        main.style.height = height + 'px'
     }
     function createBoldButton(a) {
         //formattingWrapper-div already defined in script as global variable
@@ -292,8 +295,6 @@ function bubble(number, text, statement, special) {
         setTimeout(function () {
             formattingWrapper.style.opacity = 1
             formattingWrapper.style.top = '-5px'
-            height += 45
-            main.style.height = height + 'px'
             inputfield.style.borderBottomRightRadius = '0px'
             inputfield.style.borderBottomLeftRadius = '0px'
         }, 100)
@@ -323,7 +324,7 @@ function bubble(number, text, statement, special) {
         orange.classList.add('strength', 'orange')
         yellow.classList.add('strength', 'yellow')
         green.classList.add('strength', 'green')
-        inputfield.addEventListener('input', animateStrength)
+        inputfield.addEventListener('update', animateStrength)
         orange.style.visibility = 'hidden'
         yellow.style.visibility = 'hidden'
         green.style.visibility = 'hidden'
@@ -345,7 +346,7 @@ function bubble(number, text, statement, special) {
                 green.style.left = '207px'
                 return
             }
-            if (inputfield.innerText.match(/🏋️/g).length == 1) {
+            if (inputfield.innerText.match(/🏋️/g).length >= 1) {
                 orange.style.visibility = 'visible'
                 yellow.style.visibility = 'hidden'
                 green.style.visibility = 'hidden'
@@ -354,7 +355,7 @@ function bubble(number, text, statement, special) {
                 yellow.style.left = '116.5px'
                 green.style.left = '233px'
             }
-            if (inputfield.innerText.match(/🏋️/g).length == 2) {
+            if (inputfield.innerText.match(/🏋️/g).length >= 2) {
                 yellow.style.visibility = 'visible'
                 green.style.visibility = 'hidden'
                 yellow.style.left = '233px'
@@ -366,7 +367,6 @@ function bubble(number, text, statement, special) {
                 green.style.left = '349.5px'
             }
         }
-
     }
     function embedYouTubeVideo(a) {
         if (typeof YouTubeApiKey === 'undefined') {
@@ -602,19 +602,15 @@ function bubble(number, text, statement, special) {
 }
 
 
-function changeMainElemHeight(reduce) {
-    //reduce true => smaller; reduce false => bigger
-    if (reduce) {
-        height -= newOffsetheight - inputfield.offsetHeight
-        main.style.height = height + 'px'
-        newOffsetheight = inputfield.offsetHeight
-        cBottom = (inputfield.offsetHeight - 55) / 2 + 3
-        counter.style.bottom = cBottom + 'px'
-        return // its finished
-    }
-    height += inputfield.offsetHeight - newOffsetheight
-    main.style.height = height + 'px'
-    newOffsetheight = inputfield.offsetHeight
-    cBottom = (inputfield.offsetHeight - 55) / 2 + 3
-    counter.style.bottom = cBottom + 'px'
+function changeMainElemHeight() {
+    setTimeout(() => {
+        let oldHeight = mainHeight
+        mainHeight = 49
+        let childElements = main.children;
+        for (let i = 0; i < childElements.length; i++) {
+            mainHeight += childElements[i].offsetHeight;
+        }
+        if(mainHeight == oldHeight) return
+        main.style.height = mainHeight + 'px'
+    }, 20);
 }

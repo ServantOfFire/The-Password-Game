@@ -10,14 +10,15 @@ const modifyText = (command, defaultUi, value) => {
             while (fontElements.tagName != 'FONT') { fontElements = fontElements.parentElement }
             fontElements.removeAttribute("size");
             fontElements.style.fontSize = value + 'px';
+            update()
             break;
     }
 };
 
 function highlight(strings, ruleNum, exception = null) {
-    if (falseBubbles[0] != ruleNum) return;
-    if (!strings) return;
     setTimeout(() => {
+        if (falseBubbles[0] != ruleNum) return;
+        if (!strings) return;
         doSave();
         let htmlContent = inputfield.innerHTML.replace(/<mark(.*?)>|<\/mark>/g, ''); //get rid of old mark tags
         let exceptionTag = false
@@ -37,7 +38,7 @@ function highlight(strings, ruleNum, exception = null) {
                     exceptionTag = 'font';
                     exceptionAttribute = ' face="Times New Roman"'
                     regex = new RegExp(`${string}(?!(?<=<${exceptionTag}${exceptionAttribute}>[^<]*${string})[^<]*<\/${exceptionTag})`, 'gm')
-                    console.log(regex)
+                    //console.log(regex)
                     break;
                 case 'squared':
                     exceptionTag = 'font';
@@ -76,14 +77,13 @@ function highlight(strings, ruleNum, exception = null) {
 }
 
 function deleteHighlight(ruleNum) {
-    if ((falseBubbles[0] != ruleNum || (!falseBubbles.includes(ruleNum)))) 
-        return
-    //console.log(ruleNum)    
-    setTimeout(() => {
-        doSave()
-        inputfield.innerHTML = inputfield.innerHTML.replace(/<mark(.*?)>|<\/mark>/g, ''); //get rid of old mark tags
-        doRestore()
-    }, 5);
+    if (ruleNum != 0) {
+        if (falseBubbles[0] != ruleNum)
+            return
+    }
+    doSave()
+    inputfield.innerHTML = inputfield.innerHTML.replace(/<mark(.*?)>|<\/mark>|<span(.*?)>|<\/span>/g, ''); //get rid of old mark tags
+    doRestore()
 }
 
 

@@ -26,8 +26,7 @@ function loadChessImage(img) {
 }
 function getCaptchaText() {
     let captchaText = captchaSRC
-    captchaText = captchaText.replace('images/captchas/samples/', '')
-    captchaText = captchaText.replace('.png', '')
+    captchaText = captchaText.substring(captchaText.lastIndexOf('/') + 1, captchaText.lastIndexOf('.'))
     return captchaText
 }
 
@@ -126,6 +125,7 @@ function deathscreen(message) {
     overlay.style.opacity = 0
     unfade(overlay, 50)
     document.body.style.overflow = 'hidden'
+    update()
     return
 }
 function checkForGreg() {
@@ -177,7 +177,10 @@ function startFire() {
         burnedText = inputfield.innerHTML
         inputfield.innerHTML = burnedText.replace(fireRegEx, '🔥')
         doRestore()
-        update()
+        setTimeout(() => {
+            update()
+        }, 1);
+
     }, 1000);
 
 }
@@ -248,5 +251,4 @@ function initiateRetype() {
 
     clearInterval(intervalEating)
     inputfield.addEventListener('update', () => { finalPassword() })
-
 }

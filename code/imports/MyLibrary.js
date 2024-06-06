@@ -84,10 +84,8 @@ String.prototype.replaceRandomMatch = function (regex, replacement) {
     if (!matches || matches.length === 0) {
         return this; // No matches found, return the original string
     }
-    console.log(matches)
     let index = randomNumber(0, matches.length - 1);
     let i = 0;
-    console.log(index)
     return this.replace(regex, (match) => {
         if (i === index) {
             i++;

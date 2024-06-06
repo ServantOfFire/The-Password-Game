@@ -1,5 +1,5 @@
 async function getVideoDuration(videoId) {
-    if (typeof YouTubeApiKey == 'undefined' && inputfield.innerText.includes('https://www.youtube.com/watch?v=H10xp3u5AxE')) {
+    if (typeof YouTubeApiKey == 'undefined' && inputfield.innerText.includes('youtube.com/watch?v=H10xp3u5AxE')) {
         workingLink = videoId
         return
     } else if (typeof YouTubeApiKey != 'undefined'){

@@ -3,10 +3,10 @@ const inputfield = document.getElementById("inputfield")
 var eingabeText;
 let ruleText;
 let main = document.getElementById('mainfeld')
-let height = 114;
+let mainHeight = 114
 let cBottom;
 let cLeft;
-main.style.height = height + 'px';
+main.style.height = mainHeight + 'px';
 let newOffsetheight = 55;
 let counter = document.getElementById('counter')
 const updateInput = new Event('update')
@@ -18,6 +18,7 @@ formattingWrapper.id = 'formattingWrapper'
 let trueBubbles = [];
 let falseBubbles = [];
 
+addAutoResize();
 //GLOBAL_VARIABLES_GLOBAL_VARIABLES_GLOBAL_VARIABLES_GLOBAL_VARIABLES_GLOBAL_VARIABLES_GLOBAL_VARIABLES
 
 //RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_
@@ -74,7 +75,7 @@ let intervalEating;
 
 //youtube 
 let minutes = randomNumber(2, 26)
-let seconds = randomNumber(2, 58)
+let seconds = randomNumber(0, 59)
 let time;
 let firstTimeYouTube = true
 var workingLink = ' ';
@@ -90,6 +91,7 @@ let hexColor = ''
 //different Sizes
 let usedFontsizes = []
 //RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_RULE_VARIABLES_
+
 
 
 
@@ -134,71 +136,67 @@ let ruleMatrix = [
     [35, 'Your password must include the current time.', 'stmt35(eingabeText)'],
     ['', 'Is this your final password?', 'false', 'finalPasswordCheck(ruleText)'],
 ]
-document.addEventListener('copy', (e) => {
-    e.preventDefault();
-    let selectedText = window.getSelection().toString();
-    e.clipboardData.setData('text/plain', selectedText);
-});
 
-document.addEventListener('paste', function(e){
+document.addEventListener('paste', function (e) {
     e.preventDefault();
     let pastedText = (e.clipboardData || window.clipboardData).getData('text/plain');
     insertPlainText(pastedText);
+    update()
+});
+
+document.addEventListener('dragstart', function (event) {
+    if (event.target.tagName) {
+        event.preventDefault();
+        return;
+    }
+    const selectedText = window.getSelection().toString();
+    event.dataTransfer.setData('text/plain', selectedText);
+    update()
+});
+
+inputfield.addEventListener('dragover', function (event) {
+    event.preventDefault();
+    update()
+});
+
+inputfield.addEventListener('drop', function (event) {
+    event.preventDefault();
+    const text = event.dataTransfer.getData('text/plain');
+    event.target.innerHTML += text;
+    update()
+    blur()
 });
 
 
-function handleDrop(e) {
-    // Prevent the default drop action
-    e.preventDefault();
-
-    // Retrieve the dropped text from the DataTransfer object
-    let droppedText = e.dataTransfer.getData('text/plain');
-
-    // Insert the plain text at the cursor position
-    insertPlainText(droppedText);
-}
-
 function insertPlainText(plainText) {
-    // Insert the plain text at the cursor position
     if (document.activeElement && document.activeElement.value !== undefined) {
-        // If the active element is an input or textarea
         let input = document.activeElement;
         let start = input.selectionStart;
         let end = input.selectionEnd;
-        
-        // Insert the text at the current cursor position
+
         input.value = input.value.substring(0, start) + plainText + input.value.substring(end);
-        
-        // Move the cursor to the end of the inserted text
+
         input.selectionStart = input.selectionEnd = start + plainText.length;
     } else if (document.activeElement && document.activeElement.isContentEditable) {
-        // If the active element is a contenteditable element
         document.execCommand('insertText', false, plainText);
-    } else {
-        // If there's no active element or it's not an input/textarea or contenteditable element
-        console.log('No valid element to insert text into.');
     }
 }
 
-addAutoResize();
-inputfield.addEventListener('keydown', (e) => {if(!e.key.includes('Arrow')){update()}})
-inputfield.addEventListener('input', () => {update()})
+
+inputfield.addEventListener('keydown', (e) => { if (!e.key.includes('Arrow')) { update() } })
+inputfield.addEventListener('input', () => { update() })
 let currentRuleIndex = 0;
 inputfield.addEventListener('update', () => {
+    main.style.height = mainHeight + 'px'
     eingabeText = inputfield.innerText;
     setTimeout(() => {
         for (let i = 0; i < currentRuleIndex; i++)
             bubble(ruleMatrix[i][0], ruleMatrix[i][1], ruleMatrix[i][2], ruleMatrix[i][3]);
-        if (height <= height + inputfield.offsetHeight - newOffsetheight) {
-            changeMainElemHeight(false)
-        }
-        if (height >= height + inputfield.offsetHeight - newOffsetheight) {
-            changeMainElemHeight(true)
-        }
         moveIndex()
-    }, 5);
+    }, 15);
     updateCounter()
     checkForGreg()
+    changeMainElemHeight()
 });
 
 function addAutoResize() {
@@ -249,7 +247,7 @@ function getCheats() {
         cheatsCommandBuffer += keyPressed;
         if (cheatsCommandBuffer.includes('cheats')) {
             let cheatsArray = ['Wordle answer: ' + answer, 'MoonPhase: ' + moonEmojis[moonPhase], 'Country: ' + streetViewCoords[chosenLocation][2], 'chessMove: ' + chessPositions[board][2], 'HEX:' + hexColor]
-            cheatsArray.forEach((e)=>{console.log(e)})
+            cheatsArray.forEach((e) => { console.log(e) })
             cheatsCommandBuffer = '';
         }
     });

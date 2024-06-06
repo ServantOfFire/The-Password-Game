@@ -33,7 +33,6 @@ function stmt6(input) {
     for (let month = 0; month <= months.length; month++) {
         if (input.toLowerCase().includes(months[month])) return true
     }
-    deleteHighlight(6)
 }
 
 function stmt7(input) {
@@ -41,7 +40,6 @@ function stmt7(input) {
     for (let num = 0; num <= romanNum.length; num++) {
         if (input.includes(romanNum[num])) return true
     }
-    deleteHighlight(7)
 }
 
 function stmt8(input) {
@@ -49,7 +47,6 @@ function stmt8(input) {
     for (let i = 0; i <= sponsors.length; i++) {
         if (input.toLowerCase().includes(sponsors[i])) return true
     }
-    deleteHighlight(8)
 }
 
 function stmt9(input) {
@@ -73,12 +70,11 @@ function stmt9(input) {
 }
 
 function stmt10(input) {
-    if (input.includes(getCaptchaText())) return true
-    deleteHighlight(10)
+    return input.includes(getCaptchaText())
 }
 
 function stmt11(input) {
-    deleteHighlight(11)
+
     return input.toLowerCase().includes(answer.toLowerCase())
 }
 
@@ -98,14 +94,12 @@ function stmt12(input) {
             return true
         }
     }
-    deleteHighlight(12)
 }
 
 function stmt13(input) {
     //moonEmojis = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘'] already declared in script for cheats
     if (input.includes(moonEmojis[moonPhase]))
         return true
-    deleteHighlight(13)
 }
 
 function stmt14(input) {
@@ -116,22 +110,15 @@ function stmt14(input) {
     if (input.includes(streetViewCoords[chosenLocation][2].toLowerCase())) {
         return true
     }
-    deleteHighlight(14)
     document.getElementById('falseCountries').innerHTML = ''
-    if (usedCountries) {
-        height -= 42 * usedCountries.length
-        main.style.height = height + 'px'
-    }
 
     usedCountries = allCountries.filter(function (element) {
-        return input.includes(element.toLowerCase())
+        return input.includes(element.toLowerCase().replaceAll(' ', ''))
     })
     usedCountries.forEach(function (element) {
         let wrongCountry = document.createElement('p')
         wrongCountry.innerHTML = `${error.outerHTML}${element}`
         document.getElementById('falseCountries').appendChild(wrongCountry)
-        height += 42
-        main.style.height = height + 'px'
     })
 }
 
@@ -149,7 +136,6 @@ function stmt15(input) {
             }
         }
     }
-    deleteHighlight(15)
 }
 
 function stmt16(input) {
@@ -161,7 +147,6 @@ function stmt16(input) {
         removeMoves(true)
         return true
     }
-    deleteHighlight(16)
     if (possibleChessMoves != null) {
         for (let i = 0; i < possibleChessMoves.length; i++) {
             if (!document.getElementById(possibleChessMoves[i])) {
@@ -174,8 +159,6 @@ function stmt16(input) {
                     if (possibleChessMoves[i].includes(falseMoves[o])) {//remove smaller moves
                         if (document.getElementById(falseMoves[o])) {
                             document.getElementById('chessWrapper').removeChild(document.getElementById(falseMoves[o]))
-                            height -= 42
-                            main.style.height = height + 'px'
                         }
                         let index = falseMoves.indexOf(falseMoves[o]);
                         falseMoves.splice(index, 1); // 2nd parameter means remove one item only
@@ -186,8 +169,6 @@ function stmt16(input) {
                     invalidNotation.innerHTML = `${error.outerHTML}${possibleChessMoves[i]} (Invalid notation)`
                 else
                     invalidNotation.innerHTML = `${error.outerHTML}${possibleChessMoves[i]}`
-                height += 42
-                main.style.height = height + 'px'
                 document.getElementById('chessWrapper').insertBefore(invalidNotation, document.getElementById('boardWrapper'))
             }
         }
@@ -201,14 +182,10 @@ function stmt16(input) {
                     let index = falseMoves.indexOf(removable[i].innerText); // remove from falseMoves array
                     falseMoves.splice(index, 1)
                     document.getElementById('chessWrapper').removeChild(removable[i])
-                    height -= 42
-                    main.style.height = height + 'px'
                 } else if (!input.includes(removable[i].innerText)) {
                     let index = falseMoves.indexOf(removable[i].innerText); // remove from falseMoves array
                     falseMoves.splice(index, 1)
                     document.getElementById('chessWrapper').removeChild(removable[i])
-                    height -= 42
-                    main.style.height = height + 'px'
                 }
             }
         }
@@ -216,7 +193,6 @@ function stmt16(input) {
 }
 
 function stmt17(input) {
-
     if (input.includes(gregEmoji)) {
         if (firstTimeEgg) {
             firstTimeEgg = false
@@ -225,7 +201,6 @@ function stmt17(input) {
         }
     }
     if (greg) return true
-    deleteHighlight(17)
 }
 
 function stmt18(input) {
@@ -308,7 +283,6 @@ function stmt19(input) {
 function stmt20() {
     startFire()
     if (fireOut) return true
-    deleteHighlight(20)
 }
 
 function stmt21(input) {
@@ -325,7 +299,6 @@ function stmt22(input) {
     input = input.replaceAll(' ', '').toLowerCase()
     if (input.includes('iamloved') || input.includes('iamworthy') || input.includes('iamenough'))
         return true
-    deleteHighlight(22)
 }
 
 function stmt23(input) {
@@ -337,9 +310,8 @@ function stmt23(input) {
     }
     if (input.includes('🐛')) {
         gregEating()
-        return true
     }
-    deleteHighlight(23)
+    if(alreadyEating)return true
 }
 
 function stmt24(input) {
@@ -349,10 +321,7 @@ function stmt24(input) {
         if (iframe.width != '0px') {
             iframe.width = '0px'
             iframe.height = '0px'
-            height -= 273
-            main.style.height = height + 'px'
         }
-        deleteHighlight(24)
         return false
     }
 
@@ -365,8 +334,6 @@ function stmt24(input) {
     if (iframe.height == '0px') {
         iframe.width = '468px'
         iframe.height = '263px'
-        height += 273
-        main.style.height = height + 'px'
     }
     iframe.src = `https://www.youtube.com/embed/${videoId}`
     if (workingLink != videoId) {
@@ -374,7 +341,6 @@ function stmt24(input) {
     }
     if (workingLink === videoId)
         return true
-    deleteHighlight(24)
 }
 function stmt25(input) {
     if (sacrificed) {
@@ -391,7 +357,6 @@ function stmt26() {
     let numberOfItalics = numberOfFormats('i')
     if (numberOfItalics >= 2 * numberOfBolded)
         return true
-    deleteHighlight(26)
     function numberOfFormats(modifier) {
         let alternateModifiers = ['b', 'i', 'mark', 'font']
         alternateModifiers.splice(alternateModifiers.indexOf(modifier), 1)
@@ -408,9 +373,7 @@ function stmt26() {
         matches = matches.replaceAll(`<${modifier}>`, '')
         matches = matches.replaceAll(`</${modifier}>`, '')
         return matches.actualLength()
-        // return matches.length
     }
-
 }
 
 function stmt27() {
@@ -491,11 +454,9 @@ function stmt31() {
 }
 
 function stmt32(input) {
-    deleteHighlight(32)
     return input.includes(input.actualLength())
 }
 function stmt33() {
-    deleteHighlight(33)
     function isPrime(number) {
         let start = 2;
         const limit = Math.sqrt(number);
@@ -508,7 +469,6 @@ function stmt33() {
 }
 
 function stmt35(input) {
-    deleteHighlight(35)
     var currentTime = new Date();
     var hours = currentTime.getHours();
     var minutes = currentTime.getMinutes();
